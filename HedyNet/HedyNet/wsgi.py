@@ -27,6 +27,7 @@ path.insert(0, SITE_ROOT)
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "HedyNet.settings.development")
 
 environment_settings = (
+    "DJANGO_SETTINGS_MODULE",
     "DATABASE_NAME",
     "DATABASE_USER",
     "DATABASE_PASSWORD",
