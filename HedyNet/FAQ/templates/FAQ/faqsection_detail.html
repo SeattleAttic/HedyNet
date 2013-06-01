@@ -1,0 +1,17 @@
+<article class="faqsection detail">
+<h1>{{ faqsection }}</h1>
+<div class="content">
+{{ faqsection.description|safe }}
+</div>
+</article>
+
+{% for faq in faqsection.faqitem_set %}
+<article id="faq-{{ faq.pk }}" class="faqitem list">
+<header>
+<h2>{{ faq.question }}</h2>
+</header>
+<div class="content">
+{{ faq.answer|safe }}
+</div>
+</article>
+{% endfor %}
