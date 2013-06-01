@@ -1,76 +1,280 @@
-{% load staticfiles %}
+{% load static from staticfiles %}
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>{% block title %}HedyNet{% endblock title %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 
-    <!-- Le styles -->
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-    <style>
-      body {
-        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-      }
-    </style>
-    <link href="{% static 'css/bootstrap-responsive.min.css' %}" rel="stylesheet">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>Seattle Attic</title>
 
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+  <!-- If you are using CSS version, only link these 2 files, you may add app.css to use for your overrides if you like. -->
+  <link rel="stylesheet" href="{% static "css/normalize.css" %}" />
+  <link rel="stylesheet" href="{% static "css/foundation.css" %}" />
 
-    <!-- This file store project specific CSS -->
-    <link href="{% static 'css/project.css' %}" rel="stylesheet">
+  <!-- If you are using the gem version, you need this only -->
+  <link rel="stylesheet" href="{% static "css/app.css" %}" />
 
-    <!-- Use this to quickly test CSS changes in a template,
-        then move to project.css -->
-    {% block extra_css %}{% endblock extra_css %}
-  </head>
+  <script src="{% static "js/vendor/custom.modernizr.js" %}"></script>
 
-  <body>
+</head>
+<body>
 
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
+  <!-- Header and Nav -->
+  <nav class="top-bar">
+    <ul class="title-area">
+      <!-- Title Area -->
+      <li class="name">
+        <h1>
+          <a href="#">
+            Top Bar Title
           </a>
-          <a class="brand" href="#">HedyNet</a>
-          <div class="nav-collapse collapse">
-            <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
+        </h1>
+      </li>
+      <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+    </ul>
+
+    <section class="top-bar-section">
+      <!-- Left Nav Section -->
+      <ul class="left">
+        <li class="divider"></li>
+        <li class="has-dropdown">
+          <a class="active" href="#">Main Item 1</a>
+          <ul class="dropdown">
+            <li><label>Section Name</label></li>
+            <li><a href="#" class="">Dropdown Level 1</a></li>
+            <li><a href="#">Dropdown Option</a></li>
+            <li><a href="#">Dropdown Option</a></li>
+            <li class="divider"></li>
+            <li><label>Section Name</label></li>
+            <li><a href="#">Dropdown Option</a></li>
+            <li><a href="#">Dropdown Option</a></li>
+            <li><a href="#">Dropdown Option</a></li>
+            <li class="divider"></li>
+            <li><a href="#">See all &rarr;</a></li>
+          </ul>
+        </li>
+        <li class="divider"></li>
+        <li><a href="#">Main Item 2</a></li>
+        <li class="divider"></li>
+        <li class="has-dropdown">
+          <a href="#">Main Item 3</a>
+          <ul class="dropdown">
+            <li><a href="#">Dropdown Option</a></li>
+            <li><a href="#">Dropdown Option</a></li>
+            <li><a href="#">Dropdown Option</a></li>
+            <li class="divider"></li>
+            <li><a href="#">See all &rarr;</a></li>
+          </ul>
+        </li>
+       
+      </ul>
+
+      <!-- Right Nav Section -->
+      <ul class="right">
+        <li class="divider"></li>
+        <li class="has-dropdown">
+          <a href="#">Main Item 4</a>
+          <ul class="dropdown">
+            <li><label>Section Name</label></li>
+            <li class="has-dropdown">
+              <a href="#" class="">Has Dropdown, Level 1</a>
+              <ul class="dropdown">
+                <li><a href="#">Dropdown Options</a></li>
+                <li><a href="#">Dropdown Options</a></li>
+                <li class="has-dropdown">
+                  <a href="#">Has Dropdown, Level 2</a>
+                  <ul class="dropdown test">
+                    <li><a href="#">Subdropdown Option</a></li>
+                    <li><a href="#">Subdropdown Option</a></li>
+                    <li><a href="#">Subdropdown Option</a></li>
+                  </ul>
+                </li>
+                <li><a href="#">Subdropdown Option</a></li>
+                <li><a href="#">Subdropdown Option</a></li>
+                <li><a href="#">Subdropdown Option</a></li>
+              </ul>
+            </li>
+            <li><a href="#">Dropdown Option</a></li>
+            <li><a href="#">Dropdown Option</a></li>
+            <li class="divider"></li>
+            <li><label>Section Name</label></li>
+            <li><a href="#">Dropdown Option</a></li>
+            <li><a href="#">Dropdown Option</a></li>
+            <li><a href="#">Dropdown Option</a></li>
+            <li class="divider"></li>
+            <li><a href="#">See all &rarr;</a></li>
+          </ul>
+        </li>
+        <li class="divider"></li>
+        <li><a href="#">Main Item 5</a></li>
+        <li class="divider"></li>
+        <li class="has-dropdown">
+          <a href="#">Main Item 6</a>
+          <ul class="dropdown">
+            <li><a href="#">Dropdown Option</a></li>
+            <li><a href="#">Dropdown Option</a></li>
+            <li><a href="#">Dropdown Option</a></li>
+            <li class="divider"></li>
+            <li><a href="#">See all &rarr;</a></li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+  </nav>
+
+
+  <!-- End Header and Nav -->
+
+  <!-- Main Grid Section -->
+
+  <div class="row">
+
+    <div class="large-3 columns">
+      <div class="panel">
+        <h5>Panel Title</h5>
+        <p>This is a three columns grid panel with an arbitrary height.</p>
+      </div>
+    </div>
+    <div class="large-6 columns">
+      <div class="panel">
+        <h5>Panel Title</h5>
+        <p>This is a six columns grid panel with an arbitrary height. Bacon ipsum dolor sit amet salami ham hock biltong ball tip drumstick sirloin pancetta meatball short loin.</p>
+      </div>
+    </div>
+    <div class="large-3  columns">
+      <div class="panel">
+        <h5>Panel Title</h5>
+        <p>This is a three columns grid panel with an arbitrary height.</p>
       </div>
     </div>
 
-    <div class="container">
+  </div>
 
-      <h1>{% block page_title %}Example Base Template{% endblock page_title %}</h1>
 
-      {% block content %}
-        <p>Use this document as a way to quick start any new project.</p>
-      {% endblock content %}
 
-    </div> <!-- /container -->
+  <div class="row">
 
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <div class="large-6 columns">
+      <div class="panel">
+        <h5>Panel Title</h5>
+        <p>This is a six columns grid panel with an arbitrary height. Bacon ipsum dolor sit amet salami ham hock biltong ball tip drumstick sirloin pancetta meatball short loin.</p>
+      </div>
+    </div>
+    <div class="large-2 columns">
+      <div class="panel">
+        <p>
+          <img src="http://placehold.it/200x200" />
+        </p>
+      </div>
+    </div>
+    <div class="large-4 columns">
+      <div class="panel">
+        <h5>Panel Title</h5>
+        <p>This is a four columns grid panel with an arbitrary height. Bacon ipsum dolor sit amet salami.</p>
+      </div>
+    </div>
 
-    <!-- place project specific Javascript in this file -->
-    <script src="{% static 'js/project.js' %}"></script>
+  </div>
 
-    {% block extra_js %}{% endblock extra_js %}
-  </body>
+
+  <div class="row">
+
+    <div class="large-4 columns">
+      <div class="panel">
+        <p>
+          <img src="http://placehold.it/400x300" />
+        </p>
+      </div>
+    </div>
+    <div class="large-4 columns">
+      <div class="panel">
+        <p>
+          <img src="http://placehold.it/400x300" />
+        </p>
+      </div>
+    </div>
+    <div class="large-4 columns">
+      <div class="panel">
+        <p>
+          <img src="http://placehold.it/400x300" />
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="row">
+
+    <div class="large-6 columns">
+      <div class="panel">
+        <h5>Panel Title</h5>
+        <p>This is a six columns grid panel with an arbitrary height. Bacon ipsum dolor sit amet salami ham hock biltong ball tip drumstick sirloin pancetta meatball short loin.</p>
+      </div>
+    </div>
+    <div class="large-3 columns">
+      <div class="panel">
+        <h5>Panel Title</h5>
+        <p>This is a three columns grid panel with an arbitrary height.</p>
+      </div>
+    </div>
+    <div class="large-3 columns">
+      <div class="panel">
+        <h5>Panel Title</h5>
+        <p>This is a three columns grid panel with an arbitrary height.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- End Grid Section -->
+
+
+
+  <!-- Footer -->
+
+  <footer class="row">
+    <div class="large-12 columns">
+      <hr />
+      <div class="row">
+        <div class="large-6 columns">
+          <p>&copy; </p>
+        </div>
+        <div class="large-6 columns">
+          <ul class="inline-list right">
+            <li><a href="#">Section 1</a></li>
+            <li><a href="#">Section 2</a></li>
+            <li><a href="#">Section 3</a></li>
+            <li><a href="#">Section 4</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  document.write('<script src=' +
+  ('__proto__' in {} ? '{% static "js/vendor/zepto" %}' : '{% static "js/vendor/jquery" %}') +
+  '.js><\/script>')
+  </script>
+  <script src="{% static "js/foundation/foundation.js" %}"></script>
+  <script src="{% static "js/foundation/foundation.alerts.js" %}"></script>
+  <script src="{% static "js/foundation/foundation.clearing.js" %}"></script>
+  <script src="{% static "js/foundation/foundation.cookie.js" %}"></script>
+  <script src="{% static "js/foundation/foundation.dropdown.js" %}"></script>
+  <script src="{% static "js/foundation/foundation.forms.js" %}"></script>
+  <script src="{% static "js/foundation/foundation.joyride.js" %}"></script>
+  <script src="{% static "js/foundation/foundation.magellan.js" %}"></script>
+  <script src="{% static "js/foundation/foundation.orbit.js" %}"></script>
+  <script src="{% static "js/foundation/foundation.placeholder.js" %}"></script>
+  <script src="{% static "js/foundation/foundation.reveal.js" %}"></script>
+  <script src="{% static "js/foundation/foundation.section.js" %}"></script>
+  <script src="{% static "js/foundation/foundation.tooltips.js" %}"></script>
+  <script src="{% static "js/foundation/foundation.topbar.js" %}"></script>
+  <script src="{% static "js/foundation/foundation.interchange.js" %}"></script>
+  <script>
+    $(document).foundation();
+  </script>
+</body>
 </html>
