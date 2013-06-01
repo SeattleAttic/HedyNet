@@ -6,7 +6,11 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$', TemplateView.as_view(template_name='base.html')),
+    url(r'^$', TemplateView.as_view(template_name='home.html'), name="home"),
+    url(r'^about$', TemplateView.as_view(template_name='about.html'), name="about"),
+    url(r'^policies$', TemplateView.as_view(template_name='policies.html'), name="policies"),
+    url(r'^codeofconduct$', TemplateView.as_view(template_name='codeofconduct.html'), name="codeofconduct"),
+    url(r'^wishlist$', TemplateView.as_view(template_name="wishlist.html"), name="wishlist"),
 
     # Examples:
     # url(r'^$', 'HedyNet.views.home', name='home'),
