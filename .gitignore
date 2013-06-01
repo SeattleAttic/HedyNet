@@ -3,3 +3,4 @@
 *.pyc
 
 assets/*
+.sass-cache/
