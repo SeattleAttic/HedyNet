@@ -44,10 +44,12 @@ $default-float: left;
 
 // Colors
 
-// $primary-color: #2ba6cb;
-// $secondary-color: #e9e9e9;
-// $alert-color: #c60f13;
-// $success-color: #5da423;
+$primary-color: #4c2209;
+$secondary-color: #e5bda4;
+$alert-color: #6a1d08;
+$success-color: #3e673e;
+
+$contrast-color: #2d221b;
 
 // Make sure border radius matches unless we want it different.
 
@@ -850,7 +852,7 @@ $default-float: left;
 
 // Background and border styles
 
-// $panel-bg: darken(#fff, 5%);
+$panel-bg: lighten($secondary-color, 20%);
 // $panel-border-style: solid;
 // $panel-border-size: 1px;
 
@@ -1202,7 +1204,7 @@ $default-float: left;
 
 // Background color for the top bar
 
-// $topbar-bg:                            #111 !default;
+$topbar-bg:                            $contrast-color !default;
 
 // Height and margin
 
@@ -1220,7 +1222,7 @@ $default-float: left;
 
 // Style the top bar dropdown elements
 
-// $topbar-dropdown-bg:                   #222;
+$topbar-dropdown-bg:                   $contrast-color;
 // $topbar-dropdown-link-color:           #fff;
 // $topbar-dropdown-link-bg:              lighten($topbar-bg, 5%);
 // $topbar-dropdown-toggle-size:          5px;
