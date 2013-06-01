@@ -6,7 +6,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width" />
-  <title>Seattle Attic</title>
+  <title>{% block title %}{{ title }}{% endblock %} | Seattle Attic</title>
 
   <!-- If you are using CSS version, only link these 2 files, you may add app.css to use for your overrides if you like. -->
   <link rel="stylesheet" href="{% static "css/normalize.css" %}" />
