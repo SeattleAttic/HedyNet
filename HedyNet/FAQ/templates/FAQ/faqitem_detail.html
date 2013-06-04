@@ -1,3 +1,8 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+<div class="column large-12 small-12">
 <article class="faqitem detail">
 <header>
 <h2>{{ faq.question }}</h2>
@@ -6,3 +11,6 @@
 {{ faq.answer|safe }}
 </div>
 </article>
+</div>
+</div>
+{% endblock %}

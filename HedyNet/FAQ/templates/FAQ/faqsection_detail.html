@@ -1,3 +1,8 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+<div class="column large-12 small-12">
 <article class="faqsection detail">
 <h1>{{ faqsection }}</h1>
 <div class="content">
@@ -5,13 +10,16 @@
 </div>
 </article>
 
-{% for faq in faqsection.faqitem_set %}
+{% for faq in faqsection.faqitem_set.all %}
 <article id="faq-{{ faq.pk }}" class="faqitem list">
 <header>
-<h2>{{ faq.question }}</h2>
+<h4>{{ faq.question }}</h4>
 </header>
 <div class="content">
 {{ faq.answer|safe }}
 </div>
 </article>
 {% endfor %}
+</div>
+</div>
+{% endblock %}
