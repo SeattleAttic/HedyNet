@@ -1,7 +1,7 @@
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 from .models import FAQSection, FAQItem
 
-class FAQSectionListView():
+class FAQSectionListView(ListView):
     
     model = FAQSection
     context_object_name = "faqsection_list"
@@ -18,7 +18,7 @@ class FAQItemDetailView(DetailView):
     slug_url_kwarg = "faq_slug"
     section_url_kwarg = "section_slug"
     
-    get_queryset():
+    def get_queryset(self):
         """Cut down the queryset based on the FAQ section's slug, so
         retrieval will work properly."""
         return FAQSection.objects.all() # TODO: use the faq section slug to filter

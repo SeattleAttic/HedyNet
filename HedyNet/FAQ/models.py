@@ -29,7 +29,7 @@ class FAQItem(models.Model):
     # TODO: add date created & date modified
     
     class Meta:
-        ordering = ['order', 'title']
+        ordering = ['order', 'question']
     
     def __unicode__(self):
         return self.question

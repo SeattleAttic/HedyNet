@@ -1,7 +1,6 @@
 from django.contrib import admin
 
-from .views import FAQSectionListView, FAQSectionDetailView, FAQItemDetailView
+from .views import FAQSection, FAQItem
 
-admin.site.register(FAQSectionListView)
-admin.site.register(FAQSectionDetailView)
-admin.site.register(FAQItemDetailView)
+admin.site.register(FAQSection)
+admin.site.register(FAQItem)
