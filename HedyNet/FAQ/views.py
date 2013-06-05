@@ -21,4 +21,5 @@ class FAQItemDetailView(DetailView):
     def get_queryset(self):
         """Cut down the queryset based on the FAQ section's slug, so
         retrieval will work properly."""
-        return FAQSection.objects.all() # TODO: use the faq section slug to filter
+        return FAQItem.objects.filter(
+            section__slug = self.kwargs[self.section_url_kwarg]) 
