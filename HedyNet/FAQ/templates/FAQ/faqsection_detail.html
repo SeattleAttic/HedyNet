@@ -15,10 +15,17 @@
 {% for faq in faqsection.faqitem_set.all %}
 <article id="faq-{{ faq.pk }}" class="faqitem list">
 <header>
-<h4>{{ faq.question }}</h4>
+<h4><a href="{% url "faqitem-detail" section_slug=faq.section.slug faq_slug=faq.slug %}">{{ faq.question }}</a></h4>
 </header>
 <div class="content">
-{{ faq.answer|safe }}
+<div class="summary">
+{{ faq.summary_answer|safe }}
+</div>
+{% if faq.long_answer %}
+<div class="more">
+<a href="{% url "faqitem-detail" section_slug=faq.section.slug faq_slug=faq.slug %}">Read more</a>
+</div>
+{% endif %}
 </div>
 </article>
 {% endfor %}

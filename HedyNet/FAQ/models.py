@@ -25,9 +25,15 @@ class FAQItem(models.Model):
     slug = models.SlugField()    
     section = models.ForeignKey(FAQSection)
     order = models.IntegerField(default=0)
-    answer = models.TextField()
-    # TODO: add date created & date modified
-    
+    summary_answer = models.TextField()
+    full_answer = models.TextField(blank = True)
+
+    # Automatic fields for date created and modified
+    last_modified_on = models.DateTimeField(auto_now = True, editable = False,
+        verbose_name = "date last modified")
+    created_on = models.DateTimeField(auto_now_add = True, editable = False,
+        verbose_name = "date created")
+
     class Meta:
         ordering = ['order', 'question']
     

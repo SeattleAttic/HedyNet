@@ -10,7 +10,15 @@
 <h2>{{ faq.question }}</h2>
 </header>
 <div class="content">
-{{ faq.answer|safe }}
+<div class="summary">
+{{ faq.summary_answer|safe }}
+</div>
+{% if faq.full_answer %}
+<hr />
+<div class="full">
+{{ faq.full_answer }}
+</div>
+{% endif %}
 </div>
 </article>
 </div>
