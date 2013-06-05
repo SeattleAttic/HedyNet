@@ -11,6 +11,7 @@ urlpatterns = patterns('',
     url(r'^policies$', TemplateView.as_view(template_name='policies.html'), name="policies"),
     url(r'^codeofconduct$', TemplateView.as_view(template_name='codeofconduct.html'), name="codeofconduct"),
     url(r'^wishlist$', TemplateView.as_view(template_name="wishlist.html"), name="wishlist"),
+    url(r'^sitemap$', TemplateView.as_view(template_name="sitemap.html"), name="sitemap"),
 
     url(r'^faq/', include('FAQ.urls')),
 
