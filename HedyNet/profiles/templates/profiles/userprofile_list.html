@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Member directory{% endblock %}
+
+{% block content %}
+<div class="row collapse">
+<h1>Member Directory</h1>
+{% for user_profile in user_profile_list %}
+<article class="row">
+<div class="columns large-4 small-12">
+<h3>{{ user_profile }}</h3>
+<p>({{ user_profile.legal_name }})</p>
+<p>Status: {{ user_profile.status }}</p>
+<p>Member since: {{ user_profile.became_member_on }}</p>
+</div>
+<div class="columns large-8 small-12">
+<ul>
+<li>Preferred contact method: {{ user_profile.preferred_contact_method }}</li>
+</ul>
+</div>
+</article>
+{% endfor %}
+</div>
+{% endblock %}
