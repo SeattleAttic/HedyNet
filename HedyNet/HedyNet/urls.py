@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     url(r'^wishlist$', TemplateView.as_view(template_name="wishlist.html"), name="wishlist"),
     url(r'^sitemap$', TemplateView.as_view(template_name="sitemap.html"), name="sitemap"),
     url(r'^tos$', TemplateView.as_view(template_name="tos.html"), name="tos"),
+    url(r'^donations$', TemplateView.as_view(template_name="donations.html"), name="donations"),
 
     url(r'^faq/', include('FAQ.urls')),
 
