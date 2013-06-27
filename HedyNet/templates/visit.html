@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Visit Us{% endblock %}
+
+{% block content %}
+<section class="row">
+<div class="columns large-8 small-12">
+<header><h1>Visit Us</h1></header>
+<div class="content">
+
+<p>We are located at 600 First Ave, unit 605. After hours, you can enter the building on the James Street side; look for the "Office Space" sign, and dial "Attic" on the intercom.</p>
+
+<p>The building is wheelchair accessible, including the bathrooms.</p>
+
+<div id="map_canvas"><iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?oe=utf-8&amp;client=firefox-a&amp;channel=fflb&amp;q=600+First+Ave+seattle&amp;ie=UTF8&amp;hq=&amp;hnear=600+1st+Ave,+Seattle,+Washington+98104&amp;gl=us&amp;t=m&amp;z=14&amp;ll=47.602034,-122.333467&amp;output=embed"></iframe><br /><small><a href="https://maps.google.com/maps?oe=utf-8&amp;client=firefox-a&amp;channel=fflb&amp;q=600+First+Ave+seattle&amp;ie=UTF8&amp;hq=&amp;hnear=600+1st+Ave,+Seattle,+Washington+98104&amp;gl=us&amp;t=m&amp;z=14&amp;ll=47.602034,-122.333467&amp;source=embed">View Larger Map</a></small></div>
+
+<p>We hold a weekly open house on Tuesday evenings from 6:30-9PM.</p>
+
+</div>
+</div>
+<div class="columns twitter large-4 small-12">
+{% include "twitter-embed.html" %}
+</div>
+</section>
+{% endblock %}
