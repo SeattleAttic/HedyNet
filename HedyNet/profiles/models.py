@@ -40,6 +40,12 @@ class UserProfile(models.Model):
     def __unicode__(self):
         return self.display_name
 
+    # TODO: override save function or add a listener; ensure that status changes
+    # add a member status changes.  this can be on on creation of new profile
+    # or modification of old one.
+    # also need to make sure that became_member_on is set to an
+    # appropriate value or delete it entirely and rely only on status changes
+
     def _is_member(self):
         return self.status == constants.ACTIVE_STATUS
     is_member = property(_is_member)

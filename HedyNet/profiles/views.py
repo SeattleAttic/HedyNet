@@ -45,3 +45,6 @@ class MemberDirectoryView(ListView):
 class UserProfileDetailView(DetailView):
     model = models.UserProfile
     context_object_name = "user_profile"
+    
+# TODO: User Profile editing view for users editing their own profile
+# TODO: User Profile editing view for admins editing the status of somebody else
