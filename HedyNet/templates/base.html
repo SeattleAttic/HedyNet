@@ -76,23 +76,19 @@
 
   <!-- Footer -->
 {% block footer %}
-  <footer class="row">
-    <div class="large-12 columns">
-      <hr />
-      <div class="row">
-        <div class="large-6 columns fineprint">
-          <p>This is a fiscally sponsored project of the School Factory, Inc. a 501(c)3 non-profit corporation.</p>
-          <p>&copy; Seattle Attic 2013</p>
-        </div>
-        <div class="large-6 columns">
-          <ul class="inline-list right">
+<footer class="row">
+<div class="columns"><hr /></div>
+    <div class="large-6 columns fineprint">
+        <p>This is a fiscally sponsored project of the School Factory, Inc. a 501(c)3 non-profit corporation.</p>
+        <p>&copy; Seattle Attic 2013</p>
+    </div>
+    <div class="large-6 columns">
+        <ul class="inline-list right">
             <li><a href="{% url "sitemap" %}">Sitemap</a></li>
             <li><a href="{% url "tos" %}">TOS</a></li>
             <li><a href="{% url "policies" %}">Policies</a></li>
             <li><a href="{% url "codeofconduct" %}">Code of Conduct</a></li>
-          </ul>
-        </div>
-      </div>
+        </ul>
     </div>
   </footer>
 {% endblock %}
