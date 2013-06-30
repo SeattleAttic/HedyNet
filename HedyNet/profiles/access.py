@@ -18,6 +18,7 @@ def access_levels(owner_userprofile, viewer_userprofile):
     # the only valid access value for non-logged in users is the above defined
     # public access level
     if not viewer_userprofile:
+        logger.debug(valid_access_levels)
         return valid_access_levels
     
     # registered level add since viewer user profile exists
@@ -34,7 +35,8 @@ def access_levels(owner_userprofile, viewer_userprofile):
     # private access level added if owner is same as viewer
     if owner_userprofile and viewer_userprofile.pk == owner_userprofile.pk:
         valid_access_levels.add(constants.PRIVATE_ACCESS)
-        
+    
+    logger.debug(valid_access_levels) 
     return valid_access_levels
     
 def can_access(owner_userprofile, viewer_userprofile, access_level):

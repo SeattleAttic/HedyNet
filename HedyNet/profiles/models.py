@@ -38,7 +38,10 @@ class UserProfile(models.Model):
     # using an access based media system
 
     def __unicode__(self):
-        return self.display_name
+        if self.display_name:
+            return self.display_name
+        else:
+            return self.user.username
 
     # TODO: override save function or add a listener; ensure that status changes
     # add a member status changes.  this can be on on creation of new profile
