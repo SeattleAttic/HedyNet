@@ -1,5 +1,14 @@
 @import "variables";
 
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: 'Cherry Swash', cursive, sans-serif;
+    font-weight: bold;
+}
+
 a { color: $link-color; font-weight: bold; text-decoration: underline; }
 a:visited { color: $link-visited-color; }
 a:hover, a:active { color: $link-hover-color; }
