@@ -5,6 +5,7 @@ logger = logging.getLogger(__name__)
 
 from django.views.generic import ListView, DetailView
 from django.db.models import Q
+from django.core.exceptions import ObjectDoesNotExist
 
 import profiles.models as models
 from profiles import constants
@@ -45,6 +46,18 @@ class MemberDirectoryView(ListView):
 class UserProfileDetailView(DetailView):
     model = models.UserProfile
     context_object_name = "user_profile"
-    
+
+    def get_object(self):
+        """Modify the get_object to return a profile based on a username."""
+
+        try:
+            username = self.kwargs.get("username", None)
+            profile = models.UserProfile.objects.get(user__username = username)
+        except ObjectDoesNotExist:
+            raise Http404(_("No %(verbose_name)s found matching the query") %
+                {'verbose_name': queryset.model._meta.verbose_name}) 
+
+        return profile   
+ 
 # TODO: User Profile editing view for users editing their own profile
 # TODO: User Profile editing view for admins editing the status of somebody else

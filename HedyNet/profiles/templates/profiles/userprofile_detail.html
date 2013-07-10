@@ -1,18 +1,17 @@
 {% extends "base.html" %}
 
-{% block title %}Member directory{% endblock %}
+{% block title %}Profile for: {{ user_profile.user.username }}{% endblock %}
 
 {% block content %}
-<div class="profiles">
+<div class="profile">
 <div class="row">
 <div class="columns">
-<h1>Member Directory</h1>
+<h1>Profile for {{ user_profile.user.username }}</h1>
 </div>
 </div>
-{% for user_profile in user_profile_list %}
 <article class="row">
 <div class="columns large-4 small-12">
-<h3><a href="{% url "user_profile" username=user_profile.user.username %}">{{ user_profile }}</a></h3>
+<h3>{{ user_profile }}</h3>
 <p>({{ user_profile.legal_name }})</p>
 <p>Status: {{ user_profile.status }}</p>
 <p>Member since: {{ user_profile.became_member_on }}</p>
@@ -23,6 +22,12 @@
 </ul>
 </div>
 </article>
-{% endfor %}
+
+<div class="row">
+<div class="columns">
+<p><a href="{% url "memberdirectory" %}">Back to member directory</a></p>
+</div>
+</div>
+
 </div>
 {% endblock %}
