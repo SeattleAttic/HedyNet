@@ -10,16 +10,19 @@
 <h2>Base Pages</h2>
 <ul>
 <li><a href="{% url "home" %}">Home</a></li>
-<li><a href="{% url "about" %}">About Us</a></li>
+<li><a href="{% url "about" %}">About us</a></li>
 <li><a href="{% url "policies" %}">Policies</a></li>
 <li><a href="{% url "codeofconduct" %}">Code of Conduct</a></li>
 <li><a href="{% url "faqsection-detail" "main" %}">Main FAQ</a></li>
-<li><a href="{% url "othersites" %}">Attic Windows (Other Sites)</a></li>
+<li><a href="{% url "othersites" %}">Attic windows (other sites)</a></li>
 </ul>
 
 <h2>Members Directory</h2>
 <ul>
-<li><a href="{% url "memberdirectory" %}">Member Directory</a></li>
+<li><a href="{% url "memberdirectory" %}">Member directory</a></li>
+{% if user.is_authenticated %}
+<li><a href="{% url "user_profile" username=user.username %}">My profile</a></li>
+{% endif %}
 </ul>
 
 <h2>Accounts</h2>
@@ -27,12 +30,12 @@
 {% if user.is_authenticated %}
 <li><a href="{% url "account_email" %}">Email</a></li>
 <li><a href="{% url "account_change_password" %}">Account change password</a></li>
-<li><a href="{% url "socialaccount_connections" %}">Social Account Connections</a></li>
-<li><a href="{% url "account_logout" %}">Log Out</a></li>
+<li><a href="{% url "socialaccount_connections" %}">Social account connections</a></li>
+<li><a href="{% url "account_logout" %}">Log out</a></li>
 {% else %}
-<li><a href="{% url "account_signup" %}">Sign Up</a></li>
-<li><a href="{% url "account_login" %}">Log In</a></li>
-<li><a href="{% url "account_reset_password" %}">Reset Password</a></li>
+<li><a href="{% url "account_signup" %}">Sign up</a></li>
+<li><a href="{% url "account_login" %}">Log in</a></li>
+<li><a href="{% url "account_reset_password" %}">Reset password</a></li>
 {% endif %}
 </ul>
 </div>
