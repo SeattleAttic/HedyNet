@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     url(r'^tos$', TemplateView.as_view(template_name="tos.html"), name="tos"),
     url(r'^donations$', TemplateView.as_view(template_name="donations.html"), name="donations"),
     url(r'^visit$', TemplateView.as_view(template_name="visit.html"), name="visit"),
+    url(r'^othersites$', TemplateView.as_view(template_name="othersites.html"), name="othersites"),
 
     url(r'^faq/', include('FAQ.urls')),
 
