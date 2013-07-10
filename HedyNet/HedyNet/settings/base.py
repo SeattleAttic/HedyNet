@@ -144,6 +144,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.tz',
     'django.contrib.messages.context_processors.messages',
     'django.core.context_processors.request',
+    'allauth.account.context_processors.account',
+    'allauth.socialaccount.context_processors.socialaccount',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
@@ -197,7 +199,10 @@ DJANGO_APPS = (
 )
 
 THIRD_PARTY_APPS = (
-    # Database migration helpers:
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.persona',
 )
 
 # Apps specific for this project go here.
@@ -248,3 +253,17 @@ LOGGING = {
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
 WSGI_APPLICATION = 'wsgi.application'
 ########## END WSGI CONFIGURATION
+
+# Set up allauth
+
+AUTH_PROFILE_MODULE = 'profiles.UserProfile'
+# ACCOUNT_SIGNUP_FORM_CLASS = 'ffuser.forms.UserProfileForm'
+
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = 'home'
+
+ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_USERNAME_MIN_LENGTH = 3
+

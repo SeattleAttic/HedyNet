@@ -20,6 +20,8 @@ urlpatterns = patterns('',
     url(r'^faq/', include('FAQ.urls')),
     url(r'^profiles/', include('profiles.urls')),
 
+    (r'^accounts/', include('allauth.urls')),
+
     # Examples:
     # url(r'^$', 'HedyNet.views.home', name='home'),
     # url(r'^HedyNet/', include('HedyNet.foo.urls')),

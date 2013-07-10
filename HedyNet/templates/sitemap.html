@@ -7,12 +7,27 @@
 <div class="columns large-12 small-12">
 <header><h1>Sitemap</h1></header>
 <div class="content">
+<h2>Base Pages</h2>
 <ul>
 <li><a href="{% url "home" %}">Home</a></li>
 <li><a href="{% url "about" %}">About Us</a></li>
 <li><a href="{% url "policies" %}">Policies</a></li>
 <li><a href="{% url "codeofconduct" %}">Code of Conduct</a></li>
 <li><a href="{% url "faqsection-detail" "main" %}">Main FAQ</a></li>
+</ul>
+
+<h2>Accounts</h2>
+<ul>
+{% if user.is_authenticated %}
+<li><a href="{% url "account_email" %}">Email</a></li>
+<li><a href="{% url "account_change_password" %}">Account change password</a></li>
+<li><a href="{% url "socialaccount_connections" %}">Social Account Connections</a></li>
+<li><a href="{% url "account_logout" %}">Log Out</a></li>
+{% else %}
+<li><a href="{% url "account_signup" %}">Sign Up</a></li>
+<li><a href="{% url "account_login" %}">Log In</a></li>
+<li><a href="{% url "account_reset_password" %}">Reset Password</a></li>
+{% endif %}
 </ul>
 </div>
 </div>
