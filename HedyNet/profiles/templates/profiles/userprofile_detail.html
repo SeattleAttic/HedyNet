@@ -11,6 +11,9 @@
 </div>
 <article class="row">
 <div class="columns large-4 small-12">
+{% if can_edit %}
+<a href="{% url "user_profile_edit" username=user_profile.user.username %}" class="button">Edit</a>
+{% endif %}
 <h3>{{ user_profile }}</h3>
 <p>({{ user_profile.legal_name }})</p>
 <p>Status: {{ user_profile.status }}</p>

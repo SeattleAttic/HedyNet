@@ -63,6 +63,16 @@ class UserProfileView(SingleObjectMixin):
 
         return user_profile
 
+    def get_context_data(self, *args, **kwargs):
+        context = super(UserProfileView, self).get_context_data(**kwargs)
+        
+        if self.request.user == self.object.user:
+            context['can_edit'] = True
+        else:
+            context['can_edit'] = False
+
+        return context
+
 class UserProfileDetailView(UserProfileView, DetailView):
     context_object_name = "user_profile"
 
