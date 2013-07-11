@@ -23,6 +23,8 @@ class UserProfile(models.Model):
     legal_name_access = models.CharField(max_length=20, choices=constants.ACCESS_LEVELS, \
         default=constants.MEMBERS_ACCESS)
 
+    #about = models.TextField(blank = True, help_text="You can use Markdown in this profile.")
+
     preferred_contact_method = models.CharField(max_length=20,
         choices=constants.CONTACT_METHODS, default=constants.EMAIL_CONTACT)
     preferred_phone = models.ForeignKey('UserPhone', blank = True, null = True)
