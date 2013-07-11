@@ -203,6 +203,8 @@ THIRD_PARTY_APPS = (
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.persona',
+    'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.openid',
 )
 
 # Apps specific for this project go here.
@@ -267,3 +269,12 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_USERNAME_MIN_LENGTH = 3
 
+SOCIALACCOUNT_PROVIDERS = \
+    { 'openid':
+        { 'SERVERS': []
+            #[dict(id='dreamwidth',
+            #      name='Dreamwidth',
+            #      openid_url='http://www.dreamwidth.org'),
+            #]
+        }
+    }
