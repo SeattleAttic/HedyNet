@@ -4,6 +4,7 @@ from django.db import models
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import AnonymousUser
+from django.core.urlresolvers import reverse
 
 from profiles import constants
 
@@ -42,6 +43,9 @@ class UserProfile(models.Model):
             return self.display_name
         else:
             return self.user.username
+
+    def get_absolute_url(self):
+        return reverse('user_profile', kwargs={'username': self.user.username})
 
     # TODO: override save function or add a listener; ensure that status changes
     # add a member status changes.  this can be on on creation of new profile

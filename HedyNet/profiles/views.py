@@ -3,13 +3,17 @@ from __future__ import unicode_literals
 import logging
 logger = logging.getLogger(__name__)
 
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, UpdateView
+from django.views.generic.detail import SingleObjectMixin
 from django.db.models import Q
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
+
+from braces.views import LoginRequiredMixin
 
 import profiles.models as models
 from profiles import constants
 from profiles.access import access_levels, can_access
+from profiles.forms import UserProfileForm
 
 class MemberDirectoryView(ListView):
     context_object_name = "user_profile_list"
@@ -43,21 +47,42 @@ class MemberDirectoryView(ListView):
             lambda q,value: q|Q(profile_access=value), directory_access_levels, Q())  
         return query.filter(access_filter)
 
-class UserProfileDetailView(DetailView):
-    model = models.UserProfile
-    context_object_name = "user_profile"
+class UserProfileView(SingleObjectMixin):
 
-    def get_object(self):
+    model = models.UserProfile
+    
+    def get_object(self, *args, **kwargs):
         """Modify the get_object to return a profile based on a username."""
 
         try:
             username = self.kwargs.get("username", None)
-            profile = models.UserProfile.objects.get(user__username = username)
+            user_profile = models.UserProfile.objects.get(user__username = username)
         except ObjectDoesNotExist:
             raise Http404(_("No %(verbose_name)s found matching the query") %
-                {'verbose_name': queryset.model._meta.verbose_name}) 
+                {'verbose_name': queryset.model._meta.verbose_name})
 
-        return profile   
- 
-# TODO: User Profile editing view for users editing their own profile
+        return user_profile
+
+class UserProfileDetailView(UserProfileView, DetailView):
+    context_object_name = "user_profile"
+
+class UserProfileUpdateView(LoginRequiredMixin, UserProfileView, UpdateView):
+    form_class = UserProfileForm
+    template_name_suffix = "_edit"
+    context_object_name = "user_profile"
+
+    #def get_context_data(self, *args, **kwargs):
+    #    context = super(UserProfileUpdateView, self).get_context_data(**kwargs)
+    #    context['user_profile'] = 
+    #    return context
+
+    def get_object(self, *args, **kwargs):
+
+        user_profile = super(UserProfileUpdateView, self).get_object(*args, **kwargs)
+
+        if user_profile.user != self.request.user:
+            raise PermissionDenied()
+        else:
+            return user_profile
+
 # TODO: User Profile editing view for admins editing the status of somebody else
