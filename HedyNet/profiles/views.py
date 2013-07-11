@@ -123,8 +123,6 @@ class MemberStatusListView(ListView):
          
 
 class MemberStatusUpdateView(LoginRequiredMixin, UpdateView):
-    form_class = MemberStatusChange
-    
-
+    form_class = models.MemberStatusChange
 
 # TODO: User Profile editing view for admins editing the status of somebody else
