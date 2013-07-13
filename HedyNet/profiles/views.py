@@ -8,6 +8,7 @@ from django.views.generic.detail import SingleObjectMixin
 from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from django.contrib.auth.models import User
+from django.http import Http404
 
 from braces.views import LoginRequiredMixin
 
@@ -15,6 +16,22 @@ import profiles.models as models
 from profiles import constants
 from profiles.access import access_levels, can_access
 from profiles.forms import UserProfileForm
+
+def get_user_profile_or_404(username):
+
+    username = self.kwargs.get("username", None)
+
+    try:
+        user = User.objects.get(username = username)
+    except ObjectDoesNotExist:
+        raise Http404("No %(verbose_name)s found matching the username" %
+            {'verbose_name': models.UserProfile._meta.verbose_name})
+    try:
+        user_profile, created = models.UserProfile.objects.get_or_create(user = user)
+
+    except ObjectDoesNotExist:
+        raise Http404("No %(verbose_name)s found matching the username" %
+            {'verbose_name': models.UserProfile._meta.verbose_name})
 
 class MemberDirectoryView(ListView):
     context_object_name = "user_profile_list"
@@ -60,14 +77,14 @@ class UserProfileView(SingleObjectMixin):
         try:
             user = User.objects.get(username = username)
         except ObjectDoesNotExist:
-            raise Http404(_("No %(verbose_name)s found matching the username") %
-                {'verbose_name': queryset.model._meta.verbose_name})
+            raise Http404("No %(verbose_name)s found matching the username" %
+                {'verbose_name': models.UserProfile._meta.verbose_name})
         try:
             user_profile, created = models.UserProfile.objects.get_or_create(user = user)
 
         except ObjectDoesNotExist:
-            raise Http404(_("No %(verbose_name)s found matching the username") %
-                {'verbose_name': queryset.model._meta.verbose_name})
+            raise Http404("No %(verbose_name)s found matching the username" %
+                {'verbose_name': models.UserProfile._meta.verbose_name})
 
         return user_profile
 
@@ -103,26 +120,30 @@ class UserProfileUpdateView(LoginRequiredMixin, UserProfileView, UpdateView):
         else:
             return user_profile
 
-class MemberStatusListView(ListView):
-    model = models.MemberStatusChange
+class MemberStatusListView(LoginRequiredMixin, ListView):
+    model = models.UserProfile
+    template_name = "profiles/memberstatus_list.html"
+    context_object_name = "user_profile_list"
 
-    def get_queryset(self, *args, **kwargs):
-    
+
+class MemberStatusUpdateView(LoginRequiredMixin, UpdateView):
+    form_class = models.MemberStatusChange
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(MemberStatusUpdateView, self).get_context_data(*args, **kwargs)
+
         username = self.kwargs.get("username", None)
 
         try:
             user = User.objects.get(username = username)
         except ObjectDoesNotExist:
-            raise Http404(_("No %(verbose_name)s found matching the username") %
-                {'verbose_name': queryset.model._meta.verbose_name})
+            raise Http404("No %(verbose_name)s found matching the username" %
+                {'verbose_name': models.UserProfile._meta.verbose_name})
         try:
             user_profile, created = models.UserProfile.objects.get_or_create(user = user)
-        except ObjectDoesNotExist:
-            raise Http404(_("No %(verbose_name)s found matching the username") %
-                {'verbose_name': queryset.model._meta.verbose_name})
-         
 
-class MemberStatusUpdateView(LoginRequiredMixin, UpdateView):
-    form_class = models.MemberStatusChange
+        except ObjectDoesNotExist:
+            raise Http404("No %(verbose_name)s found matching the username" %
+                {'verbose_name': models.UserProfile._meta.verbose_name})
 
 # TODO: User Profile editing view for admins editing the status of somebody else

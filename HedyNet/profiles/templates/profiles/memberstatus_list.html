@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Member status list{% endblock %}
+
+{% block content %}
+<div class="memberstatus row">
+<div class="columns">
+<h1>Member Status</h1>
+
+<table>
+<thead>
+<tr>
+<th>User</th>
+<th>Name</th>
+<th>Status</th>
+<th>Became member</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody>
+{% for user_profile in user_profile_list %}
+<tr>
+<th>{{ user_profile }}</th>
+<td>{{ user_profile.legal_name }}</td>
+<td>{{ user_profile.status }}</td>
+<td>{{ user_profile.became_member_on }}</td>
+<td><a href="#">Change Status</a></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+{% endblock %}
