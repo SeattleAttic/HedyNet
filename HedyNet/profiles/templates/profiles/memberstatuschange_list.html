@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Member status changes for {{ user_profile }}{% endblock %}
+
+{% block content %}
+<div class="memberstatus row">
+<div class="columns">
+<h1>Member Status Changes for {{ user_profile }}</h1>
+
+<a href="{% url "user_profile" username=user_profile.user.username %}" class="button">View Profile</a>
+<a href="{% url "member_status_change_add" username=user_profile.user.username %}" class="button">Change Status</a>
+
+<table>
+<thead>
+<tr>
+<th>Old status</th>
+<th>New status</th>
+<th>Changed on</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+{% for status_change in member_status_change_list %}
+<tr>
+<td>{{ status_change.old_status }}</td>
+<td>{{ status_change.new_status }}</td>
+<td>{{ status_change.changed_on }}</td>
+<td>{{ status_change.notes }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+{% endblock %}

@@ -3,23 +3,23 @@ from __future__ import unicode_literals
 import logging
 logger = logging.getLogger(__name__)
 
-from django.views.generic import ListView, DetailView, UpdateView
+from django.views.generic import ListView, DetailView, UpdateView, CreateView
+from django.views.generic.edit import ModelFormMixin
 from django.views.generic.detail import SingleObjectMixin
 from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from django.contrib.auth.models import User
 from django.http import Http404
+from django.core.urlresolvers import reverse
 
 from braces.views import LoginRequiredMixin
 
 import profiles.models as models
 from profiles import constants
 from profiles.access import access_levels, can_access
-from profiles.forms import UserProfileForm
+from profiles import forms
 
 def get_user_profile_or_404(username):
-
-    username = self.kwargs.get("username", None)
 
     try:
         user = User.objects.get(username = username)
@@ -32,6 +32,8 @@ def get_user_profile_or_404(username):
     except ObjectDoesNotExist:
         raise Http404("No %(verbose_name)s found matching the username" %
             {'verbose_name': models.UserProfile._meta.verbose_name})
+
+    return user_profile
 
 class MemberDirectoryView(ListView):
     context_object_name = "user_profile_list"
@@ -74,19 +76,7 @@ class UserProfileView(SingleObjectMixin):
 
         username = self.kwargs.get("username", None)
 
-        try:
-            user = User.objects.get(username = username)
-        except ObjectDoesNotExist:
-            raise Http404("No %(verbose_name)s found matching the username" %
-                {'verbose_name': models.UserProfile._meta.verbose_name})
-        try:
-            user_profile, created = models.UserProfile.objects.get_or_create(user = user)
-
-        except ObjectDoesNotExist:
-            raise Http404("No %(verbose_name)s found matching the username" %
-                {'verbose_name': models.UserProfile._meta.verbose_name})
-
-        return user_profile
+        return get_user_profile_or_404(username)
 
     def get_context_data(self, *args, **kwargs):
         context = super(UserProfileView, self).get_context_data(**kwargs)
@@ -102,7 +92,7 @@ class UserProfileDetailView(UserProfileView, DetailView):
     context_object_name = "user_profile"
 
 class UserProfileUpdateView(LoginRequiredMixin, UserProfileView, UpdateView):
-    form_class = UserProfileForm
+    form_class = forms.UserProfileForm
     template_name_suffix = "_edit"
     context_object_name = "user_profile"
 
@@ -125,25 +115,61 @@ class MemberStatusListView(LoginRequiredMixin, ListView):
     template_name = "profiles/memberstatus_list.html"
     context_object_name = "user_profile_list"
 
+class MemberStatusChangeDetailView(LoginRequiredMixin, DetailView):
+    model = models.MemberStatusChange
+    context_object_name = "member_status_change"
 
-class MemberStatusUpdateView(LoginRequiredMixin, UpdateView):
-    form_class = models.MemberStatusChange
+class MemberStatusChangeListView(LoginRequiredMixin, ListView):
+    model = models.MemberStatusChange
+    context_object_name = "member_status_change_list"
 
-    def get_context_data(self, *args, **kwargs):
-        context = super(MemberStatusUpdateView, self).get_context_data(*args, **kwargs)
+    def get_queryset(self, *args, **kwargs):
 
         username = self.kwargs.get("username", None)
+        user_profile = get_user_profile_or_404(username)
+
+        return models.MemberStatusChange.objects.filter(
+            profile = user_profile).order_by('-changed_on')
+
+    def get_context_data(self, *args, **kwargs):
+
+        context = super(MemberStatusChangeListView, self).get_context_data(*args, **kwargs)
+
+        username = self.kwargs.get("username", None)
+        context["user_profile"] = get_user_profile_or_404(username)
+
+        return context
+
+class MemberStatusChangeCreateView(LoginRequiredMixin, CreateView):
+    form_class = forms.MemberStatusChangeForm
+    template_name = "profiles/memberstatuschange_add.html"
+
+    def get_success_url(self, *args, **kwargs):
+
+        return reverse("member_status_change_list", kwargs={"username": self.kwargs.get("username", None)})
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(MemberStatusChangeCreateView, self).get_context_data(*args, **kwargs)
+
+        username = self.kwargs.get("username", None)
+        user_profile = get_user_profile_or_404(username)
 
         try:
-            user = User.objects.get(username = username)
-        except ObjectDoesNotExist:
-            raise Http404("No %(verbose_name)s found matching the username" %
-                {'verbose_name': models.UserProfile._meta.verbose_name})
-        try:
-            user_profile, created = models.UserProfile.objects.get_or_create(user = user)
+            last_status_change = models.MemberStatusChange.objects.filter(
+                profile = user_profile).order_by('-changed_on')[0]
+        except:
+            last_status_change = None
 
-        except ObjectDoesNotExist:
-            raise Http404("No %(verbose_name)s found matching the username" %
-                {'verbose_name': models.UserProfile._meta.verbose_name})
+        context["user_profile"] = user_profile
+        context["last_status_change"] = last_status_change
 
-# TODO: User Profile editing view for admins editing the status of somebody else
+        return context
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        username = self.kwargs.get("username", None)
+        self.object.profile = get_user_profile_or_404(username)
+        self.object.old_status = self.object.profile.status
+        self.object.save()
+
+        return super(ModelFormMixin, self).form_valid(form)

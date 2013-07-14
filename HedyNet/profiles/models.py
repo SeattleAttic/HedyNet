@@ -83,6 +83,14 @@ class MemberStatusChange(models.Model):
     new_status = models.CharField(max_length=20, choices=constants.STATUS_LEVELS)
     notes = models.TextField(blank=True)
 
+    def save(self, *args, **kwargs):
+        super(MemberStatusChange, self).save(*args, **kwargs)
+        self.profile.status = self.new_status
+        self.profile.save()
+
+    def get_absolute_url(self):
+        return reverse('member_status_change_detail', kwargs = {'username': self.profile.user.username, 'pk': self.pk})
+
 class UserContactInfo(models.Model):
 
     user = models.ForeignKey('UserProfile')
