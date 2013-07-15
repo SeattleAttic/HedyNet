@@ -1,0 +1,20 @@
+{% extends "simplebase.html" %}
+
+{% block title %}Adding phone for: {{ user_profile.user.username }}{% endblock %}
+
+{% block content %}
+<div class="profile">
+<div class="row">
+<div class="columns">
+<h1>Adding phone contact for {{ user_profile.user.username }}</h1>
+
+<form method="post">{% csrf_token %}
+{{ form.as_p }}
+<button type="submit">Add</button>
+</form>
+
+</div>
+</div>
+
+</div>
+{% endblock %}

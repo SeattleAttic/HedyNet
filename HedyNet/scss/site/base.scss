@@ -13,6 +13,8 @@ a { color: $link-color; font-weight: bold; text-decoration: underline; }
 a:visited { color: $link-visited-color; }
 a:hover, a:active { color: $link-hover-color; }
 
+a.button { color: white !important; }
+
 .top-bar a { text-decoration: none; }
 
 .fineprint { font-size: smaller; }

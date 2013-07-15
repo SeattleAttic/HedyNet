@@ -79,9 +79,9 @@ class MemberStatusChange(models.Model):
     changed_on = models.DateTimeField(auto_now_add=True)
     # old status can be blank because a profile could previously not exist
     old_status = models.CharField(max_length=20, choices=constants.STATUS_LEVELS, \
-        blank = True)
+        blank = True, null = True)
     new_status = models.CharField(max_length=20, choices=constants.STATUS_LEVELS)
-    notes = models.TextField(blank=True)
+    notes = models.TextField(blank=True, default="")
 
     def save(self, *args, **kwargs):
         super(MemberStatusChange, self).save(*args, **kwargs)
@@ -93,10 +93,11 @@ class MemberStatusChange(models.Model):
 
 class UserContactInfo(models.Model):
 
-    user = models.ForeignKey('UserProfile')
-    label = models.CharField(max_length=30)
+    profile = models.ForeignKey('UserProfile')
+    label = models.CharField(max_length=30, blank = True)
     access = models.CharField(max_length=20, choices=constants.ACCESS_LEVELS, \
         default=constants.MEMBERS_ACCESS)
+    notes = models.TextField(blank = True, default="")
 
     class Meta:
         abstract = True
@@ -108,6 +109,9 @@ class UserPhone(UserContactInfo):
     def __unicode__(self):
         return self.phone
 
+    def get_absolute_url(self):
+        return reverse('user_profile_phone_detail', kwargs = {'username': self.profile.user.username, 'pk': self.pk})
+
 class UserEmail(UserContactInfo):
 
     email = models.EmailField()
@@ -115,9 +119,15 @@ class UserEmail(UserContactInfo):
     def __unicode__(self):
         return self.email
 
+    def get_absolute_url(self):
+        return reverse('user_profile_email_detail', kwargs = {'username': self.profile.user.username, 'pk': self.pk})
+
 class UserAddress(UserContactInfo):
 
     address = models.TextField()
 
     def __unicode__(self):
         return self.label
+
+    def get_absolute_url(self):
+        return reverse('user_profile_address_detail', kwargs = {'username': self.profile.user.username, 'pk': self.pk})

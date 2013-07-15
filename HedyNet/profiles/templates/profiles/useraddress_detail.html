@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Address contact {{ user_address.label }} for {{ user_address.profile }}{% endblock %}
+
+{% block content %}
+<div class="memberstatus row">
+<div class="columns">
+<h1>Address contact {{ user_address.label }} for {{ user_address.profile }}</h1>
+
+<p>Label: {{ user_address.label }}</p>
+<p>Access: {{ user_address.access }}</p>
+<p>Address: {{ user_address.address }}</p>
+
+</div>
+</div>
+{% endblock %}

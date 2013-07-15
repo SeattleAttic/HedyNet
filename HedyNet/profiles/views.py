@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 import logging
 logger = logging.getLogger(__name__)
 
-from django.views.generic import ListView, DetailView, UpdateView, CreateView
+from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
 from django.views.generic.edit import ModelFormMixin
 from django.views.generic.detail import SingleObjectMixin
 from django.db.models import Q
@@ -12,7 +12,7 @@ from django.contrib.auth.models import User
 from django.http import Http404
 from django.core.urlresolvers import reverse
 
-from braces.views import LoginRequiredMixin
+from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 
 import profiles.models as models
 from profiles import constants
@@ -110,18 +110,87 @@ class UserProfileUpdateView(LoginRequiredMixin, UserProfileView, UpdateView):
         else:
             return user_profile
 
-class MemberStatusListView(LoginRequiredMixin, ListView):
+class UserContactInfoCreateView(LoginRequiredMixin, CreateView):
+    def get_context_data(self, *args, **kwargs):
+
+        context = super(UserContactInfoCreateView, self).get_context_data(*args, **kwargs)
+
+        username = self.kwargs.get("username", None)
+        context["user_profile"] = get_user_profile_or_404(username)
+
+        return context
+
+    def get_success_url(self, *args, **kwargs):
+
+        return reverse("user_profile", kwargs={"username": self.kwargs.get("username", None)})
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        username = self.kwargs.get("username", None)
+        self.object.profile = get_user_profile_or_404(username)
+        self.object.save()
+
+        return super(ModelFormMixin, self).form_valid(form)
+
+class UserPhoneCreateView(UserContactInfoCreateView):
+    form_class = forms.UserPhoneForm
+    template_name = "profiles/userphone_add.html"
+
+class UserEmailCreateView(UserContactInfoCreateView):
+    form_class = forms.UserEmailForm
+    template_name = "profiles/useremail_add.html"
+
+class UserAddressCreateView(UserContactInfoCreateView):
+    form_class = forms.UserAddressForm
+    template_name = "profiles/useraddress_add.html"
+
+class UserPhoneDetailView(DetailView):
+    model = models.UserPhone
+    context_object_name = "user_phone"
+
+class UserAddressDetailView(DetailView):
+    model = models.UserAddress
+    context_object_name = "user_address"
+
+class UserEmailDetailView(DetailView):
+    model = models.UserEmail
+    context_object_name = "user_email"
+
+class UserContactInfoDeleteView(LoginRequiredMixin, DeleteView):
+    def get_success_url(self, *args, **kwargs):
+
+        return reverse("user_profile", kwargs={"username": self.kwargs.get("username", None)})
+
+class UserPhoneDeleteView(UserContactInfoDeleteView):
+    model = models.UserPhone
+    context_object_name = "user_phone"
+
+class UserAddressDeleteView(UserContactInfoDeleteView):
+    model = models.UserAddress
+    context_object_name = "user_address"
+
+class UserEmailDeleteView(UserContactInfoDeleteView):
+    model = models.UserEmail
+    context_object_name = "user_email"
+
+class MemberStatusListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = models.UserProfile
     template_name = "profiles/memberstatus_list.html"
     context_object_name = "user_profile_list"
+    permission_required = "profiles.add_memberstatuschange"
+    raise_exception = True
 
-class MemberStatusChangeDetailView(LoginRequiredMixin, DetailView):
+class MemberStatusChangeDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = models.MemberStatusChange
     context_object_name = "member_status_change"
+    permission_required = "profiles.add_memberstatuschange"
+    raise_exception = True
 
-class MemberStatusChangeListView(LoginRequiredMixin, ListView):
+class MemberStatusChangeListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = models.MemberStatusChange
     context_object_name = "member_status_change_list"
+    permission_required = "profiles.add_memberstatuschange"
+    raise_exception = True
 
     def get_queryset(self, *args, **kwargs):
 
@@ -140,9 +209,11 @@ class MemberStatusChangeListView(LoginRequiredMixin, ListView):
 
         return context
 
-class MemberStatusChangeCreateView(LoginRequiredMixin, CreateView):
+class MemberStatusChangeCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     form_class = forms.MemberStatusChangeForm
     template_name = "profiles/memberstatuschange_add.html"
+    permission_required = "profiles.add_memberstatuschange"
+    raise_exception = True
 
     def get_success_url(self, *args, **kwargs):
 

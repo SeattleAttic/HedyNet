@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Phone contact {{ user_phone.label }} for {{ user_phone.profile }}{% endblock %}
+
+{% block content %}
+<div class="memberstatus row">
+<div class="columns">
+<h1>Phone contact {{ user_phone.label }} for {{ user_phone.profile }}</h1>
+
+<p>Label: {{ user_phone.label }}</p>
+<p>Phone: <a href="tel:{{ user_phone.phone }}">{{ user_phone.phone }}</a></p>
+<p>Access: {{ user_phone.access }}</p>
+
+</div>
+</div>
+{% endblock %}
