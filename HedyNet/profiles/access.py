@@ -4,7 +4,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 from profiles import constants
-
+    
 def access_levels(owner_userprofile, viewer_userprofile):
     """A shortcut function for efficiency in places like the profile,
     where it is useful to do the checks for all the access levels and

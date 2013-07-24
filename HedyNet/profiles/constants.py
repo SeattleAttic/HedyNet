@@ -7,6 +7,10 @@ MEMBERS_ACCESS = "members"
 REGISTERED_ACCESS = "registered"
 PUBLIC_ACCESS = "public"
 
+"""A list of access orders from most to least constrictive."""
+ACCESS_ORDER = (PRIVATE_ACCESS, ADMIN_ACCESS, MEMBERS_ACCESS, REGISTERED_ACCESS,
+    PUBLIC_ACCESS)
+
 EXTENDED_ACCESS_LEVELS = (
     (PRIVATE_ACCESS, "private"),
     (ADMIN_ACCESS, "admin"),

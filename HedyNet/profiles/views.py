@@ -62,10 +62,7 @@ class MemberDirectoryView(ListView):
             str(directory_access_levels))
         # only show active members 
         query = models.UserProfile.objects.filter(status = constants.ACTIVE_STATUS)
-        # create an OR filter for valid access levels 
-        access_filter = reduce(
-            lambda q,value: q|Q(profile_access=value), directory_access_levels, Q())  
-        return query.filter(access_filter)
+        return models.filter_access_levels(query, "profile_access", directory_access_levels)
 
 class UserProfileView(SingleObjectMixin):
 

@@ -1,12 +1,22 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.db.models import Q
+
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import AnonymousUser
 from django.core.urlresolvers import reverse
 
 from profiles import constants
+
+def filter_access_levels(query, field, access_levels):
+    """Given a query, add an OR filter for the list of valid access levels
+    applied to the given field."""
+    
+    access_filter = reduce(
+        lambda q,access_level: q|Q(**{field: access_level}), access_levels, Q())
+    return query.filter(access_filter)
 
 class UserProfile(models.Model):
     """Models the information we need for a user to be a member."""
@@ -62,7 +72,7 @@ class UserProfile(models.Model):
     def _is_admin(self):
         return self.user.is_staff
     is_admin = property(_is_admin)    
-        
+    
     @staticmethod
     def get_profile(user):
         if not user or not user.is_authenticated():
