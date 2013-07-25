@@ -124,7 +124,7 @@ class UserProfile(models.Model):
       viewer_profile = None):
         
         if self.preferred_phone and \
-          self.preferred_phone.access_level in access_levels:
+          self.preferred_phone.access in access_levels:
             return self.preferred_phone
             
         return None
@@ -133,8 +133,8 @@ class UserProfile(models.Model):
       viewer_profile = None):
         
         if self.preferred_email and \
-          self.preferred_email.access_level in access_levels:
-            return self.preferred_phone
+          self.preferred_email.access in access_levels:
+            return self.preferred_email
             
         return None
         
@@ -142,8 +142,8 @@ class UserProfile(models.Model):
       viewer_profile = None):
         
         if self.preferred_address and \
-          self.preferred_address.access_level in access_levels:
-            return self.preferred_phone
+          self.preferred_address.access in access_levels:
+            return self.preferred_address
             
         return None
         

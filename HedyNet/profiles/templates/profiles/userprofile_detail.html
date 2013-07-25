@@ -1,7 +1,13 @@
 {% extends "base.html" %}
 {% load markdown_deux_tags %}
+{% load static from staticfiles %}
 
 {% block title %}Profile for: {{ user_profile.user.username }}{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static "css/site/profiles.css" %}" />
+{% endblock %}
 
 {% block content %}
 {% with user_profile.user.username as username %}
@@ -38,52 +44,58 @@
 {% endif %}
 
 <section class="row">
-<article class="columns large-4 small-12 emails">
+<article class="columns large-4 small-12 contact-info emails">
 <h2{% if user_profile.preferred_contact_method = "email" %} class="preferred"{% endif %}>Email</h2>
 {% if can_edit %}
 <a class="button expand" href="{% url "user_profile_email_add" username=username %}">Add email</a>
 {% endif %}
+{% if preferred_email %}
+{% with preferred_email as email_contact %}
+{% include "profiles/includes/email_card.html" %}
+{% endwith %}
+{% endif %}
 {% for email_contact in email_contacts %}
-<div class="email{% if email_contact.is_preferred %} preferred panel{% endif %}">
-<p><a href="{{ email_contact.get_absolute_url }}">{{ email_contact.label|default:"(no label)" }}</a>: <a href="mailto:{{ email_contact.email }}">{{ email_contact.email}}</a></p>
-</div>
+{% if email_contact != preferred_email %}
+{% include "profiles/includes/email_card.html" %}
+{% endif %}
 {% empty %}
 <p>No email information available</p>
 {% endfor %}
 </article>
 
-<article class="columns large-4 small-12 phones">
+<article class="columns large-4 small-12 contact-info phones">
 <h2{% if user_profile.preferred_contact_method = "phone" %} class="preferred"{% endif %}>Phone</h2>
 {% if can_edit %}
 <a class="button expand" href="{% url "user_profile_phone_add" username=username %}">Add phone number</a>
 {% endif %}
+{% if preferred_phone %}
+{% with preferred_phone as phone_contact %}
+{% include "profiles/includes/phone_card.html" %}
+{% endwith %}
+{% endif %}
 {% for phone_contact in phone_contacts %}
-<dl class="phone{% if phone_contact.is_preferred %} preferred panel{% endif %}">
-<dt><a href="{{ phone_contact.get_absolute_url }}">{{ phone_contact.label }}</a></dt>
-<dd><a href="tel:{{ phone_contact.phone }}">{{ phone_contact.phone }}</a></dd>
-{% if can_edit %}
-<dd><a href="{% url "user_profile_phone_update" username=username pk=phone_contact.pk %}" class="button tiny">Edit</a></dd>
+{% if phone_contact != preferred_phone %}
+{% include "profiles/includes/phone_card.html" %}
 {% endif %}
-{% if phone_contact.notes %}
-<dd>{{ phone_contact.notes|markdown }}</dd>
-{% endif %}
-</dl>
-
 {% empty %}
 <p>No phone information available</p>
 {% endfor %}
 </article>
 
-<article class="columns large-4 small-12 addresses">
+<article class="columns large-4 small-12 contact-info addresses">
 <h2{% if user_profile.preferred_contact_method = "address" %} class="preferred"{% endif %}>Address</h2>
 {% if can_edit %}
 <a class="button expand" href="{% url "user_profile_address_add" username=username %}">Add address</a>
 {% endif %}
+{% if preferred_address %}
+{% with preferred_address as address_contact %}
+{% include "profiles/includes/address_card.html" %}
+{% endwith %}
+{% endif %}
 {% for address_contact in address_contacts %}
-<div class="address{% if address_contact.is_preferred %} preferred panel{% endif %}">
-<p><a href="{{ address_contact.get_absolute_url }}">{{ address_contact.label|default:"(no label)" }}</a></p>
-<p>{{ address_contact.address|linebreaks }}</p>
-</div>
+{% if address_contact != preferred_address %}
+{% include "profiles/includes/address_card.html" %}
+{% endif %}
 {% empty %}
 <p>No address information available</p>
 {% endfor %}

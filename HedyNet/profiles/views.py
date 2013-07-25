@@ -99,7 +99,14 @@ class UserProfileView(SingleObjectMixin):
             self.valid_access_levels, self.viewer_profile)
         context['email_contacts'] = self.object.get_email_contacts(
             self.valid_access_levels, self.viewer_profile)
-
+        
+        context['preferred_phone'] = self.object.get_preferred_phone(
+            self.valid_access_levels, self.viewer_profile)
+        context['preferred_email'] = self.object.get_preferred_email(
+            self.valid_access_levels, self.viewer_profile)
+        context['preferred_address'] = self.object.get_preferred_address(
+            self.valid_access_levels, self.viewer_profile)
+        
         return context
 
 class UserProfileDetailView(UserProfileView, DetailView):

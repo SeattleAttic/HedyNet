@@ -1,0 +1,9 @@
+@import "../foundation/variables";
+
+.contact-info h2.preferred:after {
+    content: "*";
+}
+
+.panel.preferred {
+    border: 2px solid $primary-color;
+}
