@@ -6,7 +6,8 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = models.UserProfile
         fields = ['profile_access', 'display_name', 'legal_name', 'legal_name_access',
-            'preferred_contact_method']
+            'about', 'about_access', 'preferred_contact_method', 'preferred_phone',
+            'preferred_email', 'preferred_address']
 
 class MemberStatusChangeForm(forms.ModelForm):
     class Meta:
