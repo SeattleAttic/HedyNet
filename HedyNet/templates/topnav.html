@@ -21,6 +21,7 @@
             <li><a href="{% url "user_profile" username=user.username %}">My profile</a></li>
           </ul>
         </li> 
+        <li class="divider"></li>
         <li><a href="{% url "account_logout" %}">Log Out</a></li>
 {% else %}
         <li><a href="{% url "account_login" %}">Log In</a></li>
