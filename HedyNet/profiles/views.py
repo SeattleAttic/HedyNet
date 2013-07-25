@@ -58,10 +58,9 @@ class MemberDirectoryView(ListView):
             set([access_level[0] for access_level in 
             constants.BASIC_ACCESS_LEVELS]))
 
-        logger.debug("Valid access levels for MemberDirectoryView: %s" % \
-            str(directory_access_levels))
-        # only show active members 
+        # only show active members by default
         query = models.UserProfile.objects.filter(status = constants.ACTIVE_STATUS)
+        
         return models.filter_access_levels(query, "profile_access", directory_access_levels)
 
 class UserProfileView(SingleObjectMixin):
@@ -72,8 +71,17 @@ class UserProfileView(SingleObjectMixin):
         """Modify the get_object to return a profile based on a username."""
 
         username = self.kwargs.get("username", None)
+                
+        user_profile = get_user_profile_or_404(username)
 
-        return get_user_profile_or_404(username)
+        # add valid access levels to this view
+        self.valid_access_levels = access_levels(user_profile.user, self.request.user)
+        # add the viewer's profile to this view
+        self.viewer_profile = models.UserProfile.get_profile(self.request.user)
+
+        user_profile.access_strip(self.valid_access_levels, self.viewer_profile)
+        
+        return user_profile
 
     def get_context_data(self, *args, **kwargs):
         context = super(UserProfileView, self).get_context_data(**kwargs)
@@ -82,6 +90,15 @@ class UserProfileView(SingleObjectMixin):
             context['can_edit'] = True
         else:
             context['can_edit'] = False
+        
+        valid_access_levels = access_levels(self.object, self.viewer_profile)
+        
+        context['phone_contacts'] = self.object.get_phone_contacts(
+            self.valid_access_levels, self.viewer_profile)
+        context['address_contacts'] = self.object.get_address_contacts(
+            self.valid_access_levels, self.viewer_profile)
+        context['email_contacts'] = self.object.get_email_contacts(
+            self.valid_access_levels, self.viewer_profile)
 
         return context
 
@@ -107,15 +124,23 @@ class UserProfileUpdateView(LoginRequiredMixin, UserProfileView, UpdateView):
         else:
             return user_profile
 
-class UserContactInfoCreateView(LoginRequiredMixin, CreateView):
+class UserContactInfoView(LoginRequiredMixin):
     def get_context_data(self, *args, **kwargs):
 
-        context = super(UserContactInfoCreateView, self).get_context_data(*args, **kwargs)
+        context = super(UserContactInfoView, self).get_context_data(*args, **kwargs)
 
-        username = self.kwargs.get("username", None)
-        context["user_profile"] = get_user_profile_or_404(username)
+        viewer_profile = models.UserProfile.get_profile(self.request.user)
+        context["username"] = self.kwargs.get("username", None)
+        context["user_profile"] = get_user_profile_or_404(context["username"])
+        if self.object:
+            context["can_edit"] = self.object.profile == viewer_profile
+        
+        self.username = context["username"]
+        self.profile = context["user_profile"]
 
         return context
+
+class UserContactInfoEditView(UserContactInfoView):
 
     def get_success_url(self, *args, **kwargs):
 
@@ -129,27 +154,42 @@ class UserContactInfoCreateView(LoginRequiredMixin, CreateView):
 
         return super(ModelFormMixin, self).form_valid(form)
 
-class UserPhoneCreateView(UserContactInfoCreateView):
+class UserPhoneCreateView(UserContactInfoEditView, CreateView):
     form_class = forms.UserPhoneForm
     template_name = "profiles/userphone_add.html"
 
-class UserEmailCreateView(UserContactInfoCreateView):
+class UserEmailCreateView(UserContactInfoEditView, CreateView):
     form_class = forms.UserEmailForm
     template_name = "profiles/useremail_add.html"
 
-class UserAddressCreateView(UserContactInfoCreateView):
+class UserAddressCreateView(UserContactInfoEditView, CreateView):
     form_class = forms.UserAddressForm
     template_name = "profiles/useraddress_add.html"
 
-class UserPhoneDetailView(DetailView):
+class UserPhoneUpdateView(UserContactInfoEditView, UpdateView):
+    model = models.UserPhone    
+    form_class = forms.UserPhoneForm
+    template_name = "profiles/userphone_add.html"
+
+class UserEmailUpdateView(UserContactInfoEditView, UpdateView):
+    model = models.UserEmail
+    form_class = forms.UserEmailForm
+    template_name = "profiles/useremail_add.html"
+
+class UserAddressUpdateView(UserContactInfoEditView, UpdateView):
+    model = models.UserAddress
+    form_class = forms.UserAddressForm
+    template_name = "profiles/useraddress_add.html"
+
+class UserPhoneDetailView(UserContactInfoView, DetailView):
     model = models.UserPhone
     context_object_name = "user_phone"
 
-class UserAddressDetailView(DetailView):
+class UserAddressDetailView(UserContactInfoView, DetailView):
     model = models.UserAddress
     context_object_name = "user_address"
 
-class UserEmailDetailView(DetailView):
+class UserEmailDetailView(UserContactInfoView, DetailView):
     model = models.UserEmail
     context_object_name = "user_email"
 

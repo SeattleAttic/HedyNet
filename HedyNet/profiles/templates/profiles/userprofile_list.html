@@ -13,7 +13,7 @@
 <article class="row">
 <div class="columns large-4 small-12">
 <h3><a href="{% url "user_profile" username=user_profile.user.username %}">{{ user_profile }}</a></h3>
-<p>({{ user_profile.legal_name }})</p>
+{% if user_profile.legal_name %}<p>({{ user_profile.legal_name }})</p>{% endif %}
 <p>Status: {{ user_profile.status }}</p>
 <p>Member since: {{ user_profile.became_member_on }}</p>
 </div>

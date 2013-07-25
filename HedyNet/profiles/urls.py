@@ -7,13 +7,17 @@ urlpatterns = patterns('',
     url(r'^user/(?P<username>\w+)$', views.UserProfileDetailView.as_view(), name="user_profile"),
     url(r'^user/(?P<username>\w+)/edit$', views.UserProfileUpdateView.as_view(), name="user_profile_edit"),
 
+    url(r'^user/(?P<username>\w+)/phone/(?P<pk>\d+)$', views.UserPhoneDetailView.as_view(), name="user_profile_phone_detail"),
+    url(r'^user/(?P<username>\w+)/address/(?P<pk>\d+)$', views.UserAddressDetailView.as_view(), name="user_profile_address_detail"),
+    url(r'^user/(?P<username>\w+)/email/(?P<pk>\d+)$', views.UserEmailDetailView.as_view(), name="user_profile_email_detail"),
+    
     url(r'^user/(?P<username>\w+)/phone/add$', views.UserPhoneCreateView.as_view(), name="user_profile_phone_add"),
     url(r'^user/(?P<username>\w+)/address/add$', views.UserAddressCreateView.as_view(), name="user_profile_address_add"),
     url(r'^user/(?P<username>\w+)/email/add$', views.UserEmailCreateView.as_view(), name="user_profile_email_add"),
 
-    url(r'^user/(?P<username>\w+)/phone/(?P<pk>\d+)$', views.UserPhoneDetailView.as_view(), name="user_profile_phone_detail"),
-    url(r'^user/(?P<username>\w+)/address/(?P<pk>\d+)$', views.UserAddressDetailView.as_view(), name="user_profile_address_detail"),
-    url(r'^user/(?P<username>\w+)/email/(?P<pk>\d+)$', views.UserEmailDetailView.as_view(), name="user_profile_email_detail"),
+    url(r'^user/(?P<username>\w+)/phone/(?P<pk>\d+)/update$', views.UserPhoneUpdateView.as_view(), name="user_profile_phone_update"),
+    url(r'^user/(?P<username>\w+)/address/(?P<pk>\d+)/update$', views.UserAddressUpdateView.as_view(), name="user_profile_address_update"),
+    url(r'^user/(?P<username>\w+)/email/(?P<pk>\d+)/update$', views.UserEmailUpdateView.as_view(), name="user_profile_email_update"),
 
     url(r'^user/(?P<username>\w+)/phone/(?P<pk>\d+)/delete$', views.UserPhoneDeleteView.as_view(), name="user_profile_phone_delete"),
     url(r'^user/(?P<username>\w+)/address/(?P<pk>\d+)/delete$', views.UserAddressDeleteView.as_view(), name="user_profile_address_delete"),

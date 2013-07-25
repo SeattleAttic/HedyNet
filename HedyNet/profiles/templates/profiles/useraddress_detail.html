@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load markdown_deux_tags %}
 
 {% block title %}Address contact {{ user_address.label }} for {{ user_address.profile }}{% endblock %}
 
@@ -7,9 +8,25 @@
 <div class="columns">
 <h1>Address contact {{ user_address.label }} for {{ user_address.profile }}</h1>
 
+{% if can_edit %}
+<a href="{% url "user_profile_address_update" username=username pk=user_address.pk %}" class="button">Update</a>
+{% endif %}
+
+<div class="row">
+<div class="columns large-6">
 <p>Label: {{ user_address.label }}</p>
 <p>Access: {{ user_address.access }}</p>
 <p>Address: {{ user_address.address }}</p>
+</div>
+<div class="columns large-6">
+{% if user_address.notes %}
+<div class="notes panel">
+<h3>Notes</h3>
+{{ user_address.notes|markdown }}
+</div>
+{% endif %}
+</div>
+</div>
 
 </div>
 </div>

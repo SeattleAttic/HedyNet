@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load markdown_deux_tags %}
 
 {% block title %}Profile for: {{ user_profile.user.username }}{% endblock %}
 
@@ -7,69 +8,81 @@
 <div class="profile">
 <div class="row">
 <div class="columns">
-<h1>Profile for {{ username }}</h1>
+<h1>Profile for {{ username }}{% if user_profile.display_name %}: {{ user_profile_display_name }}{% endif %}</h1>
 </div>
 </div>
 <article class="row">
-<div class="columns large-4 small-12">
+<div class="columns large-6 small-12">
 {% if can_edit %}
 <a href="{% url "user_profile_edit" username=username %}" class="button">Edit</a>
 {% endif %}
-<h3>{{ user_profile }}</h3>
-<p>({{ user_profile.legal_name }})</p>
+{% if user_profile.legal_name %}
+<p>Legal Name: {{ user_profile.legal_name }}</p>
+{% endif %}
+<p>Preferred contact method: {{ user_profile.preferred_contact_method }}</p>
+</div>
+<div class="columns large-6 small-12 panel">
+<h4>Membership</h4>
 <p>Status: {{ user_profile.status }}</p>
 <p>Member since: {{ user_profile.became_member_on }}</p>
 </div>
-<div class="columns large-8 small-12">
-<ul>
-<li>Preferred contact method: {{ user_profile.preferred_contact_method }}</li>
-</ul>
+</article>
+
+{% if user_profile.about %}
+<article class="row">
+<div class="columns">
+<h3>About Me</h3>
+{{ user_profile.about|markdown }}
 </div>
 </article>
+{% endif %}
 
 <section class="row">
-{% with user_profile.userphone_set.all as phone_contacts %}
-<article class="columns large-4 small-12 phones">
-<h2>Phone</h2>
-<a class="button expand" href="{% url "user_profile_phone_add" username=username %}">Add phone number</a>
-{% for phone_contact in phone_contacts %}
-<div class="phone">
-<p><a href="{{ phone_contact.get_absolute_url }}">{{ phone_contact.label }}</a>: <a href="tel:{{ phone_contact.phone }}">{{ phone_contact.phone }}</a></p>
-</div>
-{% empty %}
-<p>No phone information available</p>
-{% endfor %}
-</article>
-{% endwith %}
-
-{% with user_profile.useremail_set.all as email_contacts %}
 <article class="columns large-4 small-12 emails">
-<h2>Email</h2>
+<h2{% if user_profile.preferred_contact_method = "email" %} class="preferred"{% endif %}>Email</h2>
 <a class="button expand" href="{% url "user_profile_email_add" username=username %}">Add email</a>
 {% for email_contact in email_contacts %}
-<div class="email">
+<div class="email{% if email_contact.is_preferred %} preferred panel{% endif %}">
 <p><a href="{{ email_contact.get_absolute_url }}">{{ email_contact.label|default:"(no label)" }}</a>: <a href="mailto:{{ email_contact.email }}">{{ email_contact.email}}</a></p>
 </div>
 {% empty %}
 <p>No email information available</p>
 {% endfor %}
 </article>
-{% endwith %}
 
-{% with user_profile.useraddress_set.all as address_contacts %}
+<article class="columns large-4 small-12 phones">
+<h2{% if user_profile.preferred_contact_method = "phone" %} class="preferred"{% endif %}>Phone</h2>
+<a class="button expand" href="{% url "user_profile_phone_add" username=username %}">Add phone number</a>
+{% for phone_contact in phone_contacts %}
+<dl class="phone{% if phone_contact.is_preferred %} preferred panel{% endif %}">
+<dt><a href="{{ phone_contact.get_absolute_url }}">{{ phone_contact.label }}</a></dt>
+<dd><a href="tel:{{ phone_contact.phone }}">{{ phone_contact.phone }}</a></dd>
+{% if can_edit %}
+<dd><a href="{% url "user_profile_phone_update" username=username pk=phone_contact.pk %}" class="button tiny">Edit</a></dd>
+{% endif %}
+{% if phone_contact.notes %}
+<dd>{{ phone_contact.notes|markdown }}</dd>
+{% endif %}
+</dl>
+
+{% empty %}
+<p>No phone information available</p>
+{% endfor %}
+</article>
+
 <article class="columns large-4 small-12 addresses">
-<h2>Address</h2>
+<h2{% if user_profile.preferred_contact_method = "address" %} class="preferred"{% endif %}>Address</h2>
 <a class="button expand" href="{% url "user_profile_address_add" username=username %}">Add address</a>
 {% for address_contact in address_contacts %}
-<div class="email">
+<div class="address{% if address_contact.is_preferred %} preferred panel{% endif %}">
 <p><a href="{{ address_contact.get_absolute_url }}">{{ address_contact.label|default:"(no label)" }}</a></p>
-<p>{{ address_contact.address }}</p>
+<p>{{ address_contact.address|linebreaks }}</p>
 </div>
 {% empty %}
 <p>No address information available</p>
 {% endfor %}
 </article>
-{% endwith %}
+
 </section>
 
 <div class="row">
