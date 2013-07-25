@@ -3,17 +3,30 @@ from __future__ import unicode_literals
 import logging
 logger = logging.getLogger(__name__)
 
+from django.contrib.auth.models import User, AnonymousUser
+
 from profiles import constants
+from profiles import models
     
 def access_levels(owner_userprofile, viewer_userprofile):
     """A shortcut function for efficiency in places like the profile,
     where it is useful to do the checks for all the access levels and
-    return a dictionary, instead of manually checking each one."""
-
-    logger.debug("Figuring out access levels between owner %s and viewer %s" %
-        (str(owner_userprofile), str(viewer_userprofile)))
+    return a dictionary, instead of manually checking each one.
+    
+    Accepts either UserProfile or User objects."""
 
     valid_access_levels = set([constants.PUBLIC_ACCESS])
+
+    # Sometimes the viewer will be anonymous; should return 
+    # ASAP in these instances
+    if isinstance(viewer_userprofile, AnonymousUser):
+        return valid_access_levels
+        
+    if isinstance(viewer_userprofile, User):
+        viewer_userprofile = models.UserProfile.get_profile(viewer_userprofile)
+
+    if isinstance(owner_userprofile, User):
+        owner_userprofile = models.UserProfile.get_profile(owner_userprofile)
 
     # the only valid access value for non-logged in users is the above defined
     # public access level
