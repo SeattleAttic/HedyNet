@@ -40,7 +40,9 @@
 <section class="row">
 <article class="columns large-4 small-12 emails">
 <h2{% if user_profile.preferred_contact_method = "email" %} class="preferred"{% endif %}>Email</h2>
+{% if can_edit %}
 <a class="button expand" href="{% url "user_profile_email_add" username=username %}">Add email</a>
+{% endif %}
 {% for email_contact in email_contacts %}
 <div class="email{% if email_contact.is_preferred %} preferred panel{% endif %}">
 <p><a href="{{ email_contact.get_absolute_url }}">{{ email_contact.label|default:"(no label)" }}</a>: <a href="mailto:{{ email_contact.email }}">{{ email_contact.email}}</a></p>
@@ -52,7 +54,9 @@
 
 <article class="columns large-4 small-12 phones">
 <h2{% if user_profile.preferred_contact_method = "phone" %} class="preferred"{% endif %}>Phone</h2>
+{% if can_edit %}
 <a class="button expand" href="{% url "user_profile_phone_add" username=username %}">Add phone number</a>
+{% endif %}
 {% for phone_contact in phone_contacts %}
 <dl class="phone{% if phone_contact.is_preferred %} preferred panel{% endif %}">
 <dt><a href="{{ phone_contact.get_absolute_url }}">{{ phone_contact.label }}</a></dt>
@@ -72,7 +76,9 @@
 
 <article class="columns large-4 small-12 addresses">
 <h2{% if user_profile.preferred_contact_method = "address" %} class="preferred"{% endif %}>Address</h2>
+{% if can_edit %}
 <a class="button expand" href="{% url "user_profile_address_add" username=username %}">Add address</a>
+{% endif %}
 {% for address_contact in address_contacts %}
 <div class="address{% if address_contact.is_preferred %} preferred panel{% endif %}">
 <p><a href="{{ address_contact.get_absolute_url }}">{{ address_contact.label|default:"(no label)" }}</a></p>
