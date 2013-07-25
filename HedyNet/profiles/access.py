@@ -4,10 +4,10 @@ import logging
 logger = logging.getLogger(__name__)
 
 from django.contrib.auth.models import User, AnonymousUser
+from django.db.models.loading import get_model
 
 from profiles import constants
-from profiles import models
-    
+
 def access_levels(owner_userprofile, viewer_userprofile):
     """A shortcut function for efficiency in places like the profile,
     where it is useful to do the checks for all the access levels and
@@ -21,12 +21,17 @@ def access_levels(owner_userprofile, viewer_userprofile):
     # ASAP in these instances
     if isinstance(viewer_userprofile, AnonymousUser):
         return valid_access_levels
-        
+
+    # Dynamically load access to this profiles model
+    # This is so we don't have a circular import when we use access functions
+    # inside of models.py
+    UserProfile_model = get_model('profiles', 'UserProfile')
+
     if isinstance(viewer_userprofile, User):
-        viewer_userprofile = models.UserProfile.get_profile(viewer_userprofile)
+        viewer_userprofile = UserProfile_model.get_profile(viewer_userprofile)
 
     if isinstance(owner_userprofile, User):
-        owner_userprofile = models.UserProfile.get_profile(owner_userprofile)
+        owner_userprofile = UserProfile_model.get_profile(owner_userprofile)
 
     # the only valid access value for non-logged in users is the above defined
     # public access level

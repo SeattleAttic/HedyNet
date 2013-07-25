@@ -41,28 +41,13 @@ class MemberDirectoryView(ListView):
     
     def get_queryset(self):
         
-        # get the viewer and their valid access levels (in general)
+        # get the viewer's profile
         viewer_profile = models.UserProfile.get_profile(self.request.user)
         logger.debug("Viewing member directory by user: %s" % str(self.request.user))
         
-        # we don't have any particular owner here, so get general access levels
-        # for the viewer
-        valid_access_levels = access_levels(None, viewer_profile)
+        return models.UserProfile.get_directory(
+            viewer_profile, status = constants.ACTIVE_STATUS)
         
-        # okay, so if we're making a list of profiles we can show in this directory
-        # view, we want items both in the valid access levels and in the
-        # BASIC_ACCESS_LEVELS set that profile_access can be in
-        # see this for more information on set operations:
-        # http://docs.python.org/2/library/sets.html
-        directory_access_levels = valid_access_levels.intersection(
-            set([access_level[0] for access_level in 
-            constants.BASIC_ACCESS_LEVELS]))
-
-        # only show active members by default
-        query = models.UserProfile.objects.filter(status = constants.ACTIVE_STATUS)
-        
-        return models.filter_access_levels(query, "profile_access", directory_access_levels)
-
 class UserProfileView(SingleObjectMixin):
 
     model = models.UserProfile

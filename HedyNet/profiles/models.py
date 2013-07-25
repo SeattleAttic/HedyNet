@@ -11,6 +11,7 @@ from django.core.urlresolvers import reverse
 from markdown_deux.templatetags.markdown_deux_tags import markdown_allowed
 
 from profiles import constants
+from profiles import access
 
 def filter_access_levels(query, field, access_levels, owner_field = None,
   owner_object = None):
@@ -101,6 +102,31 @@ class UserProfile(models.Model):
         except ObjectDoesNotExist:
             return None
 
+    @staticmethod
+    def get_directory(viewer_profile = None, status = None):
+        """Returns a list of profiles in the directory.  Giving a viewer_profile
+        allows the viewer to see profiles that they have access to.  Giving
+        a status filters the list to that type of membership status."""
+        
+        # we don't have any particular owner here, so get general access levels
+        # for the viewer
+        valid_access_levels = access.access_levels(None, viewer_profile)
+        
+        # okay, so if we're making a list of profiles we can show in this directory
+        # view, we want items both in the valid access levels and in the
+        # BASIC_ACCESS_LEVELS set that profile_access can be in
+        # see this for more information on set operations:
+        # http://docs.python.org/2/library/sets.html
+        directory_access_levels = valid_access_levels.intersection(
+            set([access_level[0] for access_level in 
+            constants.BASIC_ACCESS_LEVELS]))
+        
+        # optionally filter by status
+        if status:
+            query = UserProfile.objects.filter(status = status)
+            
+        return filter_access_levels(query, "profile_access", directory_access_levels)
+        
     def access_strip(self, access_levels = (constants.PUBLIC_ACCESS,),
         viewer_profile = None):
         """Strip away information from the model that does not have the given
