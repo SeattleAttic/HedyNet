@@ -16,6 +16,11 @@
       <ul class="left">
         <li class="divider"></li>
 {% if user.is_authenticated %}
+        <li class="has-dropdown"><a href="#">{{ user }}</a>
+          <ul class="dropdown">
+            <li><a href="{% url "user_profile" username=user.username %}">My profile</a></li>
+          </ul>
+        </li> 
         <li><a href="{% url "account_logout" %}">Log Out</a></li>
 {% else %}
         <li><a href="{% url "account_login" %}">Log In</a></li>
