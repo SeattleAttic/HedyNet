@@ -32,23 +32,33 @@ class UserProfile(models.Model):
     status = models.CharField(max_length=20, choices=constants.STATUS_LEVELS, null=True)
 
     profile_access = models.CharField(max_length=20, choices=constants.BASIC_ACCESS_LEVELS, \
-        default=constants.MEMBERS_ACCESS)
+        default=constants.MEMBERS_ACCESS,
+        help_text = """This determines who can see your profile.""")
 
-    display_name = models.CharField(max_length=50, blank = True)
+    display_name = models.CharField(max_length=50, blank = True,
+        help_text="Your display name throughout the site, which can be different from the default of your username.")
 
-    legal_name = models.CharField(max_length=255, blank = True)
+    legal_name = models.CharField(max_length=255, blank = True,
+        help_text="Your legal name, which could be useful for administrative purposes.")
     legal_name_access = models.CharField(max_length=20, choices=constants.ACCESS_LEVELS, \
-        default=constants.MEMBERS_ACCESS)
+        default=constants.MEMBERS_ACCESS,
+        help_text="Restrict who has access to your legal name.")
 
-    about = models.TextField(blank = True, help_text=markdown_allowed())
+    about = models.TextField(blank = True, 
+        help_text= "You can customize this area to tell others more about yourself.\n\n" + markdown_allowed() )
     about_access = models.CharField(max_length=20, choices=constants.ACCESS_LEVELS,
-        default=constants.MEMBERS_ACCESS)
+        default=constants.MEMBERS_ACCESS,
+        help_text="Restrict who has access to your about text.")
 
     preferred_contact_method = models.CharField(max_length=20,
-        choices=constants.CONTACT_METHODS, default=constants.EMAIL_CONTACT)
-    preferred_phone = models.ForeignKey('UserPhone', blank = True, null = True)
-    preferred_email = models.ForeignKey('UserEmail', blank = True, null = True)
-    preferred_address = models.ForeignKey('UserAddress', blank = True, null = True)
+        choices=constants.CONTACT_METHODS, default=constants.EMAIL_CONTACT,
+        help_text="This lists your preferred contact method, so people know the best way to get in touch with you.")
+    preferred_phone = models.ForeignKey('UserPhone', blank = True, null = True,
+        help_text="This sets your preferred phone number, so if you have more than one you can say which one to use.")
+    preferred_email = models.ForeignKey('UserEmail', blank = True, null = True,
+                help_text="This sets your preferred email, so if you have more than one you can say which one to use.")
+    preferred_address = models.ForeignKey('UserAddress', blank = True, null = True,
+                help_text="This sets your preferred address, so if you have more than one you can say which one to use.")
 
     became_member_on = models.DateField(null = True, blank = True)
     created_on = models.DateTimeField(auto_now_add=True)

@@ -9,8 +9,8 @@
 <h1>Adding phone contact for {{ user_profile.user.username }}</h1>
 
 <form method="post">{% csrf_token %}
-{{ form.as_p }}
-<button type="submit">Add</button>
+{% include "forms/foundation.html" %}
+<button class="right" type="submit">Add</button>
 </form>
 
 </div>

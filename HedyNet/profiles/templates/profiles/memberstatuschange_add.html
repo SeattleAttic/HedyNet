@@ -9,8 +9,8 @@
 <h1>Changing member status for {{ user_profile.user.username }}</h1>
 
 <form method="post">{% csrf_token %}
-{{ form.as_p }}
-<button type="submit">Change</button>
+{% include "forms/foundation.html" %}
+<button class="right" type="submit">Change</button>
 </form>
 
 </div>
