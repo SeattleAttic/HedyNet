@@ -20,6 +20,8 @@ from profiles.access import access_levels, can_access
 from profiles import forms
 
 def get_user_profile_or_404(username):
+    """This function tries to retrieve a user profile based off of the given
+    user name or raises a 404 error."""
 
     try:
         user = User.objects.get(username = username)
@@ -64,6 +66,8 @@ class UserProfileView(SingleObjectMixin):
         # add the viewer's profile to this view
         self.viewer_profile = models.UserProfile.get_profile(self.request.user)
 
+        # strip the profile to only contain information present
+        # at the valid access level
         user_profile.access_strip(self.valid_access_levels, self.viewer_profile)
         
         return user_profile
@@ -102,15 +106,11 @@ class UserProfileUpdateView(LoginRequiredMixin, UserProfileView, UpdateView):
     template_name_suffix = "_edit"
     context_object_name = "user_profile"
 
-    #def get_context_data(self, *args, **kwargs):
-    #    context = super(UserProfileUpdateView, self).get_context_data(**kwargs)
-    #    context['user_profile'] = 
-    #    return context
-
     def get_object(self, *args, **kwargs):
 
         user_profile = super(UserProfileUpdateView, self).get_object(*args, **kwargs)
 
+        # only the owner of the profile can edit it
         if user_profile.user != self.request.user:
             raise PermissionDenied()
         else:
@@ -124,8 +124,22 @@ class UserContactInfoView(LoginRequiredMixin):
         viewer_profile = models.UserProfile.get_profile(self.request.user)
         context["username"] = self.kwargs.get("username", None)
         context["user_profile"] = get_user_profile_or_404(context["username"])
+
         if self.object:
-            context["can_edit"] = self.object.profile == viewer_profile
+            owner_profile = self.object.profile
+            # pass in can_edit flag if viewer of the profile is also the owner
+            # it will then be used as a conditional to render edit buttons
+            context["can_edit"] = owner_profile == viewer_profile
+            
+            # check access for both the profile and the contact
+            valid_profile_access = can_access(owner_profile, viewer_profile, 
+                owner_profile.profile_access)
+            valid_contact_access = can_access(owner_profile, viewer_profile,
+                self.object.access)
+            
+            # only let the page be viewed if there is valid access
+            if not (valid_profile_access and valid_contact_access):
+                raise PermissionDenied
         
         self.username = context["username"]
         self.profile = context["user_profile"]
@@ -134,14 +148,26 @@ class UserContactInfoView(LoginRequiredMixin):
 
 class UserContactInfoEditView(UserContactInfoView):
 
+    def dispatch(self, request, *args, **kwargs):
+        self.username = self.kwargs.get("username", None)
+        self.profile = get_user_profile_or_404(self.username)
+
+        # only owner of the profile can edit a given contact view
+        if self.request.user != self.profile.user:
+            raise PermissionDenied
+
+        return super(UserContactInfoView, self).dispatch(request, *args, **kwargs)
+
     def get_success_url(self, *args, **kwargs):
 
         return reverse("user_profile", kwargs={"username": self.kwargs.get("username", None)})
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        username = self.kwargs.get("username", None)
-        self.object.profile = get_user_profile_or_404(username)
+
+        # give this object a profile automatically
+        self.object.profile = self.profile
+
         self.object.save()
 
         return super(ModelFormMixin, self).form_valid(form)
@@ -221,10 +247,14 @@ class MemberStatusChangeListView(LoginRequiredMixin, PermissionRequiredMixin, Li
     permission_required = "profiles.add_memberstatuschange"
     raise_exception = True
 
-    def get_queryset(self, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
+        self.username = self.kwargs.get("username", None)
+        self.user_profile = get_user_profile_or_404(self.username)
+        self.viewer_profile = models.UserProfile.get_profile(self.request.user)
 
-        username = self.kwargs.get("username", None)
-        user_profile = get_user_profile_or_404(username)
+        return super(MemberStatusChangeListView, self).get(self, *args, **kwargs)
+
+    def get_queryset(self, *args, **kwargs):
 
         return models.MemberStatusChange.objects.filter(
             profile = user_profile).order_by('-changed_on')
@@ -233,8 +263,7 @@ class MemberStatusChangeListView(LoginRequiredMixin, PermissionRequiredMixin, Li
 
         context = super(MemberStatusChangeListView, self).get_context_data(*args, **kwargs)
 
-        username = self.kwargs.get("username", None)
-        context["user_profile"] = get_user_profile_or_404(username)
+        context["user_profile"] = self.user_profile
 
         return context
 
