@@ -81,11 +81,11 @@ def can_access(owner_userprofile, viewer_userprofile, access_level):
         return True
         
     # members only access is met
-    if viewer.is_member and access_level == constants.MEMBERS_ACCESS:
+    if viewer_userprofile.is_member and access_level == constants.MEMBERS_ACCESS:
         return True
         
     # admin only access is met
-    if view.is_admin and access_level == constants.ADMIN_ACCESS:
+    if viewer_userprofile.is_admin and access_level == constants.ADMIN_ACCESS:
         return True
         
     # explicitly return False in all other cases
