@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Attic Windows{% endblock %}
+
+{% block content %}
+<section class="row">
+<div class="columns large-12 small-12">
+<header><h1>Attic Windows</h1></header>
+<noscript>
+<div class="row"><div class="columns">
+    <ul class="inline-list right">
+        <li><a href="#twitter">Twitter</a></li>
+        <li><a href="#librarything">LibraryThing</a></li>
+        <li><a href="#dreamwidth">Dreamwidth</a></li>
+        <li><a href="#facebook">Facebook</a></li>
+        <li><a href="#github">GitHub</a></li>
+        <li><a href="#irc">IRC</a></li>
+        <li><a href="#ravelry">Ravelry</a></li>
+    </ul>
+</div></div>
+</noscript>
+
+<div class="section-container vertical-tabs" data-section="vertical-tabs">
+  <section>
+    <p id="twitter" class="title" data-section-title><a href="#">Twitter</a></p>
+    <div class="row content" data-section-content>
+        <div class="columns large-8 small-12">
+            <p>Put description here.</p>
+        </div>
+        <div class="columns twitter large-4 small-12">
+             {% include "embeds/twitter.html" %}
+        </div>
+    </div>
+  </section>
+  <section>
+    <p id="librarything" class="title" data-section-title><a href="#">LibraryThing</a></p>
+    <div class="row content" data-section-content>
+        <div class="columns large-8 small-12">
+            <p>We have an attic library listed on LibraryThing and are working on ways to
+            implement a checkout system.  Reference books should remain in the space, however.</p>
+        </div>
+        <div class="columns twitter large-4 small-12">
+            {% include "embeds/librarything.html" %}
+        </div>
+    </div>
+   </section>
+   <section>
+    <p id="dreamwidth" class="title" data-section-title><a href="#">Dreamwidth</a></p>
+    <div class="row content" data-section-content>
+        <p>Description here.</p>
+    </div>
+   </section>
+   <section>
+    <p id="facebook" class="title" data-section-title><a href="#">Facebook</a></p>
+    <div class="row content" data-section-content>
+        <p>Add description here.</p>
+    </div>
+   </section>
+   <section>
+    <p id="irc" class="title" data-section-title><a href="#">IRC</a></p>
+    <div class="row content" data-section-content>
+            <p>We have an IRC channel <a href="http://webchat.freenode.net?channels=seattleattic">seattleattic</a> on <a href="http://freenode.net/">FreeNode</a>.</p>
+            <iframe src="http://webchat.freenode.net?channels=seattleattic" width="647" height="400"></iframe>
+    </div>
+   </section>
+   <section>
+    <p id="github" class="title" data-section-title><a href="#">GitHub</a></p>
+    <div class="row content" data-section-content>
+        <div class="columns large-12 small-12">
+           <p>We have a <a href="https://github.com/SeattleAttic">GitHub organisation</a> with a nonprofit account.</p>
+        </div>
+    </div>
+   </section>
+   <section>
+    <p id="ravelry" class="title" data-section-title><a href="#">Ravelry</a></p>
+    <div class="row content" data-section-content>
+        <div class="columns large-12 small-12">
+           <p>We have a <a href="http://www.ravelry.com/groups/seattle-attic">seattle-attic</a> group on Ravelry.</p>
+        </div>
+    </div>
+   </section>
+</div>
+
+
+</div>
+</section>
+{% endblock %}
