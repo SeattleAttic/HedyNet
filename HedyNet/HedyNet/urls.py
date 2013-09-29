@@ -5,8 +5,10 @@ from django.views.generic import TemplateView
 from django.contrib import admin
 admin.autodiscover()
 
+from .views import HomeTemplateView
+
 urlpatterns = patterns('',
-    url(r'^$', TemplateView.as_view(template_name='home.html'), name="home"),
+    url(r'^$', HomeTemplateView.as_view(), name="home"),
     url(r'^about$', TemplateView.as_view(template_name='about.html'), name="about"),
     url(r'^policies$', TemplateView.as_view(template_name='policies.html'), name="policies"),
     url(r'^codeofconduct$', TemplateView.as_view(template_name='codeofconduct.html'), name="codeofconduct"),
