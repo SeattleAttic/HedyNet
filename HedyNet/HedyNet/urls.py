@@ -16,6 +16,7 @@ urlpatterns = patterns('',
     
     url(r'^visit$', TemplateView.as_view(template_name="visit.html"), name="visit"),
     url(r'^friends$', TemplateView.as_view(template_name="friends.html"), name="friends"),
+    url(r'^events$', TemplateView.as_view(template_name="events.html"), name="events"),
     
     url(r'^faq/', include('FAQ.urls')),
     url(r'^payments/', include('payments.urls')),
