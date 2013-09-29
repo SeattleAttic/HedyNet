@@ -18,7 +18,7 @@
 </div>
 </div>
 <article class="row">
-<div class="columns large-6 small-12">
+<div class="columns medium-6">
 {% if can_edit %}
 <a href="{% url "user_profile_edit" username=username %}" class="button">Edit</a>
 {% endif %}
@@ -27,7 +27,7 @@
 {% endif %}
 <p>Preferred contact method: {{ user_profile.preferred_contact_method }}</p>
 </div>
-<div class="columns large-6 small-12 panel">
+<div class="columns medium-6 panel">
 <h4>Membership</h4>
 <p>Status: {{ user_profile.status }}</p>
 <p>Member since: {{ user_profile.became_member_on }}</p>
@@ -44,7 +44,7 @@
 {% endif %}
 
 <section class="row">
-<article class="columns large-4 small-12 contact-info emails">
+<article class="columns large-4 medium-6 contact-info emails">
 <h2{% if user_profile.preferred_contact_method = "email" %} class="preferred"{% endif %}>Email</h2>
 {% if can_edit %}
 <a class="button expand" href="{% url "user_profile_email_add" username=username %}">Add email</a>
@@ -63,7 +63,7 @@
 {% endfor %}
 </article>
 
-<article class="columns large-4 small-12 contact-info phones">
+<article class="columns large-4 medium-6 contact-info phones">
 <h2{% if user_profile.preferred_contact_method = "phone" %} class="preferred"{% endif %}>Phone</h2>
 {% if can_edit %}
 <a class="button expand" href="{% url "user_profile_phone_add" username=username %}">Add phone number</a>
@@ -82,7 +82,7 @@
 {% endfor %}
 </article>
 
-<article class="columns large-4 small-12 contact-info addresses">
+<article class="columns large-4 medium-6 contact-info addresses">
 <h2{% if user_profile.preferred_contact_method = "address" %} class="preferred"{% endif %}>Address</h2>
 {% if can_edit %}
 <a class="button expand" href="{% url "user_profile_address_add" username=username %}">Add address</a>
