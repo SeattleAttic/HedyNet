@@ -49,7 +49,21 @@ class MemberDirectoryView(ListView):
         
         return models.UserProfile.get_directory(
             viewer_profile, status = constants.ACTIVE_STATUS)
-        
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(MemberDirectoryView, self).get_context_data(**kwargs)
+
+        # add the viewer's profile to this view
+        self.viewer_profile = models.UserProfile.get_profile(self.request.user)
+
+        valid_access_levels = access_levels(None, self.viewer_profile)
+
+        [profile.access_strip(access_levels = valid_access_levels,
+            viewer_profile = self.viewer_profile)
+            for profile in context["user_profile_list"]]
+
+        return context
+
 class UserProfileView(SingleObjectMixin):
 
     model = models.UserProfile
@@ -101,6 +115,17 @@ class UserProfileView(SingleObjectMixin):
 class UserProfileDetailView(UserProfileView, DetailView):
     context_object_name = "user_profile"
 
+    def get_context_data(self, *args, **kwargs):
+        context = super(UserProfileDetailView, self).get_context_data(**kwargs)
+
+        # add the viewer's profile to this view
+        self.viewer_profile = models.UserProfile.get_profile(self.request.user)
+        valid_access_levels = access_levels(self.object, self.viewer_profile)
+        self.object.access_strip(access_levels = valid_access_levels,
+            viewer_profile = self.viewer_profile)
+
+        return context
+        
 class UserProfileUpdateView(LoginRequiredMixin, UserProfileView, UpdateView):
     form_class = forms.UserProfileForm
     template_name_suffix = "_edit"
