@@ -27,7 +27,10 @@
 </div>
 </div>
 <div class="columns twitter large-4 small-12">
-{% include "embeds/twitter.html" %}
+{% if twitter %}
+<h2>What's Up?</h2>
+{{ twitter.embed_code|safe }}
+{% endif %}
 </div>
 </section>
 {% endblock %}
