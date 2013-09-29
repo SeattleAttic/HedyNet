@@ -16,10 +16,10 @@ urlpatterns = patterns('',
     
     url(r'^visit$', TemplateView.as_view(template_name="visit.html"), name="visit"),
     url(r'^friends$', TemplateView.as_view(template_name="friends.html"), name="friends"),
-    url(r'^othersites$', TemplateView.as_view(template_name="othersites.html"), name="othersites"),
     
     url(r'^faq/', include('FAQ.urls')),
     url(r'^payments/', include('payments.urls')),
+    url(r'^othersites/', include('othersites.urls')),
 
     # Examples:
     # url(r'^$', 'HedyNet.views.home', name='home'),
