@@ -15,7 +15,8 @@ urlpatterns = patterns('',
     url(r'^wishlist$', TemplateView.as_view(template_name="wishlist.html"), name="wishlist"),
     url(r'^sitemap$', TemplateView.as_view(template_name="sitemap.html"), name="sitemap"),
     url(r'^tos$', TemplateView.as_view(template_name="tos.html"), name="tos"),
-    
+
+    url(r'^membership$', TemplateView.as_view(template_name="membership.html"), name="membership"),    
     url(r'^visit$', TemplateView.as_view(template_name="visit.html"), name="visit"),
     url(r'^othersites$', TemplateView.as_view(template_name="othersites.html"), name="othersites"),
     url(r'^friends$', TemplateView.as_view(template_name="friends.html"), name="friends"),
