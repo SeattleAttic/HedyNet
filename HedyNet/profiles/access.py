@@ -3,17 +3,35 @@ from __future__ import unicode_literals
 import logging
 logger = logging.getLogger(__name__)
 
+from django.contrib.auth.models import User, AnonymousUser
+from django.db.models.loading import get_model
+
 from profiles import constants
-    
+
 def access_levels(owner_userprofile, viewer_userprofile):
     """A shortcut function for efficiency in places like the profile,
     where it is useful to do the checks for all the access levels and
-    return a dictionary, instead of manually checking each one."""
-
-    logger.debug("Figuring out access levels between owner %s and viewer %s" %
-        (str(owner_userprofile), str(viewer_userprofile)))
+    return a dictionary, instead of manually checking each one.
+    
+    Accepts either UserProfile or User objects."""
 
     valid_access_levels = set([constants.PUBLIC_ACCESS])
+
+    # Sometimes the viewer will be anonymous; should return 
+    # ASAP in these instances
+    if isinstance(viewer_userprofile, AnonymousUser):
+        return valid_access_levels
+
+    # Dynamically load access to this profiles model
+    # This is so we don't have a circular import when we use access functions
+    # inside of models.py
+    UserProfile_model = get_model('profiles', 'UserProfile')
+
+    if isinstance(viewer_userprofile, User):
+        viewer_userprofile = UserProfile_model.get_profile(viewer_userprofile)
+
+    if isinstance(owner_userprofile, User):
+        owner_userprofile = UserProfile_model.get_profile(owner_userprofile)
 
     # the only valid access value for non-logged in users is the above defined
     # public access level
@@ -63,11 +81,11 @@ def can_access(owner_userprofile, viewer_userprofile, access_level):
         return True
         
     # members only access is met
-    if viewer.is_member and access_level == constants.MEMBERS_ACCESS:
+    if viewer_userprofile.is_member and access_level == constants.MEMBERS_ACCESS:
         return True
         
     # admin only access is met
-    if view.is_admin and access_level == constants.ADMIN_ACCESS:
+    if viewer_userprofile.is_admin and access_level == constants.ADMIN_ACCESS:
         return True
         
     # explicitly return False in all other cases

@@ -1,3 +1,4 @@
+@import "../foundation/variables";
 @import "variables";
 
 body {
@@ -13,7 +14,7 @@ a { color: $link-color; font-weight: bold; text-decoration: underline; }
 a:visited { color: $link-visited-color; }
 a:hover, a:active { color: $link-hover-color; }
 
-a.button { color: white !important; }
+a.button, a.button:visited { color: white !important; }
 
 .top-bar a { text-decoration: none; }
 

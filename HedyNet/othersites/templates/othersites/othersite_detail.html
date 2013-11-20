@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load markdown_deux_tags %}
+
+{% block title %}Attic Windows: {{ othersite }}{% endblock %}
+
+{% block content %}
+<div class="row">
+<div class="columns large-12 small-12">
+<header><h1>Attic Windows: {{ othersite }}</h1></header>
+
+<p>These are other sites on the internet associated with the Attic!</p>
+
+<dl class="sub-nav">
+  <dt>Sites:</dt>
+  {% for site in othersite_list %}
+  <dd{% if site.slug == othersite.slug %} class="active"{% endif %}><a href="{{ site.get_absolute_url }}">{{ site }}</a></dd>
+  {% endfor %}
+</dl>
+
+<hr />
+
+{% if othersite.embed_code %}
+{% if othersite.embed_position == othersite.EMBED_RIGHT %}
+<div class="row">
+<div class="columns large-{{ othersite.description_columns }}">
+{{ othersite.description|markdown:"trusted" }}
+</div>
+<div class="columns large-{{ othersite.embed_columns }}">
+{{ othersite.embed_code|safe }}
+</div>
+</div>
+{% else %}
+<div class="row">
+<div class="columns">
+{{ othersite.description|markdown:"trusted" }}
+</div>
+<div class="columns">
+{{ othersite.embed_code|safe }}
+</div>
+</div>
+{% endif %}
+{% else %}
+{{ othersite.description|markdown:"trusted" }}
+{% endif %}
+</div>
+</div>
+{% endblock %}

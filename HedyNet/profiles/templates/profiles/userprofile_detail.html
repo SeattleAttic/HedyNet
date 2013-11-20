@@ -1,75 +1,106 @@
 {% extends "base.html" %}
+{% load markdown_deux_tags %}
+{% load static from staticfiles %}
 
 {% block title %}Profile for: {{ user_profile.user.username }}{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static "css/site/profiles.css" %}" />
+{% endblock %}
 
 {% block content %}
 {% with user_profile.user.username as username %}
 <div class="profile">
 <div class="row">
 <div class="columns">
-<h1>Profile for {{ username }}</h1>
+<h1>Profile for {{ username }}{% if user_profile.display_name %}: {{ user_profile_display_name }}{% endif %}</h1>
 </div>
 </div>
 <article class="row">
-<div class="columns large-4 small-12">
+<div class="columns medium-6">
 {% if can_edit %}
 <a href="{% url "user_profile_edit" username=username %}" class="button">Edit</a>
 {% endif %}
-<h3>{{ user_profile }}</h3>
-<p>({{ user_profile.legal_name }})</p>
+{% if user_profile.legal_name %}
+<p>Legal Name: {{ user_profile.legal_name }}</p>
+{% endif %}
+<p>Preferred contact method: {{ user_profile.preferred_contact_method }}</p>
+</div>
+<div class="columns medium-6 panel">
+<h4>Membership</h4>
 <p>Status: {{ user_profile.status }}</p>
 <p>Member since: {{ user_profile.became_member_on }}</p>
 </div>
-<div class="columns large-8 small-12">
-<ul>
-<li>Preferred contact method: {{ user_profile.preferred_contact_method }}</li>
-</ul>
+</article>
+
+{% if user_profile.about %}
+<article class="row">
+<div class="columns">
+<h3>About Me</h3>
+{{ user_profile.about|markdown }}
 </div>
 </article>
+{% endif %}
 
 <section class="row">
-{% with user_profile.userphone_set.all as phone_contacts %}
-<article class="columns large-4 small-12 phones">
-<h2>Phone</h2>
-<a class="button expand" href="{% url "user_profile_phone_add" username=username %}">Add phone number</a>
-{% for phone_contact in phone_contacts %}
-<div class="phone">
-<p><a href="{{ phone_contact.get_absolute_url }}">{{ phone_contact.label }}</a>: <a href="tel:{{ phone_contact.phone }}">{{ phone_contact.phone }}</a></p>
-</div>
-{% empty %}
-<p>No phone information available</p>
-{% endfor %}
-</article>
-{% endwith %}
-
-{% with user_profile.useremail_set.all as email_contacts %}
-<article class="columns large-4 small-12 emails">
-<h2>Email</h2>
+<article class="columns large-4 medium-6 contact-info emails">
+<h2{% if user_profile.preferred_contact_method = "email" %} class="preferred"{% endif %}>Email</h2>
+{% if can_edit %}
 <a class="button expand" href="{% url "user_profile_email_add" username=username %}">Add email</a>
+{% endif %}
+{% if preferred_email %}
+{% with preferred_email as email_contact %}
+{% include "profiles/includes/email_card.html" %}
+{% endwith %}
+{% endif %}
 {% for email_contact in email_contacts %}
-<div class="email">
-<p><a href="{{ email_contact.get_absolute_url }}">{{ email_contact.label|default:"(no label)" }}</a>: <a href="mailto:{{ email_contact.email }}">{{ email_contact.email}}</a></p>
-</div>
+{% if email_contact != preferred_email %}
+{% include "profiles/includes/email_card.html" %}
+{% endif %}
 {% empty %}
 <p>No email information available</p>
 {% endfor %}
 </article>
-{% endwith %}
 
-{% with user_profile.useraddress_set.all as address_contacts %}
-<article class="columns large-4 small-12 addresses">
-<h2>Address</h2>
+<article class="columns large-4 medium-6 contact-info phones">
+<h2{% if user_profile.preferred_contact_method = "phone" %} class="preferred"{% endif %}>Phone</h2>
+{% if can_edit %}
+<a class="button expand" href="{% url "user_profile_phone_add" username=username %}">Add phone number</a>
+{% endif %}
+{% if preferred_phone %}
+{% with preferred_phone as phone_contact %}
+{% include "profiles/includes/phone_card.html" %}
+{% endwith %}
+{% endif %}
+{% for phone_contact in phone_contacts %}
+{% if phone_contact != preferred_phone %}
+{% include "profiles/includes/phone_card.html" %}
+{% endif %}
+{% empty %}
+<p>No phone information available</p>
+{% endfor %}
+</article>
+
+<article class="columns large-4 medium-6 contact-info addresses">
+<h2{% if user_profile.preferred_contact_method = "address" %} class="preferred"{% endif %}>Address</h2>
+{% if can_edit %}
 <a class="button expand" href="{% url "user_profile_address_add" username=username %}">Add address</a>
+{% endif %}
+{% if preferred_address %}
+{% with preferred_address as address_contact %}
+{% include "profiles/includes/address_card.html" %}
+{% endwith %}
+{% endif %}
 {% for address_contact in address_contacts %}
-<div class="email">
-<p><a href="{{ address_contact.get_absolute_url }}">{{ address_contact.label|default:"(no label)" }}</a></p>
-<p>{{ address_contact.address }}</p>
-</div>
+{% if address_contact != preferred_address %}
+{% include "profiles/includes/address_card.html" %}
+{% endif %}
 {% empty %}
 <p>No address information available</p>
 {% endfor %}
 </article>
-{% endwith %}
+
 </section>
 
 <div class="row">

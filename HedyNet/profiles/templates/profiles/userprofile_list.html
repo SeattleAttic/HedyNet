@@ -11,16 +11,15 @@
 </div>
 {% for user_profile in user_profile_list %}
 <article class="row">
-<div class="columns large-4 small-12">
+<header class="columns">
 <h3><a href="{% url "user_profile" username=user_profile.user.username %}">{{ user_profile }}</a></h3>
-<p>({{ user_profile.legal_name }})</p>
-<p>Status: {{ user_profile.status }}</p>
-<p>Member since: {{ user_profile.became_member_on }}</p>
-</div>
-<div class="columns large-8 small-12">
-<ul>
-<li>Preferred contact method: {{ user_profile.preferred_contact_method }}</li>
-</ul>
+</header>
+<div class="columns large-12">
+<dl>
+{% if user_profile.legal_name %}<dt>Legal name:</dt><dd>{{ user_profile.legal_name }}</dd>{% endif %}
+<dt>Status:</dt><dd>{{ user_profile.status }}</dd>
+<dt>Member since:</dt><dd>{{ user_profile.became_member_on }}</dd>
+</dl>
 </div>
 </article>
 {% endfor %}

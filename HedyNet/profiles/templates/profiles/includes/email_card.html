@@ -1,0 +1,13 @@
+{% load markdown_deux_tags %}
+{% with email_contact.is_preferred as preferred %}
+<dl class="email panel{% if preferred %} preferred{% endif %}">
+<dt><a href="{{ email_contact.get_absolute_url }}">{{ email_contact.label|default:"Email" }}</a>{% if preferred %} (preferred){% endif %}</dt>
+<dd><a href="mailto:{{ email_contact.email }}">{{ email_contact.email}}</a></dd>
+{% if email_contact.notes %}
+<dd>{{ email_contact.notes|markdown }}</dd>
+{% endif %}
+{% if can_edit %}
+<dd><a href="{% url "user_profile_email_update" username=username pk=email_contact.pk %}" class="button tiny">Edit</a></dd>
+{% endif %}
+</dl>
+{% endwith %}

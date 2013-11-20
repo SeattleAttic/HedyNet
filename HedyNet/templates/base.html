@@ -58,8 +58,7 @@
 <footer class="row">
 <div class="columns"><hr /></div>
     <div class="large-6 columns fineprint">
-        <p>This is a fiscally sponsored project of the School Factory, Inc. a 501(c)3 non-profit corporation.</p>
-        <p>&copy; Seattle Attic 2013</p>
+        <p>This is a fiscally sponsored project of the School Factory, Inc. a 501(c)3 non-profit corporation.  For more information: <br /><a href="mailto:info@seattleattic.com">info@seattleattic.com</a></p>
     </div>
     <div class="large-6 columns">
         <ul class="inline-list right">
@@ -68,6 +67,7 @@
             <li><a href="{% url "policies" %}">Policies</a></li>
             <li><a href="{% url "codeofconduct" %}">Code of Conduct</a></li>
         </ul>
+        <p class="right">&copy; Seattle Attic 2013</p>
     </div>
   </footer>
 {% endblock %}
@@ -86,6 +86,7 @@
   <script src="{% static "js/foundation/foundation.reveal.js" %}"></script>
   <script src="{% static "js/foundation/foundation.topbar.js" %}"></script>
   <script src="{% static "js/foundation/foundation.section.js" %}"></script>
+  <script src="{% static "js/foundation/foundation.tooltips.js" %}"></script>
   <script>
     $(document).foundation();
   </script>

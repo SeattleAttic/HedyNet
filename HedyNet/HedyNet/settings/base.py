@@ -199,18 +199,23 @@ DJANGO_APPS = (
 )
 
 THIRD_PARTY_APPS = (
+    # Authentication apps
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.persona',
     'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.openid',
+    # Markdown
+    'markdown_deux',
 )
 
 # Apps specific for this project go here.
 LOCAL_APPS = (
     'FAQ',
     'profiles',
+    'payments',
+    'othersites',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -256,7 +261,7 @@ LOGGING = {
 WSGI_APPLICATION = 'wsgi.application'
 ########## END WSGI CONFIGURATION
 
-# Set up allauth
+########## AUTH CONFIGURATION
 
 AUTH_PROFILE_MODULE = 'profiles.UserProfile'
 # ACCOUNT_SIGNUP_FORM_CLASS = 'ffuser.forms.UserProfileForm'
@@ -278,3 +283,23 @@ SOCIALACCOUNT_PROVIDERS = \
             #]
         }
     }
+########## END AUTH CONFIGURATION
+
+########## MARKDOWN CONFIGURATION
+MARKDOWN_DEUX_STYLES = {
+    "default": {
+	"extras": {
+    	    "code-friendly": None,
+    	},
+    	"safe_mode": "escape",
+    },
+    "trusted": {
+        "extras": {
+            "code-friendly": None,
+        },
+        # Allow raw HTML (WARNING: don't use this for user-generated
+        # Markdown for your site!).
+        "safe_mode": False,
+    }
+}
+######### END MARKDOWN CONFIGURATION

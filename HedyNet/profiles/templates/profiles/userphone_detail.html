@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load markdown_deux_tags %}
 
 {% block title %}Phone contact {{ user_phone.label }} for {{ user_phone.profile }}{% endblock %}
 
@@ -7,9 +8,25 @@
 <div class="columns">
 <h1>Phone contact {{ user_phone.label }} for {{ user_phone.profile }}</h1>
 
+{% if can_edit %}
+<a href="{% url "user_profile_phone_update" username=username pk=user_phone.pk %}" class="button">Update</a>
+{% endif %}
+
+<div class="row">
+<div class="columns large-6">
 <p>Label: {{ user_phone.label }}</p>
 <p>Phone: <a href="tel:{{ user_phone.phone }}">{{ user_phone.phone }}</a></p>
 <p>Access: {{ user_phone.access }}</p>
+</div>
+<div class="columns large-6">
+{% if user_phone.notes %}
+<div class="notes panel">
+<h3>Notes</h3>
+{{ user_phone.notes|markdown }}
+</div>
+{% endif %}
+</div>
+</div>
 
 </div>
 </div>

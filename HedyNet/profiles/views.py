@@ -20,6 +20,8 @@ from profiles.access import access_levels, can_access
 from profiles import forms
 
 def get_user_profile_or_404(username):
+    """This function tries to retrieve a user profile based off of the given
+    user name or raises a 404 error."""
 
     try:
         user = User.objects.get(username = username)
@@ -41,28 +43,26 @@ class MemberDirectoryView(ListView):
     
     def get_queryset(self):
         
-        # get the viewer and their valid access levels (in general)
+        # get the viewer's profile
         viewer_profile = models.UserProfile.get_profile(self.request.user)
         logger.debug("Viewing member directory by user: %s" % str(self.request.user))
         
-        # we don't have any particular owner here, so get general access levels
-        # for the viewer
-        valid_access_levels = access_levels(None, viewer_profile)
-        
-        # okay, so if we're making a list of profiles we can show in this directory
-        # view, we want items both in the valid access levels and in the
-        # BASIC_ACCESS_LEVELS set that profile_access can be in
-        # see this for more information on set operations:
-        # http://docs.python.org/2/library/sets.html
-        directory_access_levels = valid_access_levels.intersection(
-            set([access_level[0] for access_level in 
-            constants.BASIC_ACCESS_LEVELS]))
+        return models.UserProfile.get_directory(
+            viewer_profile, status = constants.ACTIVE_STATUS)
 
-        logger.debug("Valid access levels for MemberDirectoryView: %s" % \
-            str(directory_access_levels))
-        # only show active members 
-        query = models.UserProfile.objects.filter(status = constants.ACTIVE_STATUS)
-        return models.filter_access_levels(query, "profile_access", directory_access_levels)
+    def get_context_data(self, *args, **kwargs):
+        context = super(MemberDirectoryView, self).get_context_data(**kwargs)
+
+        # add the viewer's profile to this view
+        self.viewer_profile = models.UserProfile.get_profile(self.request.user)
+
+        valid_access_levels = access_levels(None, self.viewer_profile)
+
+        [profile.access_strip(access_levels = valid_access_levels,
+            viewer_profile = self.viewer_profile)
+            for profile in context["user_profile_list"]]
+
+        return context
 
 class UserProfileView(SingleObjectMixin):
 
@@ -72,8 +72,19 @@ class UserProfileView(SingleObjectMixin):
         """Modify the get_object to return a profile based on a username."""
 
         username = self.kwargs.get("username", None)
+                
+        user_profile = get_user_profile_or_404(username)
 
-        return get_user_profile_or_404(username)
+        # add valid access levels to this view
+        self.valid_access_levels = access_levels(user_profile.user, self.request.user)
+        # add the viewer's profile to this view
+        self.viewer_profile = models.UserProfile.get_profile(self.request.user)
+
+        # strip the profile to only contain information present
+        # at the valid access level
+        user_profile.access_strip(self.valid_access_levels, self.viewer_profile)
+        
+        return user_profile
 
     def get_context_data(self, *args, **kwargs):
         context = super(UserProfileView, self).get_context_data(**kwargs)
@@ -82,40 +93,95 @@ class UserProfileView(SingleObjectMixin):
             context['can_edit'] = True
         else:
             context['can_edit'] = False
-
+        
+        valid_access_levels = access_levels(self.object, self.viewer_profile)
+        
+        context['phone_contacts'] = self.object.get_phone_contacts(
+            self.valid_access_levels, self.viewer_profile)
+        context['address_contacts'] = self.object.get_address_contacts(
+            self.valid_access_levels, self.viewer_profile)
+        context['email_contacts'] = self.object.get_email_contacts(
+            self.valid_access_levels, self.viewer_profile)
+        
+        context['preferred_phone'] = self.object.get_preferred_phone(
+            self.valid_access_levels, self.viewer_profile)
+        context['preferred_email'] = self.object.get_preferred_email(
+            self.valid_access_levels, self.viewer_profile)
+        context['preferred_address'] = self.object.get_preferred_address(
+            self.valid_access_levels, self.viewer_profile)
+        
         return context
 
 class UserProfileDetailView(UserProfileView, DetailView):
     context_object_name = "user_profile"
 
+    def get_context_data(self, *args, **kwargs):
+        context = super(UserProfileDetailView, self).get_context_data(**kwargs)
+
+        # add the viewer's profile to this view
+        self.viewer_profile = models.UserProfile.get_profile(self.request.user)
+        valid_access_levels = access_levels(self.object, self.viewer_profile)
+        self.object.access_strip(access_levels = valid_access_levels,
+            viewer_profile = self.viewer_profile)
+
+        return context
+        
 class UserProfileUpdateView(LoginRequiredMixin, UserProfileView, UpdateView):
     form_class = forms.UserProfileForm
     template_name_suffix = "_edit"
     context_object_name = "user_profile"
 
-    #def get_context_data(self, *args, **kwargs):
-    #    context = super(UserProfileUpdateView, self).get_context_data(**kwargs)
-    #    context['user_profile'] = 
-    #    return context
-
     def get_object(self, *args, **kwargs):
 
         user_profile = super(UserProfileUpdateView, self).get_object(*args, **kwargs)
 
+        # only the owner of the profile can edit it
         if user_profile.user != self.request.user:
             raise PermissionDenied()
         else:
             return user_profile
 
-class UserContactInfoCreateView(LoginRequiredMixin, CreateView):
+class UserContactInfoView(LoginRequiredMixin):
     def get_context_data(self, *args, **kwargs):
 
-        context = super(UserContactInfoCreateView, self).get_context_data(*args, **kwargs)
+        context = super(UserContactInfoView, self).get_context_data(*args, **kwargs)
 
-        username = self.kwargs.get("username", None)
-        context["user_profile"] = get_user_profile_or_404(username)
+        viewer_profile = models.UserProfile.get_profile(self.request.user)
+        context["username"] = self.kwargs.get("username", None)
+        context["user_profile"] = get_user_profile_or_404(context["username"])
+
+        if self.object:
+            owner_profile = self.object.profile
+            # pass in can_edit flag if viewer of the profile is also the owner
+            # it will then be used as a conditional to render edit buttons
+            context["can_edit"] = owner_profile == viewer_profile
+            
+            # check access for both the profile and the contact
+            valid_profile_access = can_access(owner_profile, viewer_profile, 
+                owner_profile.profile_access)
+            valid_contact_access = can_access(owner_profile, viewer_profile,
+                self.object.access)
+            
+            # only let the page be viewed if there is valid access
+            if not (valid_profile_access and valid_contact_access):
+                raise PermissionDenied
+        
+        self.username = context["username"]
+        self.profile = context["user_profile"]
 
         return context
+
+class UserContactInfoEditView(UserContactInfoView):
+
+    def dispatch(self, request, *args, **kwargs):
+        self.username = self.kwargs.get("username", None)
+        self.profile = get_user_profile_or_404(self.username)
+
+        # only owner of the profile can edit a given contact view
+        if self.request.user != self.profile.user:
+            raise PermissionDenied
+
+        return super(UserContactInfoView, self).dispatch(request, *args, **kwargs)
 
     def get_success_url(self, *args, **kwargs):
 
@@ -123,33 +189,50 @@ class UserContactInfoCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        username = self.kwargs.get("username", None)
-        self.object.profile = get_user_profile_or_404(username)
+
+        # give this object a profile automatically
+        self.object.profile = self.profile
+
         self.object.save()
 
         return super(ModelFormMixin, self).form_valid(form)
 
-class UserPhoneCreateView(UserContactInfoCreateView):
+class UserPhoneCreateView(UserContactInfoEditView, CreateView):
     form_class = forms.UserPhoneForm
     template_name = "profiles/userphone_add.html"
 
-class UserEmailCreateView(UserContactInfoCreateView):
+class UserEmailCreateView(UserContactInfoEditView, CreateView):
     form_class = forms.UserEmailForm
     template_name = "profiles/useremail_add.html"
 
-class UserAddressCreateView(UserContactInfoCreateView):
+class UserAddressCreateView(UserContactInfoEditView, CreateView):
     form_class = forms.UserAddressForm
     template_name = "profiles/useraddress_add.html"
 
-class UserPhoneDetailView(DetailView):
+class UserPhoneUpdateView(UserContactInfoEditView, UpdateView):
+    model = models.UserPhone    
+    form_class = forms.UserPhoneForm
+    template_name = "profiles/userphone_add.html"
+
+class UserEmailUpdateView(UserContactInfoEditView, UpdateView):
+    model = models.UserEmail
+    form_class = forms.UserEmailForm
+    template_name = "profiles/useremail_add.html"
+
+class UserAddressUpdateView(UserContactInfoEditView, UpdateView):
+    model = models.UserAddress
+    form_class = forms.UserAddressForm
+    template_name = "profiles/useraddress_add.html"
+
+class UserPhoneDetailView(UserContactInfoView, DetailView):
     model = models.UserPhone
     context_object_name = "user_phone"
 
-class UserAddressDetailView(DetailView):
+class UserAddressDetailView(UserContactInfoView, DetailView):
     model = models.UserAddress
     context_object_name = "user_address"
 
-class UserEmailDetailView(DetailView):
+class UserEmailDetailView(UserContactInfoView, DetailView):
     model = models.UserEmail
     context_object_name = "user_email"
 
@@ -189,10 +272,14 @@ class MemberStatusChangeListView(LoginRequiredMixin, PermissionRequiredMixin, Li
     permission_required = "profiles.add_memberstatuschange"
     raise_exception = True
 
-    def get_queryset(self, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
+        self.username = self.kwargs.get("username", None)
+        self.user_profile = get_user_profile_or_404(self.username)
+        self.viewer_profile = models.UserProfile.get_profile(self.request.user)
 
-        username = self.kwargs.get("username", None)
-        user_profile = get_user_profile_or_404(username)
+        return super(MemberStatusChangeListView, self).get(self, *args, **kwargs)
+
+    def get_queryset(self, *args, **kwargs):
 
         return models.MemberStatusChange.objects.filter(
             profile = user_profile).order_by('-changed_on')
@@ -201,8 +288,7 @@ class MemberStatusChangeListView(LoginRequiredMixin, PermissionRequiredMixin, Li
 
         context = super(MemberStatusChangeListView, self).get_context_data(*args, **kwargs)
 
-        username = self.kwargs.get("username", None)
-        context["user_profile"] = get_user_profile_or_404(username)
+        context["user_profile"] = self.user_profile
 
         return context
 

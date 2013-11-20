@@ -2,3 +2,4 @@ Django==1.5.1
 MySQL-python
 django-braces==1.0.0
 django-allauth==0.11.1
+django-markdown-deux==1.0.4

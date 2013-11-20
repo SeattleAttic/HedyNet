@@ -6,8 +6,19 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = models.UserProfile
         fields = ['profile_access', 'display_name', 'legal_name', 'legal_name_access',
-            'preferred_contact_method']
+            'about', 'about_access', 'preferred_contact_method', 'preferred_phone',
+            'preferred_email', 'preferred_address']
 
+    def __init__(self, *args, **kwargs):
+        super(UserProfileForm, self).__init__(*args, **kwargs)
+        
+        self.fields['preferred_phone'].queryset = models.UserPhone.objects.filter(
+            profile = self.instance)
+        self.fields['preferred_email'].queryset = models.UserEmail.objects.filter(
+            profile = self.instance)
+        self.fields['preferred_address'].queryset = models.UserAddress.objects.filter(
+            profile = self.instance)
+        
 class MemberStatusChangeForm(forms.ModelForm):
     class Meta:
         model = models.MemberStatusChange

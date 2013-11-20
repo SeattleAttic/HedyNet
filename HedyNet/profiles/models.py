@@ -8,14 +8,22 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import AnonymousUser
 from django.core.urlresolvers import reverse
 
-from profiles import constants
+from markdown_deux.templatetags.markdown_deux_tags import markdown_allowed
 
-def filter_access_levels(query, field, access_levels):
+from profiles import constants
+from profiles import access
+
+def filter_access_levels(query, field, access_levels, owner_field = None,
+  owner_object = None):
     """Given a query, add an OR filter for the list of valid access levels
-    applied to the given field."""
+    applied to the given field. Can optionally add in an owner field and
+    owner object that will be added, so that a user can see their own
+    items regardless of """
     
     access_filter = reduce(
         lambda q,access_level: q|Q(**{field: access_level}), access_levels, Q())
+    if owner_field and owner_object:
+        access_filter = access_filter | Q(**{owner_field: owner_object})
     return query.filter(access_filter)
 
 class UserProfile(models.Model):
@@ -25,21 +33,33 @@ class UserProfile(models.Model):
     status = models.CharField(max_length=20, choices=constants.STATUS_LEVELS, null=True)
 
     profile_access = models.CharField(max_length=20, choices=constants.BASIC_ACCESS_LEVELS, \
-        default=constants.MEMBERS_ACCESS)
+        default=constants.MEMBERS_ACCESS,
+        help_text = """This determines who can see your profile.""")
 
-    display_name = models.CharField(max_length=50)
+    display_name = models.CharField(max_length=50, blank = True,
+        help_text="Your display name throughout the site, which can be different from the default of your username.")
 
-    legal_name = models.CharField(max_length=255, blank = True, null = True)
+    legal_name = models.CharField(max_length=255, blank = True,
+        help_text="Your legal name, which could be useful for administrative purposes.")
     legal_name_access = models.CharField(max_length=20, choices=constants.ACCESS_LEVELS, \
-        default=constants.MEMBERS_ACCESS)
+        default=constants.MEMBERS_ACCESS,
+        help_text="Restrict who has access to your legal name.")
 
-    #about = models.TextField(blank = True, help_text="You can use Markdown in this profile.")
+    about = models.TextField(blank = True, 
+        help_text= "You can customize this area to tell others more about yourself.\n\n" + markdown_allowed() )
+    about_access = models.CharField(max_length=20, choices=constants.ACCESS_LEVELS,
+        default=constants.MEMBERS_ACCESS,
+        help_text="Restrict who has access to your about text.")
 
     preferred_contact_method = models.CharField(max_length=20,
-        choices=constants.CONTACT_METHODS, default=constants.EMAIL_CONTACT)
-    preferred_phone = models.ForeignKey('UserPhone', blank = True, null = True)
-    preferred_email = models.ForeignKey('UserEmail', blank = True, null = True)
-    preferred_address = models.ForeignKey('UserAddress', blank = True, null = True)
+        choices=constants.CONTACT_METHODS, default=constants.EMAIL_CONTACT,
+        help_text="This lists your preferred contact method, so people know the best way to get in touch with you.")
+    preferred_phone = models.ForeignKey('UserPhone', blank = True, null = True,
+        help_text="This sets your preferred phone number, so if you have more than one you can say which one to use.")
+    preferred_email = models.ForeignKey('UserEmail', blank = True, null = True,
+                help_text="This sets your preferred email, so if you have more than one you can say which one to use.")
+    preferred_address = models.ForeignKey('UserAddress', blank = True, null = True,
+                help_text="This sets your preferred address, so if you have more than one you can say which one to use.")
 
     became_member_on = models.DateField(null = True, blank = True)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -81,6 +101,105 @@ class UserProfile(models.Model):
             return UserProfile.objects.get(user = user)
         except ObjectDoesNotExist:
             return None
+
+    @staticmethod
+    def get_directory(viewer_profile = None, status = None):
+        """Returns a list of profiles in the directory.  Giving a viewer_profile
+        allows the viewer to see profiles that they have access to.  Giving
+        a status filters the list to that type of membership status."""
+        
+        # we don't have any particular owner here, so get general access levels
+        # for the viewer
+        valid_access_levels = access.access_levels(None, viewer_profile)
+        
+        # okay, so if we're making a list of profiles we can show in this directory
+        # view, we want items both in the valid access levels and in the
+        # BASIC_ACCESS_LEVELS set that profile_access can be in
+        # see this for more information on set operations:
+        # http://docs.python.org/2/library/sets.html
+        directory_access_levels = valid_access_levels.intersection(
+            set([access_level[0] for access_level in 
+            constants.BASIC_ACCESS_LEVELS]))
+        
+        # optionally filter by status
+        if status:
+            query = UserProfile.objects.filter(status = status)
+            
+        return filter_access_levels(query, "profile_access", directory_access_levels)
+        
+    def access_strip(self, access_levels = (constants.PUBLIC_ACCESS,),
+        viewer_profile = None):
+        """Strip away information from the model that does not have the given
+        valid access levels."""
+        
+        # if the viewer is the owner of the profile, they can observe all the
+        # current fields of data
+        if viewer_profile == self:
+            return
+        
+        if not self.legal_name_access in access_levels:
+            self.legal_name = ""
+        
+        if not self.about_access in access_levels:
+            self.about = ""
+        
+        if not constants.MEMBERS_ACCESS in constants.PUBLIC_ACCESS:
+            self.became_member_on = None
+        
+    def get_preferred_phone(self, access_levels = (constants.PUBLIC_ACCESS,), 
+      viewer_profile = None):
+        
+        if self.preferred_phone and \
+          self.preferred_phone.access in access_levels:
+            return self.preferred_phone
+            
+        return None
+        
+    def get_preferred_email(self, access_levels = (constants.PUBLIC_ACCESS,),
+      viewer_profile = None):
+        
+        if self.preferred_email and \
+          self.preferred_email.access in access_levels:
+            return self.preferred_email
+            
+        return None
+        
+    def get_preferred_address(self, access_levels = (constants.PUBLIC_ACCESS,),
+      viewer_profile = None):
+        
+        if self.preferred_address and \
+          self.preferred_address.access in access_levels:
+            return self.preferred_address
+            
+        return None
+        
+    def get_phone_contacts(self, access_levels = (constants.PUBLIC_ACCESS,),
+      viewer_profile = None):
+        """Fetch a list of phone contacts, given an access level.  The default
+        access level is public."""
+        
+        query = UserPhone.objects.filter(profile = self)
+        return filter_access_levels(query, "access", access_levels, "profile",
+            viewer_profile)
+    
+    def get_address_contacts(self, access_levels = (constants.PUBLIC_ACCESS,),
+      viewer_profile = None):
+        """Fetch a list of address contacts, given an access level.  The default
+        access level is public."""
+        
+        query = UserAddress.objects.filter(profile = self)
+        return filter_access_levels(query, "access", access_levels, "profile",
+            viewer_profile)
+        
+    def get_email_contacts(self, access_levels = (constants.PUBLIC_ACCESS,),
+      viewer_profile = None):
+        """Fetch a list of email contacts, given an access level.  The default
+        access level is public."""
+        
+        query = UserEmail.objects.filter(profile = self)
+        return filter_access_levels(query, "access", access_levels, "profile",
+            viewer_profile)
+    
     
 class MemberStatusChange(models.Model):
     """A history of user status changes."""
@@ -118,9 +237,15 @@ class UserPhone(UserContactInfo):
 
     def __unicode__(self):
         return self.phone
-
+        
     def get_absolute_url(self):
-        return reverse('user_profile_phone_detail', kwargs = {'username': self.profile.user.username, 'pk': self.pk})
+        return reverse('user_profile_phone_detail', 
+            kwargs = {'username': self.profile.user.username, 'pk': self.pk})
+
+    def is_preferred(self):
+        if self.profile.preferred_phone == self:
+            return True
+        return False
 
 class UserEmail(UserContactInfo):
 
@@ -130,14 +255,28 @@ class UserEmail(UserContactInfo):
         return self.email
 
     def get_absolute_url(self):
-        return reverse('user_profile_email_detail', kwargs = {'username': self.profile.user.username, 'pk': self.pk})
+        return reverse('user_profile_email_detail', 
+            kwargs = {'username': self.profile.user.username, 'pk': self.pk})
+
+    def is_preferred(self):
+        if self.profile.preferred_email == self:
+            return True
+        return False
 
 class UserAddress(UserContactInfo):
 
     address = models.TextField()
 
     def __unicode__(self):
-        return self.label
-
+        if self.label:
+            return self.label
+        return "address"
+        
     def get_absolute_url(self):
-        return reverse('user_profile_address_detail', kwargs = {'username': self.profile.user.username, 'pk': self.pk})
+        return reverse('user_profile_address_detail', 
+            kwargs = {'username': self.profile.user.username, 'pk': self.pk})
+    
+    def is_preferred(self):
+        if self.profile.preferred_address == self:
+            return True
+        return False

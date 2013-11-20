@@ -9,8 +9,8 @@
 <h1>Editing profile for {{ user_profile.user.username }}</h1>
 
 <form method="post">{% csrf_token %}
-{{ form.as_p }}
-<button type="submit">Save</button>
+{% include "forms/foundation.html" %}
+<button class="right" type="submit">Save</button>
 </form>
 
 </div>
