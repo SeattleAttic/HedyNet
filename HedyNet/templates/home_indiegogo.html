@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block extrahead %}
+<style>
+.content .flair { margin-bottom: 1em; text-align: center; }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="row">
+<div class="columns large-8 small-12">
+<header><h1>Welcome!</h1></header>
+<div class="content">
+<div class="panel">
+<center><h3>The Attic is running a fundraising campaign through Indiegogo!</h3>
+
+<a href="http://igg.me/at/launch-seattle-attic/x/5306605"><img src="http://images.indiegogo.com/medias/1115370/primary_pictures/full/20131119050624-spaceheader.png?1384866648" width="600" alt="banner with various photos from the space with clickthrough link to indiegogo campaign"></a>
+<p>Find it here: <a href="http://igg.me/at/launch-seattle-attic/x/5306605">http://igg.me/at/launch-seattle-attic/x/5306605</a></p></center>
+
+<p>We want to accomplish the following:</p>
+
+<ul>
+<li>Flooring to protect our carpet and pave the way for woodworking, dyeing, and more.
+<li>More whiteboard space (the mother of invention)
+<li>Funded scholarships to allow members who can't afford dues, event fees, or transportation to contribute their talents to the Attic
+<li>Shelving and storage space so that we can continue to expand our awesome library and accomodate more member cubbies
+<li>A complete lighting overhaul: we'll replace the standard office fluorescents with energy-efficient daylight bulbs so that our artists can see colors better and to combat SAD
+<li>A reserve fund to cover re-painting our space when we move to a larger location
+</ul>
+
+<p>If you can't donate, that's really okay- just tell other people why you're excited for the Attic!  Help us in our quest for world domination through baked goods and warm welcomes!  (With apologies to the Tiptree Bake Sale.)</p>
+</div>
+
+<p>We're building something new and cool in downtown Seattle - a feminist, woman-centered, and trans- and queer-inclusive space where tinkerers, makers, crafters, and hackers of all genders encourage each other to work, teach, learn, and collaborate.</p> 
+
+<p>Does this sound relevant to your interests?  Sign up for our low-volume announcements list (via <a href="https://groups.google.com/forum/?fromgroups#!forum/seattle-attic-announce">web</a> or by emailing seattle-attic-announce+subscribe AT googlegroups DOT com) to get updates about our events.</p> 
+
+<hr />
+
+<p>We are <a href="{% url "visit" %}">located at 600 First Ave, Unit 605</a>. After hours, you can enter the building on the James Street side; look for the "Office Space" sign, and dial "Attic" on the intercom.</p>
+
+<p>We hold a weekly open house on Tuesday evenings from 6:30-9PM. You can reach us for more information at <a href="mailto:info@seattleattic.com">info@seattleattic.com</a>.</p>
+
+</div>
+</div>
+<div class="columns twitter large-4 small-12">
+{% if twitter %}
+<h2>What's Up?</h2>
+{{ twitter.embed_code|safe }}
+{% endif %}
+</div>
+</section>
+{% endblock %}
