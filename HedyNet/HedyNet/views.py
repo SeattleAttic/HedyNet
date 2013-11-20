@@ -6,7 +6,7 @@ from django.conf import settings
 import othersites
 
 class HomeTemplateView(TemplateView):
-    template_name = "home.html"
+    template_name = "home_indiegogo.html"
 
     def get_context_data(self, *args, **kwargs):
 
