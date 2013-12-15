@@ -7,7 +7,10 @@
 <dd>{{ address_contact.notes|markdown }}</dd>
 {% endif %}
 {% if can_edit %}
-<dd><a href="{% url "user_profile_address_update" username=username pk=address_contact.pk %}" class="button tiny">Edit</a></dd>
+<dd>
+<a href="{% url "user_profile_address_update" username=username pk=address_contact.pk %}" class="button tiny">Edit</a>
+<a href="{% url "user_profile_address_delete" username=username pk=address_contact.pk %}" class="button tiny">Delete</a>
+</dd>
 {% endif %}
 </dl>
 {% endwith %}

@@ -4,7 +4,8 @@
 <dt><a href="{{ phone_contact.get_absolute_url }}">{{ phone_contact.label }}</a>{% if preferred %} (preferred){% endif %}</dt>
 <dd><a href="tel:{{ phone_contact.phone }}">{{ phone_contact.phone }}</a></dd>
 {% if can_edit %}
-<dd><a href="{% url "user_profile_phone_update" username=username pk=phone_contact.pk %}" class="button tiny">Edit</a></dd>
+<dd><a href="{% url "user_profile_phone_update" username=username pk=phone_contact.pk %}" class="button tiny">Edit</a>
+<a href="{% url "user_profile_phone_delete" username=username pk=phone_contact.pk %}" class="button tiny">Delete</a></dd>
 {% endif %}
 {% if phone_contact.notes %}
 <dd>{{ phone_contact.notes|markdown }}</dd>
