@@ -80,6 +80,10 @@ class UserProfileView(SingleObjectMixin):
         # add the viewer's profile to this view
         self.viewer_profile = models.UserProfile.get_profile(self.request.user)
 
+        if not user_profile.profile_access in self.valid_access_levels:
+            raise Http404("No %(verbose_name)s found matching the username" %
+                {'verbose_name': models.UserProfile._meta.verbose_name})
+
         # strip the profile to only contain information present
         # at the valid access level
         user_profile.access_strip(self.valid_access_levels, self.viewer_profile)
@@ -196,6 +200,18 @@ class UserContactInfoEditView(UserContactInfoView):
         self.object.save()
 
         return super(ModelFormMixin, self).form_valid(form)
+
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(UserContactInfoEditView, self).get_context_data(**kwargs)
+
+        if isinstance(self, CreateView):
+            context["action"] = "add"
+        if isinstance(self, UpdateView):
+            context["action"] = "edit"
+
+        return context
+            
 
 class UserPhoneCreateView(UserContactInfoEditView, CreateView):
     form_class = forms.UserPhoneForm
