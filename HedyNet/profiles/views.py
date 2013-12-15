@@ -282,7 +282,7 @@ class MemberStatusChangeListView(LoginRequiredMixin, PermissionRequiredMixin, Li
     def get_queryset(self, *args, **kwargs):
 
         return models.MemberStatusChange.objects.filter(
-            profile = user_profile).order_by('-changed_on')
+            profile = self.user_profile).order_by('-changed_on')
 
     def get_context_data(self, *args, **kwargs):
 
