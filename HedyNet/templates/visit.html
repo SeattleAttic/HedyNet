@@ -23,7 +23,8 @@ Seattle WA 98104</p>
 </div>
 </div>
 <div class="columns twitter large-4 small-12">
-{% include "embeds/twitter.html" %}
+<h2>What's Up?</h2>
+{{ twitter.embed_code|safe }}
 </div>
 </section>
 {% endblock %}
