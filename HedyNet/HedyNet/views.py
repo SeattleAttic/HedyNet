@@ -20,3 +20,17 @@ class HomeTemplateView(TemplateView):
 
         return context
 
+class VisitTemplateView(TemplateView):
+    template_name = "visit.html"
+
+    def get_context_data(self, *args, **kwargs):
+
+        context = super(VisitTemplateView, self).get_context_data(
+            *args, **kwargs)
+
+        try:
+            context["twitter"] = othersites.models.OtherSite.objects.get(slug="twitter")
+        except:
+            pass
+
+        return context
