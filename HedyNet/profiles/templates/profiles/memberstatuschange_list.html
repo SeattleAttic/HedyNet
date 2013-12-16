@@ -2,6 +2,13 @@
 
 {% block title %}Member status changes for {{ user_profile }}{% endblock %}
 
+{% block breadcrumbs %}
+<ul class="breadcrumbs">
+<li><a href="{% url "home" %}">Home</a></li>
+<li class="current"><a href="{% url "memberdirectory" %}">Member Directory</a></li>
+</ul>
+{% endblock %}
+
 {% block content %}
 <div class="memberstatus row">
 <div class="columns">

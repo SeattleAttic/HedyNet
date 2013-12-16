@@ -2,16 +2,28 @@
 
 {% block title %}Member status list{% endblock %}
 
+{% block breadcrumbs %}
+<ul class="breadcrumbs">
+<li><a href="{% url "home" %}">Home</a></li>
+<li><a href="{% url "memberdirectory" %}">Member Directory</a></li>
+<li class="unavailable">Admin</li>
+<li class="current"><a href="{% url "member_status_list_admin" %}">Member Status</a></li>
+</ul>
+{% endblock %}
+
 {% block content %}
 <div class="memberstatus row">
 <div class="columns">
 <h1>Member Status</h1>
 
+<a href="{% url "memberdirectory" %}" class="button small">Back to directory</a>
+
 <table>
 <thead>
 <tr>
-<th>User</th>
-<th>Name</th>
+<th>Username</th>
+<th>Display Name</th>
+<th>Legal Name</th>
 <th>Status</th>
 <th>Became member</th>
 <th>Actions</th>
@@ -19,12 +31,15 @@
 </thead>
 <tbody>
 {% for user_profile in user_profile_list %}
+{% with user_profile.user as user %}
 <tr>
-<th>{{ user_profile }}</th>
+<th><a href="{% url "user_profile" username=user.username %}">{{ user.username }}</a></th>
+<td>{{ user_profile }}</td>
 <td>{{ user_profile.legal_name }}</td>
-<td>{{ user_profile.status }}</td>
+<td><a href="{% url "member_status_change_list" username=user.username %}">{{ user_profile.status }}</a></td>
 <td>{{ user_profile.became_member_on }}</td>
-<td><a href="{% url "member_status_change_add" username=user_profile.user.username %}">Change Status</a></td>
+<td><a href="{% url "member_status_change_add" username=user.username %}">Change Status</a></td>
+{% endwith %}
 </tr>
 {% endfor %}
 </tbody>
