@@ -1,11 +1,87 @@
+
 $link-color: #9a2a0c;
 $link-visited-color: #6a1d08;
-$link-hover-color: #e06a11;
+$link-hover-color: #c83737;
 
 /* Foundation overrides */
-$primary-color: #4c2209;
-$secondary-color: #e5bda4;
-$alert-color: #6a1d08;
-$success-color: #3e673e;
+$primary-color: #5e2500;
+$secondary-color: #de8787;
+$alert-color: #c83737;
+$success-color: #98ba33;
 
-$contrast-color: #2d221b;
+$contrast-color: #2b1100;
+
+/* Breadcrumb Variables */
+
+$crumb-radius: 0px;
+
+$crumb-font-color-current: $primary-color;
+$crumb-font-color-unavailable: #550000;
+$crumb-slash-color: $primary-color;
+
+/* Top Bar Variables */
+
+
+/* Background color for the top bar */
+
+$topbar-bg: $contrast-color;
+
+/* Height and margin */
+
+$topbar-height: 45px;
+$topbar-margin-bottom: 0px;
+
+/* Control Input height for top bar */
+
+$topbar-input-height: 2.45em;
+
+/* Controlling the styles for the title in the top bar */
+
+$topbar-title-weight: bold;
+$topbar-title-font-size: em-calc(17);
+
+/* Style the top bar dropdown elements */
+
+$topbar-dropdown-bg: $primary-color;
+$topbar-dropdown-link-color: #fff;
+$topbar-dropdown-link-bg: lighten($topbar-bg, 5%);
+$topbar-dropdown-toggle-size: 5px;
+$topbar-dropdown-toggle-color: #fff;
+$topbar-dropdown-toggle-alpha: 0.5;
+
+/* Set the link colors and styles for top-level nav */
+
+$topbar-link-color: #fff;
+$topbar-link-color-hover: #fff;
+$topbar-link-color-active: #fff;
+$topbar-link-weight: bold;
+$topbar-link-font-size: em-calc(13);
+$topbar-link-hover-lightness: -30%;
+$topbar-link-bg-hover: darken($topbar-bg, 3%);
+$topbar-link-bg-active: darken($topbar-bg, 3%);
+
+$topbar-dropdown-label-color: lighten($topbar-bg, 20%);
+$topbar-dropdown-label-text-transform: uppercase;
+$topbar-dropdown-label-font-weight: bold;
+$topbar-dropdown-label-font-size: em-calc(10);
+
+/* Top menu icon styles */
+
+$topbar-menu-link-transform: uppercase;
+$topbar-menu-link-font-size: em-calc(13);
+$topbar-menu-link-weight: bold;
+$topbar-menu-link-color: #fff;
+$topbar-menu-icon-color: #fff;
+$topbar-menu-link-color-toggled: #d35f5f;
+$topbar-menu-icon-color-toggled: #d35f5f;
+
+/* Transitions and breakpoint styles */
+
+$topbar-transition-speed: 300ms;
+$topbar-breakpoint: em-calc(940);
+$topbar-media-query: "only screen and (min-width: #{$topbar-breakpoint})";
+
+/* Divider Styles */
+
+$topbar-divider-border-bottom: solid 1px lighten($topbar-bg, 10%);
+$topbar-divider-border-top: solid 1px darken($topbar-bg, 10%);
