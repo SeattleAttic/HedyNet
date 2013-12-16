@@ -10,35 +10,8 @@
 
 {% block content %}
 <section class="row">
-<div class="columns large-8 small-12">
-<div class="content">
-
-<div class="panel">
-<div class="row">
-<div class="columns large-4 medium-4">
-<img src="{{ STATIC_URL }}img/logo/SACW_logo.png" height="100" alt="The Seattle Attic Logo: A banner with our name below a stylized roof with a window.">
-</div>
-<div class="columns large-8 medium-8">
-<p>Did you miss our <a href="http://igg.me/at/launch-seattle-attic/x/5306605">IndieGogo Campaign</a>?
-You can still contribute to the Seattle Attic's continuing success on our
-<a href="{% url "donations" %}">donate page</a>.</p>
-</div>
-</div>
-<br />
-<p>Your gift will help fund our operations cost as well as some of our stretch goals:</p>
-
-<ul>
-<li>Memberships for starving hackers</li>
-<li>A textile fabrication workshop: drum carder, serger, sewing/embroidery machine, blocking frame
-and blocking wires, notions and teaching materials!</li>
-<li>A 3-D printer</li>
-</ul>
-
-<p>You may also donate in kind. Check out 
-<a href="http://www.amazon.com/gp/registry/wishlist/1SN6WVAPQT1IG/ref=cm_sw_su_w">this list of books/items/stuff that we 
-would like to stock our space with</a>.</p>
-</div>
-
+<div class="columns large-5 medium-6 small-12">
+<h2>Welcome!</h2>
 <p>This summer, a group of idealistic intersectional feminists started a 
 <a href="http://en.wikipedia.org/wiki/Hackerspace" data-tooltip class="has-tip" 
 title="Via Wikipedia: A hackerspace (also referred to as a hacklab, makerspace, or hackspace) is a community-operated workspace where people with common interests, often in computers, technology, science, digital art or electronic art, can meet, socialize and/or collaborate.">hackerspace</a>
@@ -64,11 +37,32 @@ seattle-attic-announce+subscribe AT googlegroups DOT com) to get updates about o
 <p>If you want to start a similar space in your city, do contact us so that we can share our 
 knowledge and experience with you.</p>
 
-</div>
-</div>
-<div class="columns twitter large-4 small-12">
+</div><!-- end columns -->
+<div class="columns large-5 medium-6 small-12">
+
+<div class="panel">
+<p><img src="{{ STATIC_URL }}img/logo/SACW_logo.png" height="100" alt="The Seattle Attic Logo: A banner with our name below a stylized roof with a window."></p>
+<p>Did you miss our <a href="http://igg.me/at/launch-seattle-attic/x/5306605">IndieGogo Campaign</a>?
+You can still contribute to the Seattle Attic's continuing success on our
+<a href="{% url "donations" %}">donate page</a>.</p>
+<p>Your gift will help fund our operations cost as well as some of our stretch goals:</p>
+
+<ul>
+<li>Memberships for starving hackers</li>
+<li>A textile fabrication workshop: drum carder, serger, sewing/embroidery machine, blocking frame
+and blocking wires, notions and teaching materials!</li>
+<li>A 3-D printer</li>
+</ul>
+
+<p>You may also donate in kind. Check out 
+<a href="http://www.amazon.com/gp/registry/wishlist/1SN6WVAPQT1IG/ref=cm_sw_su_w">this list of books/items/stuff that we 
+would like to stock our space with</a>.</p>
+</div><!-- end panel -->
+</div><!-- end columns -->
+
+<div class="columns twitter large-2 medium-12 small-12">
 {% if twitter %}
-<h2>What's Up?</h2>
+<h5>What's Up?</h5>
 {{ twitter.embed_code|safe }}
 {% endif %}
 </div>
