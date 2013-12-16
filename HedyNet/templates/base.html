@@ -59,17 +59,22 @@
 {% block footer %}
 <footer class="row">
 <div class="columns"><hr /></div>
-    <div class="large-6 columns fineprint">
+    <div class="medium-6 columns fineprint">
         <p>This is a fiscally sponsored project of the School Factory, Inc. a 501(c)3 non-profit corporation.  For more information: <br /><a href="mailto:info@seattleattic.com">info@seattleattic.com</a></p>
     </div>
-    <div class="large-6 columns">
+    <div class="medium-6 columns">
+    <div class="row">
+      <div class="columns">
         <ul class="inline-list right">
             <li><a href="{% url "sitemap" %}">Sitemap</a></li>
             <li><a href="{% url "tos" %}">TOS</a></li>
             <li><a href="{% url "policies" %}">Policies</a></li>
             <li><a href="{% url "codeofconduct" %}">Code of Conduct</a></li>
         </ul>
+      </div>
+      <div class="columns">
         <p class="right">&copy; Seattle Attic 2013</p>
+      </div>
     </div>
   </footer>
 {% endblock %}
