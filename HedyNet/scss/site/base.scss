@@ -21,3 +21,6 @@ a.button, a.button:visited { color: white !important; }
 .fineprint { font-size: smaller; }
 
 ul.breadcrumbs { margin-bottom: 0px; }
+
+/* Fix IE resizing */
+img { -ms-interpolation-mode: bicubic; }
