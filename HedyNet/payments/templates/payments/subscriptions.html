@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% block title %}Member Subscriptions{% endblock %}
+
+{% block extrahead %}
+<style>
+.paypal-button { float: left; margin-right: 1em; margin-bottom: 1em; }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="row">
+
+<div class="columns">
+<h1>Member Subscriptions</h1>
+
+<p>Hello, charming Attic member! This is where you can set up a recurring payment for your Workshop
+membership. Thank you for doing your part to support our space!  We currently have three levels
+of membership.</p>
+
+<h2>Membership Levels</h2>
+
+<div class="row">
+<div class="columns large-4">
+<h3>Full</h3>
+<p>Members have access to the space and can attend members only meetings.</p>
+</div>
+<div class="columns large-4">
+<h3>Starving Hacker</h3>
+<p>If the regular membership rate would cause hardship, members may elect to pay this rate instead.</p>
+</div>
+<div class="columns large-4">
+<h3>Friends of the Attic</h3>
+<p>A level for people who want to show their support and help keep the space running, but 
+aren't interested in membership.</p>
+</div>
+</div>
+</div>
+
+<div class="columns">
+<h2>PayPal</h2>
+
+<p>PayPal has bigger processing fees than Dwolla, but you can set up a recurring subscription so you
+don't have to remember to manually pay each month.  PayPal can also accept credit cards, unlike Dwolla.</p>
+
+<div class="row">
+
+<div class="columns medium-4">
+<h3>Full:<br />$51.75</h3>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+
+<input type="hidden" name="cmd" value="_s-xclick">
+
+<input type="hidden" name="hosted_button_id" value="LFRLYZX45WGG8">
+
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_subscribeCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+
+<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+
+</form>
+</div>
+
+<div class="columns medium-4">
+<h3>Starving Hacker:<br />$26.00</h3>
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+
+<input type="hidden" name="cmd" value="_s-xclick">
+
+<input type="hidden" name="hosted_button_id" value="JNFWYHT53D58S">
+
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_subscribeCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+
+<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+
+</form>
+</div>
+
+<div class="columns medium-4">
+<h3>Friends Of:<br />$13.37</h3>
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+
+<input type="hidden" name="cmd" value="_s-xclick">
+
+<input type="hidden" name="hosted_button_id" value="KNJDGMA6PWVNE">
+
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_subscribeCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+
+<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+
+</form>
+</div>
+</div>
+</div>
+
+<div class="columns ">
+<h2>Dwolla</h2>
+
+<p>Dwolla payments are much cheaper to process than PayPal, but this method currently doesn't have
+a way of making automatic subscription payments every month, so make sure to come back next month!
+They only work with bank account ACH transfers.</p>
+
+<p><strong>Warning:</strong> the buttons below don't work without Javascript enabled from Dwolla!  Apologies.</p>
+
+<div class="row">
+
+<div class="columns medium-4">
+<h3>Full:<br />$50.25</h3>
+<script
+  src="https://www.dwolla.com/scripts/button.min.js" class="dwolla_button" type="text/javascript"
+  data-key="bkjlb4RohNRH7UcPWlslhAk4X5Tc4He2dzm2TZBT06Kr/t91yz"
+  data-redirect="http://hedynet.audrajohnson.com/payments/subscriptions/thankyou"
+  data-label="Full"
+  data-name="Full Membership"
+  data-description="A month's dues for full membership for the Seattle Attic.  Thank you for supporting us!"
+  data-amount="50.25"
+  data-shipping="0"
+  data-tax="0"
+  data-guest-checkout="true"
+  data-type="simple"
+>
+</script>
+</div>
+
+<div class="columns medium-4">
+<h3>Starving Hacker:<br />$25.25</h3>
+
+<script
+  src="https://www.dwolla.com/scripts/button.min.js" class="dwolla_button" type="text/javascript"
+  data-key="GRy257EYySKCgz/uY4EADhZ/Kj57tpj2wIGmjepOdaSnQ5myDY"
+  data-redirect="http://hedynet.audrajohnson.com/payments/subscriptions/thankyou"
+  data-label="Starving Hacker"
+  data-name="Starving Hacker Membership"
+  data-description="A month's reduced dues for membership to the Seattle Attic.  Thank you for supporting us!"
+  data-amount="25.25"
+  data-shipping="0"
+  data-tax="0"
+  data-guest-checkout="true"
+  data-type="simple"
+>
+</script>
+</div>
+
+<div class="columns medium-4">
+<h3>Friends Of:<br />$13.25</h3>
+<script
+  src="https://www.dwolla.com/scripts/button.min.js" class="dwolla_button" type="text/javascript"
+  data-key="x73t8n7hW939peVoTM9nB/Xe6ZPREebk4/hX+himVJ13oyc3qR"
+  data-redirect="http://hedynet.audrajohnson.com/payments/subscriptions/thankyou"
+  data-label="Friends of the Attic"
+  data-name="Friends of the Attic Membership"
+  data-description="A month's supporting dues towards the Seattle Attic.  Thank you!"
+  data-amount="13.25"
+  data-shipping="0"
+  data-tax="0"
+  data-guest-checkout="true"
+  data-type="simple"
+>
+</script>
+</div>
+</div>
+</div>
+
+</div>
+
+</section>
+{% endblock %}

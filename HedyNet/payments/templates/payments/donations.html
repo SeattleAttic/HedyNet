@@ -9,14 +9,20 @@
 {% endblock %}
 
 {% block content %}
-<section class="row">
-<div class="columns large-12 small-12">
+<section class="row"><div class="columns">
 <header><h1>Donations: Thank You!</h1></header>
 <div class="content">
+<div class="row">
+<div class="columns large-6">
+<h4>PayPal</h4>
+
+<p>Donate through PayPal or with your credit card!</p>
+
 <form class="paypal-button" action="https://www.paypal.com/cgi-bin/webscr" method="post"
 target="_top">
 <input type="hidden" name="cmd" value="_s-xclick">
 <input type="hidden" name="hosted_button_id" value="24FWAFH9NZ7PU">
+<input type="hidden" name="return" value="{% url "donations_thankyou" %}">
 <input type="image"
 src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
 border="0" name="submit" alt="PayPal - The safer, easier way to pay
@@ -25,6 +31,30 @@ online!">
 src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1"
 height="1">
 </form>
+</div><!-- end columns  -->
+<div class="columns large-6">
+<h4>Dwolla</h4>
+
+<p>Dwolla has fewer fees than PayPal, if you want to increase the amount we get for the same money! Note: the button
+requires Javascript from dwolla.com to work.</p>
+<script
+  src="https://www.dwolla.com/scripts/button.min.js" class="dwolla_button" type="text/javascript"
+  data-key="0tynLP77eyTLU5FPc/Pd3T6B1ZtF1sjltRAEO6Mmvmcv6fsNc6"
+  data-redirect="http://seattleattic.com/payments/donations/thankyou"
+  data-label="Donate now"
+  data-name="Seattle Attic Donation"
+  data-description="Thank you for your donation to the Attic!  We'll put it to good use."
+  data-amount="25"
+  data-guest-checkout="true"
+  data-type="freetype"
+>
+</script>
+</div><!-- end columns -->
+</div><!-- end row -->
+<div class="row">
+<div class="columns large-12 small-12">
+
+<hr />
 <p>Thank you for supporting the Seattle Attic Community Workshop. We are
 a fiscally sponsored project of the School Factory, Inc. a 501(c)3
 non-profit corporation. They will provide you with a receipt for your
@@ -33,14 +63,16 @@ donation.</p>
 <p>Many companies will match donations to 501c3 charities. Microsoft
 employees, for example, can go to <a href="http://give">MS Give</a> (an intranet link)
 and search for School Factory to have donations matched.
-Please indicate in the comments on your donation that it is intended for the 
+Please indicate in the comments on your donation that it is intended for the
 Seattle Attic Community Workshop so that School Factory can route it appropriately.</p>
 
 <p>If you haven't already, please consider subscribing to our low-volume
 annoucements mailing list via
 <a href="https://groups.google.com/forum/?fromgroups#!forum/seattle-attic-announce">web</a>
 or by emailing seattle-attic-announce+subscribe AT googlegroups DOT com.</p>
-</div>
-</div>
+</div><!-- end columns -->
+</div><!-- end row -->
+</div><!-- end columns -->
+</div><!-- end content -->
 </section>
 {% endblock %}

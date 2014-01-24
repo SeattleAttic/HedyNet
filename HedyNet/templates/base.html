@@ -53,7 +53,9 @@
       <!-- Right Nav Section -->
       <ul class="right">
         <li class="divider"></li>
-        <li><a href="{% url "home" %}">Home</a></li>
+        <li><a href="{% url "events" %}">Events</a></li>
+        <li class="divider"></li>
+        <li><a href="http://seattleattic.dreamwidth.org/" target="_blank">Community Blog</a><li>
         <li class="divider"></li>
         <li class="has-dropdown">
           <a href="#">About</a>
@@ -62,12 +64,16 @@
             <li><a href="{% url "policies" %}">Policies</a></li>
             <li><a href="{% url "codeofconduct" %}">Code of Conduct</a></li>
             <li><a href="{% url "faqsection-detail" slug="main" %}">FAQ</a></li>
+            <li><a href="{% url "othersite_list" %}">Other sites</a></li>
+            <li><a href="{% url "friends" %}">Friends</a></li>
           </ul>
         </li>
         <li class="divider"></li>
         <li><a href="{% url "visit" %}">Visit</a></li>
         <li class="divider"></li>
         <li><a href="{% url "donations" %}">Donate</a></li>
+        <li class="divider"></li>
+        <li><a href="{% url "membership" %}">Membership</a></li>
       </ul>
     </section>
 
@@ -91,8 +97,7 @@
 <footer class="row">
 <div class="columns"><hr /></div>
     <div class="large-6 columns fineprint">
-        <p>This is a fiscally sponsored project of the School Factory, Inc. a 501(c)3 non-profit corporation.</p>
-        <p>&copy; Seattle Attic 2013</p>
+        <p>This is a fiscally sponsored project of the School Factory, Inc. a 501(c)3 non-profit corporation.  For more information: <br /><a href="mailto:info@seattleattic.com">info@seattleattic.com</a></p>
     </div>
     <div class="large-6 columns">
         <ul class="inline-list right">
@@ -101,23 +106,23 @@
             <li><a href="{% url "policies" %}">Policies</a></li>
             <li><a href="{% url "codeofconduct" %}">Code of Conduct</a></li>
         </ul>
+        <p class="right">&copy; Seattle Attic 2013</p>
     </div>
   </footer>
 {% endblock %}
 {% endblock %}
 
 {% block scripts %}
-  <script>
-  document.write('<script src=' +
-  ('__proto__' in {} ? '{% static "js/vendor/zepto" %}' : '{% static "js/vendor/jquery" %}') +
-  '.js><\/script>')
-  </script>
+  <script src="{% static "js/vendor/jquery.js" %}"></script>
+  <script src="{% static "js/vendor/fastclick.js" %}"></script>
   <script src="{% static "js/foundation/foundation.js" %}"></script>
   <script src="{% static "js/foundation/foundation.dropdown.js" %}"></script>
   <script src="{% static "js/foundation/foundation.forms.js" %}"></script>
   <script src="{% static "js/foundation/foundation.placeholder.js" %}"></script>
   <script src="{% static "js/foundation/foundation.reveal.js" %}"></script>
   <script src="{% static "js/foundation/foundation.topbar.js" %}"></script>
+  <script src="{% static "js/foundation/foundation.section.js" %}"></script>
+  <script src="{% static "js/foundation/foundation.tooltips.js" %}"></script>
   <script>
     $(document).foundation();
   </script>

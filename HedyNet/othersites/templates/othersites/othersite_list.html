@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Attic Windows{% endblock %}
+
+{% block content %}
+<div class="row">
+<div class="columns large-12 small-12">
+<header><h1>Attic Windows</h1></header>
+
+<p>These are other sites on the internet associated with the Attic!</p>
+
+<dl class="sub-nav">
+  <dt>Sites:</dt>
+  {% for site in othersite_list %}
+  <dd><a href="{{ site.get_absolute_url }}">{{ site }}</a></dd>
+  {% endfor %}
+</dl>
+
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Membership{% endblock %}
+
+{% block content %}
+<section class="row">
+<div class="columns">
+<header><h1>Membership</h1></header>
+
+<p>We at the Seattle Attic form a vibrant and supportive community of hackers and makers. We're looking for new members who want to build this community with us and who support our goals of creating a diverse hackerspace built on openness and respect.</p>
+
+<p>As an Attic member, you will:</p>
+
+<ul>
+<li>have 24/7 access to our two-room workspace/coworking space, and have your very own cubby to store your projects</li>
+
+<li>attend members-only events</li>
+
+<li>use Attic equipment for your projects, large and small. We currently have: soldering stations, sewing machines, knitting needles, Louet S15 spinning wheel, miscellaneous hand tools, a portable drill, tiny screwdrivers, a vintage set of Crayolas, a Wacom tablet, an ironing board, beads and findings, cross stitch supplies, a ball winder, and an umbrella swift</li>
+
+<li>borrow from a <a href="{% url "othersite" slug="librarything" %}">growing library</a> that includes books on social justice, programming, infosec, feminist humor, math and science, fiber arts references, history and sociology, science fiction, and feminist humor.</li>
+</ul>
+
+<h3>How do I become a member?</h3>
+
+<p>Come to our open houses and see if we're a good fit for each other! Open house nights are Tuesdays, 7 pm to 9:30 pm. More information is at <a href="{% url "visit" %}">getting to the Attic</a> page.</p>
+
+<p>Once you've been here a few times and we're comfortable around each other, talk to one of the officers about joining and we'll get the approval process going. Our current approval process involves an application statement and approval by the majority of the members, with no more than one disapproval.</p>
+
+<h3>What are your membership rates?</h3>
+
+<p>Membership fees are set on a sliding scale: $50/month standard, $25/month starving hacker. We do not currently have sponsored memberships available but hope to in the future. If you would like to sponsor a membership for prospective members who cannot afford dues at any level, please contact us [info AT seattleattic DOT com].</p>
+
+<p>We <a href="{% url "subscriptions" %}">have a page for managing paying your member dues.</a></p>
+
+<h3>I have more questions!</h3>
+
+<p>Great! Email info AT seattleattic DOT com or tweet @seattle_attic and we'll have answers.</p>
+</div>
+</section>
+{% endblock %}

@@ -1,0 +1,39 @@
+$primary-color: #4c2209;
+$secondary-color: #e5bda4;
+$alert-color: #6a1d08;
+$success-color: #3e673e;
+
+$contrast-color: #2d221b;
+
+$header-font-color: $primary-color;
+
+/* Topbar settings */
+
+$topbar-color: #2B1100;
+
+$topbar-bg-color: $topbar-color;
+$topbar-dropdown-bg: $topbar-color;
+$topbar-dropdown-link-color: #fff;
+$topbar-dropdown-link-bg: $topbar-color;
+$topbar-dropdown-toggle-color: #C83737;
+$topbar-dropdown-toggle-alpha: 0.9;
+
+$topbar-link-bg-hover: #550000;
+$topbar-link-bg-active: $primary-color;
+$topbar-link-bg-active-hover: scale-color($primary-color, $lightness: -14%);
+
+$topbar-dropdown-label-color: $topbar-color;
+$topbar-menu-link-color: #fff;
+$topbar-menu-icon-color: #fff;
+$topbar-menu-link-color-toggled: $secondary-color;
+$topbar-menu-icon-color-toggled: $secondary-color;
+$topbar-divider-border-bottom: solid 1px  scale-color($topbar-bg-color, $lightness: 13%);
+$topbar-divider-border-top: solid 1px scale-color($topbar-bg-color, $lightness: -50%);
+
+/* Tooltips */
+
+$has-tip-border-bottom: dotted 1px #ccc;
+$has-tip-font-color: $primary-color;
+$has-tip-border-bottom-hover: dotted 1px scale-color($primary-color, $lightness: -55%);
+$has-tip-font-color-hover: $primary-color;
+$tooltip-bg: $primary-color;

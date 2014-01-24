@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Events{% endblock %}
+
+{% block content %}
+<div class="row">
+<div class="columns">
+<h1>Events</h1>
+<p>Here is our events calendar.  For directions on getting to the space, <a href="{% url "visit" %}">see our visiting page</a>.</p>
+
+<iframe src="https://www.google.com/calendar/embed?src=seattleattic.com_7njn433rdisg2d7ala2b94bn74%40group.calendar.google.com&ctz=America/Los_Angeles" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+
+<p>Because parking availability near the space can depend on whether or not there are sports events going on, you might also want to check <a href="https://www.google.com/calendar/embed?src=seattleattic.com_3v2841tq6hmauucgsv7fhtqqps%40group.calendar.google.com&ctz=America/Los_Angeles">this downtown sports events</a> calendar.</p>
+</div>
+</div>
+{% endblock %}

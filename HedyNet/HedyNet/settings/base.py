@@ -198,11 +198,14 @@ DJANGO_APPS = (
 
 THIRD_PARTY_APPS = (
     # Database migration helpers:
+    'markdown_deux',
 )
 
 # Apps specific for this project go here.
 LOCAL_APPS = (
     'FAQ',
+    'payments',
+    'othersites',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -247,3 +250,22 @@ LOGGING = {
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
 WSGI_APPLICATION = 'wsgi.application'
 ########## END WSGI CONFIGURATION
+
+########## MARKDOWN CONFIGURATION
+MARKDOWN_DEUX_STYLES = {
+    "default": {
+	"extras": {
+    	    "code-friendly": None,
+    	},
+    	"safe_mode": "escape",
+    },
+    "trusted": {
+        "extras": {
+            "code-friendly": None,
+        },
+        # Allow raw HTML (WARNING: don't use this for user-generated
+        # Markdown for your site!).
+        "safe_mode": False,
+    }
+}
+######### END MARKDOWN CONFIGURATION
