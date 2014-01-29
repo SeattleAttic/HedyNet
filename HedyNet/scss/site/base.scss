@@ -16,3 +16,8 @@ a:hover, a:active { color: $link-hover-color; }
 .top-bar a { text-decoration: none; }
 
 .fineprint { font-size: smaller; }
+
+form {
+  .hint { text-align: right; display: block; margin-bottom: .5rem; }
+  .required { font-size: smaller; margin-bottom: .5rem; font-style: italic; }
+}

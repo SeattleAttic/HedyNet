@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Mailing Lists{% endblock %}
+
+{% block content %}
+<div class="row">
+<div class="columns">
+<h2>Mailing Lists</h2>
+
+<p>If you want to keep up on what the space is doing, sign up for an email list!</p>
+
+<ul>
+{% for list in lists %}
+<li><a href="{% url "maillist_subscribe" list_id=list.id %}">{{ list.name }}</a></li>
+{% endfor %}
+</ul>
+</table>
+</div>
+</div>
+{% endblock %}
