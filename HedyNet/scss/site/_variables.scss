@@ -11,6 +11,8 @@ $success-color: #98ba33;
 
 $contrast-color: #2b1100;
 
+$header-font-color: $primary-color;
+
 /* Breadcrumb Variables */
 
 $crumb-radius: 0px;
@@ -85,3 +87,11 @@ $topbar-media-query: "only screen and (min-width: #{$topbar-breakpoint})";
 
 $topbar-divider-border-bottom: solid 1px lighten($topbar-bg, 10%);
 $topbar-divider-border-top: solid 1px darken($topbar-bg, 10%);
+
+/* Tooltips */
+
+$has-tip-border-bottom: dotted 1px #ccc;
+$has-tip-font-color: $primary-color;
+$has-tip-border-bottom-hover: dotted 1px scale-color($primary-color, $lightness: -55%);
+$has-tip-font-color-hover: $primary-color;
+$tooltip-bg: $primary-color;

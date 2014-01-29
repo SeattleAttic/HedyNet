@@ -24,3 +24,8 @@ ul.breadcrumbs { margin-bottom: 0px; }
 
 /* Fix IE resizing */
 img { -ms-interpolation-mode: bicubic; }
+
+form {
+  .hint { text-align: right; display: block; margin-bottom: .5rem; }
+  .required { font-size: smaller; margin-bottom: .5rem; font-style: italic; }
+}

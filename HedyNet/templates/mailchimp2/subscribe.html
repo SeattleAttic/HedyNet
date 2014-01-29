@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Subscribe to {{ list.name }}{% endblock %}
+
+{% block content %}
+<div class="row">
+<div class="columns large-6 large-centered medium-8 medium-centered">
+<div id="form-area">
+<h2>{{ list.name }}</h2>
+{% if success %}
+<h3>Success!</h3>
+
+<p>You are now subscribed to this email list!</p>
+
+{% else %}
+<form method="post">
+    {% csrf_token %}
+    {% include "foundation/form.html" %}
+    <button class="expand">Subscribe</button>
+</form>
+{% endif %}
+</div>
+</div>
+</div>
+{% endblock %}

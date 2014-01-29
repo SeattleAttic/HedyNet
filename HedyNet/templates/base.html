@@ -81,11 +81,8 @@
 {% endblock %}
 
 {% block scripts %}
-  <script>
-  document.write('<script src=' +
-  ('__proto__' in {} ? '{% static "js/vendor/zepto" %}' : '{% static "js/vendor/jquery" %}') +
-  '.js><\/script>')
-  </script>
+  <script src="{% static "js/vendor/jquery.js" %}"></script>
+  <script src="{% static "js/vendor/fastclick.js" %}"></script>
   <script src="{% static "js/foundation/foundation.js" %}"></script>
   <script src="{% static "js/foundation/foundation.dropdown.js" %}"></script>
   <script src="{% static "js/foundation/foundation.forms.js" %}"></script>

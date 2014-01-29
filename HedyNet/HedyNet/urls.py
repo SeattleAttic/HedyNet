@@ -28,6 +28,7 @@ urlpatterns = patterns('',
     (r'^accounts/', include('allauth.urls')),
     (r'^payments/', include('payments.urls')),
     (r'^othersites/', include('othersites.urls')),
+    (r'^mailinglists/', include('mailchimp2.urls')),
 
     # Examples:
     # url(r'^$', 'HedyNet.views.home', name='home'),
