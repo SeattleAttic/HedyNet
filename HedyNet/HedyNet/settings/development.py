@@ -44,6 +44,14 @@ MIDDLEWARE_CLASSES += (
 )
 ########## END TOOLBAR CONFIGURATION
 
+"""
+Logging config is a bit tricky; here are some documents on it:
+http://docs.python.org/2/library/logging.html
+https://docs.djangoproject.com/en/dev/topics/logging/
+http://stackoverflow.com/questions/5438642/django-setup-default-logging
+"""
+DEBUG_LOGFILE = join(dirname(SITE_ROOT), 'logs', 'debug.log')
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -65,15 +73,28 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'simple'
         },
-    },        
+        'debug_file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler', # set the logging class to log to a file
+            'formatter': 'verbose',         # define the formatter to associate
+            'filename': DEBUG_LOGFILE,
+        },
+    },
     'loggers': {
-        'django': {
-            'handlers': ['console'],
+        # catch all logger
+        '': {
+            'handlers': ['debug_file'],
+            'level': 'DEBUG',
             'propagate': True,
+        },
+        # django logger; want to be able to control the level easily
+        'django': {
+            'handlers': ['debug_file'],
             'level': 'INFO',
+            'propogate': False,
         },
         'profiles': {
-            'handlers': ['console'],
+            'handlers': ['debug_file'],
             'propogate': False,
             'level': 'DEBUG',
         }

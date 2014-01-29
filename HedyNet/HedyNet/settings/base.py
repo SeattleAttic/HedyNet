@@ -199,6 +199,7 @@ DJANGO_APPS = (
 THIRD_PARTY_APPS = (
     # Database migration helpers:
     'markdown_deux',
+    'mailchimp2',
 )
 
 # Apps specific for this project go here.
@@ -269,3 +270,10 @@ MARKDOWN_DEUX_STYLES = {
     }
 }
 ######### END MARKDOWN CONFIGURATION
+
+######### MAILCHIMP INTEGRATION
+
+#MAILCHIMP_API_KEY = get_env_variable("MAILCHIMP_API_KEY")
+MAILCHIMP_API_KEY = '780167529b893df25d37767d6cce71cf-us3'
+
+######### END MAILCHIMP INTEGRATION

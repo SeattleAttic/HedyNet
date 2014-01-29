@@ -25,6 +25,7 @@ urlpatterns = patterns('',
     url(r'^faq/', include('FAQ.urls')),
     url(r'^payments/', include('payments.urls')),
     url(r'^othersites/', include('othersites.urls')),
+    url(r'^mailinglists/', include('mailchimp2.urls')),
 
     # Examples:
     # url(r'^$', 'HedyNet.views.home', name='home'),

@@ -1,0 +1,39 @@
+<!-- Forms rendering with Zurb-Foundation. -->
+{% for hidden in form.hidden_fields %}
+  {{ hidden }}
+{% endfor %}
+
+<div class="row">
+<div class="columns">
+<p class="required right smaller">* indicates required</p>
+</div>
+</div>
+
+{% if form.non_field_errors %}
+<div class="row">
+<div class="columns">
+<small class="error">{{ form.non_field_errors }}</small>
+</div>
+</div>
+{% endif %}
+
+{% for field in form.visible_fields %}
+    <div class="row form-field{% if field.errors %} error{% endif %}{% if field.field.required %} required{% endif %}">
+    <div class="columns large-{{ label_columns|default:"4" }} medium-{{ label_columns|default:"4" }} small-12">
+    <label for="id_{{field.name}}" class="inline">
+    {{ field.label }}{% if field.field.required %}*{% endif %}:
+    </label>
+    </div>
+    <div class="columns large-{{ field_columns|default:"8" }} medium-{{ label_columns|default:"8" }} small-12">
+    {{ field }}
+    {% if field.help_text %}
+        <small class="hint">{{ field.help_text }}</small>
+    {% endif %}
+    {% if field.errors %}
+      {% for error in field.errors %}
+          <small class="error">{{ error }}</small>
+      {% endfor %}
+    {% endif %}
+    </div>
+    </div>
+{% endfor %}
