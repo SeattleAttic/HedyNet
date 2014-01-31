@@ -4,6 +4,15 @@
 
 {% block title %}Profile for: {{ user_profile.user.display_name }}{% endblock %}
 
+{% block breadcrumbs %}
+{% with user_profile.user.username as username %}
+<ul class="breadcrumbs"> <li><a href="{% url "home" %}">Home</a></li>
+<li><a href="{% url "memberdirectory" %}">Member Directory</a></li>
+<li class="current retain-capitalization">{% if user_profile.display_name %}{{ user_profile.display_name }} ({{ username }}){% else %}{{ username }}{% endif %}</li>
+</ul>
+{% endwith %}
+{% endblock %}
+
 {% block extrahead %}
 {{ block.super }}
 <link rel="stylesheet" href="{% static "css/site/profiles.css" %}" />
