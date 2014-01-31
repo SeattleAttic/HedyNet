@@ -269,6 +269,9 @@ class UserEmail(UserContactInfo):
             return True
         return False
 
+    class Meta:
+        unique_together = (("profile", "email"),)
+
 class UserAddress(UserContactInfo):
 
     address = models.TextField()
