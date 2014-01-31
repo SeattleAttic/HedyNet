@@ -59,9 +59,12 @@ class UserProfile(models.Model):
     preferred_phone = models.ForeignKey('UserPhone', blank = True, null = True,
         help_text="This sets your preferred phone number, so if you have more than one you can say which one to use.")
     preferred_email = models.ForeignKey('UserEmail', blank = True, null = True,
-                help_text="This sets your preferred email, so if you have more than one you can say which one to use.")
+        help_text="This sets your preferred email, so if you have more than one you can say which one to use.")
     preferred_address = models.ForeignKey('UserAddress', blank = True, null = True,
-                help_text="This sets your preferred address, so if you have more than one you can say which one to use.")
+        help_text="This sets your preferred address, so if you have more than one you can say which one to use.")
+
+    emergency_contact = models.TextField(blank = True,
+        help_text="Please describe who to contact in an emergency and how to best reach them. This is members only information.")
 
     became_member_on = models.DateField(null = True, blank = True)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -147,6 +150,7 @@ class UserProfile(models.Model):
         
         if not constants.MEMBERS_ACCESS in constants.PUBLIC_ACCESS:
             self.became_member_on = None
+            self.emergency_contact = None
         
     def get_preferred_phone(self, access_levels = (constants.PUBLIC_ACCESS,), 
       viewer_profile = None):
@@ -253,6 +257,9 @@ class UserPhone(UserContactInfo):
             return True
         return False
 
+    class Meta:
+        unique_together = (('profile', 'phone'),)
+
 class UserEmail(UserContactInfo):
 
     email = models.EmailField()
@@ -289,3 +296,6 @@ class UserAddress(UserContactInfo):
         if self.profile.preferred_address == self:
             return True
         return False
+
+    class Meta:
+        unique_together = (("profile", "address"),)

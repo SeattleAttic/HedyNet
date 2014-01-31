@@ -7,7 +7,7 @@ class UserProfileForm(forms.ModelForm):
         model = models.UserProfile
         fields = ['profile_access', 'display_name', 'legal_name', 'legal_name_access',
             'about', 'about_access', 'preferred_contact_method', 'preferred_phone',
-            'preferred_email', 'preferred_address']
+            'preferred_email', 'preferred_address', 'emergency_contact']
 
     def __init__(self, *args, **kwargs):
         super(UserProfileForm, self).__init__(*args, **kwargs)
