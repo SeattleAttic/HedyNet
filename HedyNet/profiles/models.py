@@ -1,5 +1,7 @@
 from __future__ import unicode_literals
 
+import datetime
+
 from django.db import models
 from django.db.models import Q
 
@@ -215,6 +217,10 @@ class MemberStatusChange(models.Model):
     def save(self, *args, **kwargs):
         super(MemberStatusChange, self).save(*args, **kwargs)
         self.profile.status = self.new_status
+
+        if self.new_status == constants.ACTIVE_STATUS:
+            self.profile.became_member_on = datetime.date.today()
+
         self.profile.save()
 
     def get_absolute_url(self):
