@@ -31,3 +31,6 @@ form {
   .hint { text-align: right; display: block; margin-bottom: .5rem; }
   .required { font-size: smaller; margin-bottom: .5rem; font-style: italic; }
 }
+
+/* https://github.com/zurb/foundation/issues/2127 */
+textarea { height: auto; }

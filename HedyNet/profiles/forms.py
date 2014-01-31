@@ -3,12 +3,17 @@ import django.forms as forms
 from profiles import models
 
 class UserProfileForm(forms.ModelForm):
+
+
     class Meta:
         model = models.UserProfile
         fields = ['profile_access', 'display_name', 'legal_name', 'legal_name_access',
             'about', 'about_access', 'preferred_contact_method', 'preferred_phone',
             'preferred_email', 'preferred_address', 'emergency_contact']
-
+        widgets = {
+            'about': forms.Textarea(attrs={'rows':20}),
+            'emergency_contact': forms.Textarea(attrs={'rows':4}),
+        }
     def __init__(self, *args, **kwargs):
         super(UserProfileForm, self).__init__(*args, **kwargs)
         

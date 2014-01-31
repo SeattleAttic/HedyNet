@@ -38,7 +38,7 @@ class UserProfile(models.Model):
         default=constants.MEMBERS_ACCESS,
         help_text = """This determines who can see your profile.""")
 
-    display_name = models.CharField(max_length=50, blank = True,
+    display_name = models.CharField(max_length=100, blank = True,
         help_text="Your display name throughout the site, which can be different from the default of your username.")
 
     legal_name = models.CharField(max_length=255, blank = True,
