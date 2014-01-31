@@ -2,7 +2,7 @@
 {% load markdown_deux_tags %}
 {% load static from staticfiles %}
 
-{% block title %}Profile for: {{ user_profile.user.username }}{% endblock %}
+{% block title %}Profile for: {{ user_profile.user.display_name }}{% endblock %}
 
 {% block extrahead %}
 {{ block.super }}
@@ -14,13 +14,16 @@
 <div class="profile">
 <div class="row">
 <div class="columns">
-<h1>Profile for {{ username }}{% if user_profile.display_name %}: {{ user_profile_display_name }}{% endif %}</h1>
+<h1>Profile for {% if user_profile.display_name %}{{ user_profile.display_name }}{% else %}{{ username }}{% endif %}</h1>
 </div>
 </div>
 <article class="row">
 <div class="columns medium-6">
 {% if can_edit %}
 <a href="{% url "user_profile_edit" username=username %}" class="button">Edit</a>
+{% endif %}
+{% if user_profile.display_name %}
+<p>Username: {{ username }}</p>
 {% endif %}
 {% if user_profile.legal_name %}
 <p>Legal Name: {{ user_profile.legal_name }}</p>
