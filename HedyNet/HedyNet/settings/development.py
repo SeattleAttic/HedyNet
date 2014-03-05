@@ -100,3 +100,5 @@ LOGGING = {
         }
     }
 }
+
+DEBUG_TOOLBAR_PATCH_SETTINGS = False
