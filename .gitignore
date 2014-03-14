@@ -1,6 +1,7 @@
 *.log
 *.pot
 *.pyc
+*~ # some editors have this as an addition for swap files
 
 assets/*
 .sass-cache/
