@@ -201,7 +201,6 @@ class UserContactInfoEditView(UserContactInfoView):
 
         return super(ModelFormMixin, self).form_valid(form)
 
-
     def get_context_data(self, *args, **kwargs):
         context = super(UserContactInfoEditView, self).get_context_data(**kwargs)
 
@@ -212,7 +211,6 @@ class UserContactInfoEditView(UserContactInfoView):
 
         return context
             
-
 class UserPhoneCreateView(UserContactInfoEditView, CreateView):
     form_class = forms.UserPhoneForm
     template_name = "profiles/userphone_add.html"
@@ -224,6 +222,10 @@ class UserEmailCreateView(UserContactInfoEditView, CreateView):
 class UserAddressCreateView(UserContactInfoEditView, CreateView):
     form_class = forms.UserAddressForm
     template_name = "profiles/useraddress_add.html"
+
+class UserExternalSiteCreateView(UserContactInfoEditView, CreateView):
+    form_class = forms.UserExternalSiteForm
+    template_name = "profiles/userexternalsite_add.html"
 
 class UserPhoneUpdateView(UserContactInfoEditView, UpdateView):
     model = models.UserPhone    
@@ -240,6 +242,11 @@ class UserAddressUpdateView(UserContactInfoEditView, UpdateView):
     form_class = forms.UserAddressForm
     template_name = "profiles/useraddress_add.html"
 
+class UserExternalSiteUpdateView(UserContactInfoEditView, UpdateView):
+    model = models.UserExternalSite
+    form_class = forms.UserExternalSiteForm
+    template_name = "profiles/userexternalsite_add.html"
+
 class UserPhoneDetailView(UserContactInfoView, DetailView):
     model = models.UserPhone
     context_object_name = "user_phone"
@@ -251,6 +258,10 @@ class UserAddressDetailView(UserContactInfoView, DetailView):
 class UserEmailDetailView(UserContactInfoView, DetailView):
     model = models.UserEmail
     context_object_name = "user_email"
+
+class UserExternalSiteDetailView(UserContactInfoView, DetailView):
+    model = models.UserExternalSite
+    context_object_name = "user_externalsite"
 
 class UserContactInfoDeleteView(LoginRequiredMixin, DeleteView):
     def get_success_url(self, *args, **kwargs):
@@ -268,6 +279,10 @@ class UserAddressDeleteView(UserContactInfoDeleteView):
 class UserEmailDeleteView(UserContactInfoDeleteView):
     model = models.UserEmail
     context_object_name = "user_email"
+
+class UserExternalSiteDeleteView(UserContactInfoDeleteView):
+    model = models.UserExternalSite
+    context_object_name = "user_externalsite"
 
 class MemberStatusListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = models.UserProfile

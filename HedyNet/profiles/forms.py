@@ -8,10 +8,13 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = models.UserProfile
         fields = ['profile_access', 'display_name', 'legal_name', 'legal_name_access',
-            'about', 'about_access', 'preferred_contact_method', 'preferred_phone',
-            'preferred_email', 'preferred_address', 'emergency_contact']
+            'public_about', 'about', 'about_access', 'preferred_contact_method',
+            'preferred_phone', 'preferred_email', 'preferred_address',
+            'dietary_considerations', 'emergency_contact']
         widgets = {
+            'public_about': forms.Textarea(attrs={'rows':10}),
             'about': forms.Textarea(attrs={'rows':20}),
+            'dietary_restrictions': forms.Textarea(attrs={'rows':4}),
             'emergency_contact': forms.Textarea(attrs={'rows':4}),
         }
     def __init__(self, *args, **kwargs):
@@ -43,3 +46,9 @@ class UserAddressForm(forms.ModelForm):
     class Meta:
         model = models.UserAddress
         fields = ['label', 'access', 'address', 'notes']
+
+class UserExternalSiteForm(forms.ModelForm):
+    class Meta:
+        model = models.UserExternalSite
+        fields = ['handle', 'link', 'site_category', 'custom_label', 'order',
+            'access', 'notes']

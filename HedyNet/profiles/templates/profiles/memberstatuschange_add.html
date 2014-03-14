@@ -1,9 +1,18 @@
-{% extends "simplebase.html" %}
+{% extends "profiles/base.html" %}
 
-{% block title %}Profile for: {{ user_profile.user.username }}{% endblock %}
+{% block title %}Member status change for: {{ user_profile.user.username }}{% endblock %}
+
+{% block breadcrumbs %}
+{{ block.super }}
+<li class="unavailable">Admin</li>
+{% with user_profile.user.username as username %}
+<li class="retain-capitalization">{% if user_profile.display_name %}{{ user_profile.display_name }} ({{ username }}){% else %}{{ username }}{% endif %}</li>
+{% endwith %}
+<li class="current">Add Status</li>
+</ul>
+{% endblock %}
 
 {% block content %}
-<div class="profile">
 <div class="row">
 <div class="columns">
 <h1>Changing member status for {{ user_profile.user.username }}</h1>
@@ -14,7 +23,5 @@
 </form>
 
 </div>
-</div>
-
 </div>
 {% endblock %}

@@ -1,11 +1,14 @@
-{% extends "base.html" %}
+{% extends "profiles/base.html" %}
 
 {% block title %}Member status changes for {{ user_profile }}{% endblock %}
 
 {% block breadcrumbs %}
-<ul class="breadcrumbs">
-<li><a href="{% url "home" %}">Home</a></li>
-<li class="current"><a href="{% url "memberdirectory" %}">Member Directory</a></li>
+{{ block.super }}
+<li class="unavailable">Admin</li>
+{% with user_profile.user.username as username %}
+<li class="retain-capitalization">{% if user_profile.display_name %}{{ user_profile.display_name }} ({{ username }}){% else %}{{ username }}{% endif %}</li>
+{% endwith %}
+<li class="current">Status Change</li>
 </ul>
 {% endblock %}
 

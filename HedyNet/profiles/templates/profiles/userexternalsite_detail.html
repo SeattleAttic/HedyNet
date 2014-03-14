@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load markdown_deux_tags %}
+{% load access_icons %}
+
+{% block title %}{{ user_externalsite.label }} for {{ user_externalsite.profile }}{% endblock %}
+
+{% block content %}
+<div class="row">
+<div class="columns">
+<h2>External site {{ user_externalsite.label }} for {{ user_externalsite.profile }}</h2>
+
+<div class="row">
+<div class="columns {% if user_externalsite.notes %}large-6{% endif %}">
+{% with user_externalsite.site_category as site_info %}
+{% if user_externalsite.link %}
+{% if user_externalsite.handle %}
+{% include "foundation/infofield/link.html" with title_link=site_info.base_link item_title=user_externalsite.label item_link=user_externalsite.link item=user_externalsite.handle %}
+{% else %}
+{% include "foundation/infofield/link.html" with title_link=site_info.base_link item_title=user_externalsite.label item_link=user_externalsite.link item="visit" %}
+{% endif %}
+{% endif %}
+
+{% include "foundation/infofield/basic.html" with item_title="Access" item=user_externalsite.access|access_label %}
+</div>                                                                       
+{% if user_externalsite.notes %}
+<div class="columns large-6">
+<div class="notes panel">
+<h3>Notes</h3>
+{{ user_externalsite.notes|markdown }}                       
+</div>
+</div>
+{% endif %}
+{% endwith %}
+</div>
+
+{% if can_edit %}
+<a href="{% url "user_profile_site_update" username=username pk=user_externalsite.pk %}" class="button">Update</a>
+<a href="{% url "user_profile_site_delete" username=username pk=user_externalsite.pk %}" class="button">Delete</a>
+{% endif %}
+
+</div>
+</div>
+{% endblock %}

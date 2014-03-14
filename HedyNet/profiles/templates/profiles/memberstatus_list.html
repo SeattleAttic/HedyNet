@@ -1,11 +1,9 @@
-{% extends "base.html" %}
+{% extends "profiles/base.html" %}
 
 {% block title %}Member status list{% endblock %}
 
 {% block breadcrumbs %}
-<ul class="breadcrumbs">
-<li><a href="{% url "home" %}">Home</a></li>
-<li><a href="{% url "memberdirectory" %}">Member Directory</a></li>
+{{ block.super }}
 <li class="unavailable">Admin</li>
 <li class="current"><a href="{% url "member_status_list_admin" %}">Member Status</a></li>
 </ul>

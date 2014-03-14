@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load markdown_deux_tags %}
+
+{% block title %}Deleting site {{ user_externalsite.label }} for {{ user_externalsite.profile }}{% endblock %}
+
+{% block content %}
+<div class="row">
+<div class="columns">
+<h2>External contact {{ user_externalsite.label }} for {{ user_externalsite.profile }}</h2>
+
+<form method="post">{% csrf_token %}
+<p>Delete this site?</p>
+<button type="submit">Confirm delete</button>
+</form>
+
+<hr />
+
+<div class="row">
+<div class="columns large-6">
+<p>Label: {{ user_externalsite.label }}</p>
+<p>Access: {{ user_externalsite.access }}</p>
+</div>
+<div class="columns large-6">
+{% if user_externalsite.notes %}
+<div class="notes panel">
+<h3>Notes</h3>
+{{ user_externalsite.notes|markdown }}                       
+</div>
+{% endif %}
+</div>
+</div>
+
+</div>
+</div>
+{% endblock %}

@@ -49,3 +49,14 @@ class OtherSite(models.Model):
     @models.permalink        
     def get_absolute_url(self):
         return ('othersite', (), {'slug': self.slug})
+
+class SiteInfo(models.Model):
+    """Defines different properties for websites members might have."""
+
+    name = models.CharField(max_length = 50)
+    base_link = models.URLField(blank = True)
+    slug = models.SlugField()
+    description = models.TextField(blank = True)
+
+    def __unicode__(self):
+        return self.name

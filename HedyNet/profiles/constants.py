@@ -39,6 +39,7 @@ BASIC_ACCESS_LEVELS = (
 )
 
 ACTIVE_STATUS = "active"
+VISITOR_STATUS = "visitor"
 APPLYING_STATUS = "applying"
 REFUSED_STATUS = "refused"
 INACTIVE_STATUS = "inactive"
@@ -46,6 +47,7 @@ REVOKED_STATUS = "revoked"
 
 STATUS_LEVELS = (
     (ACTIVE_STATUS, "active"),
+    (VISITOR_STATUS, "visitor"),
     (APPLYING_STATUS, "applying"),
     (REFUSED_STATUS, "refused"),
     (INACTIVE_STATUS, "inactive"),
