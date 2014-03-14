@@ -71,6 +71,51 @@
 </section>
 {% endif %}
 
+{% if external_sites %}
+<section class="row">
+<div class="columns">
+
+<div class="row">
+<div class="columns medium-10">
+<h3>My Sites</h3>
+</div>
+<div class="columns medium-2">
+{% if can_edit %}
+<a href="{% url "user_profile_site_add" username=username %}" class="button tiny right">Add site</a>
+{% endif %}
+</div>
+</div>
+
+<dl>
+{% for site in external_sites %}
+<dt>
+{% if site.link %}<a href="{{ site.link }}">{% endif %}{{ site.label }}{% if site.handle %}: {{ site.handle }}{% endif %}{% if site.link %}</a>{% endif %}
+{% if can_edit %}<a class="right" href="{% url "user_profile_site_update" username=username pk=site.pk %}">Edit</a>{% endif %}
+</dt>
+{% if site.notes %}
+<dd>{{ site.notes|markdown }}</dd>
+{% endif %}
+{% endfor %}
+</dl>
+
+</div>
+</section>
+{% else %}
+{% if can_edit %}
+<section class="row">
+<div class="columns medium-10">
+<h3>My Sites</h3>
+</div>
+<div class="columns medium-2">
+{% if can_edit %}
+<a href="{% url "user_profile_site_add" username=username %}" class="button right">Add site</a>
+{% endif %}
+</div>
+</section>
+{% endif %}
+{% endif %}
+
+
 {% if user_profile.dietary_considerations %}
 <section class="row">
 <div class="columns">

@@ -106,6 +106,8 @@ class UserProfileView(SingleObjectMixin):
             self.valid_access_levels, self.viewer_profile)
         context['email_contacts'] = self.object.get_email_contacts(
             self.valid_access_levels, self.viewer_profile)
+        context['external_sites'] = self.object.get_external_sites(
+            self.valid_access_levels, self.viewer_profile)
         
         context['preferred_phone'] = self.object.get_preferred_phone(
             self.valid_access_levels, self.viewer_profile)

@@ -3,18 +3,23 @@
 {% block title %}{{ action|title }}ing external site for: {{ user_profile.user.username }}{% endblock %}
 
 {% block content %}
+{% with user_profile.user.username as username %}
 <div class="profile">
 <div class="row">
 <div class="columns">
-<h1>{{ action|title }}ing external site for {{ user_profile.user.username }}</h1>
+<h1>{{ action|title }}ing external site for {{ username }}</h1>
 
 <form method="post">{% csrf_token %}
 {% include "forms/foundation.html" %}
 <button class="right" type="submit">{{ action|title }}</button>
+{% if action == "edit" %}
+<a href="{% url "user_profile_site_delete" username=username pk=object.pk %}" class="left button">Delete</a>
+{% endif %}
 </form>
 
 </div>
 </div>
 
 </div>
+{% endwith %}
 {% endblock %}
