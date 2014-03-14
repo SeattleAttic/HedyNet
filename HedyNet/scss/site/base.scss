@@ -22,7 +22,7 @@ a.button, a.button:visited { color: white !important; }
 
 ul.breadcrumbs { margin-bottom: 0px; }
 
-ul.breadcrumbs li.retain-capitalization { text-transform: none; }
+ul.breadcrumbs li.retain-capitalization, ul.breadcrumbs li.retain-capitalization a { text-transform: none; }
 
 /* Fix IE resizing */
 img { -ms-interpolation-mode: bicubic; }
