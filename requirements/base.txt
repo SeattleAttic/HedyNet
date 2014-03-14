@@ -1,7 +1,7 @@
-Django==1.5.1
+Django==1.6.2
 MySQL-python
-django-braces==1.0.0
-django-allauth==0.11.1
+django-allauth==0.15.0
+django-braces==1.4.0
 django-markdown-deux==1.0.4
 mailchimp==2.0.7
 django-localflavor==1.0
