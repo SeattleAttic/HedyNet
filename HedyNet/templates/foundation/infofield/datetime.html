@@ -1,0 +1,10 @@
+{% if item %}
+<div class="row infofield">
+<div class="columns small-{{ small_title_columns|default:"12" }} medium-{{ medium_title_columns|default:"3" }} large-{{ large_title_columns|default:"3" }} title">
+<p><strong>{{ item_title }}:</strong></p>
+</div>
+<div class="columns small-{{ small_item_columns|default:"12" }} medium-{{ medium_item_columns|default:"9" }} large-{{ large_item_columns|default:"9" }} item">
+<p>{{ item|date:"m/d/Y h:i:s a" }}</p>
+</div>
+</div>
+{% endif %}
