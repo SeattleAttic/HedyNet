@@ -10,6 +10,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import AnonymousUser
 from django.core.urlresolvers import reverse
 
+from localflavor.us.models import PhoneNumberField
+
 from markdown_deux.templatetags.markdown_deux_tags import markdown_allowed
 
 from profiles import constants
@@ -305,7 +307,7 @@ class UserContactInfo(models.Model):
 
 class UserPhone(UserContactInfo):
 
-    phone = models.CharField(max_length=20)
+    phone = PhoneNumberField()
 
     def __unicode__(self):
         return self.phone
