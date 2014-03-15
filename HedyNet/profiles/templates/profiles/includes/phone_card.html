@@ -1,14 +1,20 @@
 {% load markdown_deux_tags %}
 {% with phone_contact.is_preferred as preferred %}
-<dl class="phone panel{% if preferred %} preferred{% endif %}">
-<dt><a href="{{ phone_contact.get_absolute_url }}">{{ phone_contact.label }}</a>{% if preferred %} (preferred){% endif %}</dt>
-<dd><a href="tel:{{ phone_contact.phone }}">{{ phone_contact.phone }}</a></dd>
+<div class="phone contact-card {% if preferred %} preferred{% endif %}">
+
+<div class="row">
+<div class="columns large-10">
+<p><a href="{{ phone_contact.get_absolute_url }}">{{ phone_contact.label|default:"Phone" }}</a>{% if preferred %} (preferred){% endif %}: <a href="tel:{{ phone_contact.phone }}">{{ phone_contact.phone }}</a></p>
+</div>
+<div class="columns large-2">
 {% if can_edit %}
-<dd><a href="{% url "user_profile_phone_update" username=username pk=phone_contact.pk %}" class="button tiny">Edit</a>
-<a href="{% url "user_profile_phone_delete" username=username pk=phone_contact.pk %}" class="button tiny">Delete</a></dd>
+<a href="{% url "user_profile_phone_update" username=username pk=phone_contact.pk %}" class="button tiny right">Edit</a>
 {% endif %}
+</div>
+</div>
+
 {% if phone_contact.notes %}
-<dd>{{ phone_contact.notes|markdown }}</dd>
+<blockquote>{{ phone_contact.notes|markdown }}</blockquote>
 {% endif %}
 </dl>
 {% endwith %}

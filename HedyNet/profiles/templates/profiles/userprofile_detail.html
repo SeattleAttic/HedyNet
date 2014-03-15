@@ -48,13 +48,41 @@
 {% if user_profile.legal_name %}
 {% include "foundation/infofield/basic.html" with item_title="Legal name" item=user_profile.legal_name %}
 {% endif %}
-{% include "foundation/infofield/basic.html" with item_title="Preferred contact method" item=user_profile.preferred_contact_method %}
 
-{% with user_profile.get_preferred_phone as phone %}
-{% if phone %}
-
+{% if preferred_phone %}
+{% if user_profile.preferred_contact_method == "phone" %}
+{% include "foundation/infofield/basic.html" with item_title="Phone (preferred)" item=preferred_phone.phone %}
+{% else %}
+{% include "foundation/infofield/basic.html" with item_title="Phone" item=preferred_phone.phone %}
 {% endif %}
-{% endwith %}
+{% if preferred_phone.notes %}
+<blockquote>{{ preferred_phone.notes|markdown }}</blockquote>
+{% endif %}
+{% endif %}
+
+{% if preferred_email %}
+{% if user_profile.preferred_contact_method == "email" %}
+{% include "foundation/infofield/link.html" with item_title="Email (preferred)" item=preferred_email.email item_link="mailto:"|add:preferred_email.email %}
+{% else %}
+{% include "foundation/infofield/link.html" with item_title="Email" item=preferred_email.email item_link="mailto:"|add:preferred_email.email %}
+{% endif %}
+{% if preferred_email.notes %}
+<blockquote>{{ preferred_email.notes|markdown }}</blockquote>
+{% endif %}
+{% endif %}
+
+{% if preferred_address %}
+{% if user_profile.preferred_contact_method == "address" %}
+{% include "foundation/infofield/link.html" with item_title="Address (preferred)" item=preferred_address.address item_link="mailto:"|add:preferred_address.address %}
+{% else %}
+{% include "foundation/infofield/link.html" with item_title="Address" item=preferred_address.address item_link="mailto:"|add:preferred_address.address %}
+{% endif %}
+{% if preferred_address.notes %}
+<blockquote>{{ preferred_email.notes|markdown }}</blockquote>
+{% endif %}
+{% endif %}
+
+<a class="button right" href="{% url "user_contact" username=username %}">All contact information</a>
 </div>
 </section>
 

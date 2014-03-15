@@ -8,3 +8,8 @@
 .panel.preferred {
     border: 2px solid $primary-color;
 }
+
+.title.panel {
+    .button, button { margin-bottom: 0em; }
+}
+

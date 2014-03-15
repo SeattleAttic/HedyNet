@@ -95,3 +95,8 @@ $has-tip-font-color: $primary-color;
 $has-tip-border-bottom-hover: dotted 1px scale-color($primary-color, $lightness: -55%);
 $has-tip-font-color-hover: $primary-color;
 $tooltip-bg: $primary-color;
+
+/* Blockquotes */
+
+$blockquote-font-color: scale-color($header-font-color, $lightness: 10%);
+

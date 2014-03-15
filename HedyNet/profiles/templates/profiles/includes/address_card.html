@@ -1,16 +1,23 @@
 {% load markdown_deux_tags %}
+
 {% with address_contact.is_preferred as preferred %}
-<dl class="address panel{% if preferred %} preferred{% endif %}">
-<dt><a href="{{ address_contact.get_absolute_url }}">{{ address_contact.label|default:"Address" }}</a>{% if preferred %} (preferred){% endif %}</dt>
-<dl>{{ address_contact.address|linebreaks }}</dl>
-{% if address_contact.notes %}
-<dd>{{ address_contact.notes|markdown }}</dd>
-{% endif %}
+<div class="address contact-card {% if preferred %} preferred{% endif %}">
+
+<div class="row">
+<div class="columns large-10">
+<p><a href="{{ address_contact.get_absolute_url }}">{{ address_contact.label|default:"Address" }}</a>{% if preferred %} (preferred){% endif %}</p>
+{{ address_contact.address|linebreaks }}
+</div>
+<div class="columns large-2">
 {% if can_edit %}
-<dd>
-<a href="{% url "user_profile_address_update" username=username pk=address_contact.pk %}" class="button tiny">Edit</a>
-<a href="{% url "user_profile_address_delete" username=username pk=address_contact.pk %}" class="button tiny">Delete</a>
-</dd>
+<a href="{% url "user_profile_address_update" username=username pk=address_contact.pk %}" class="button tiny right">Edit</a>
 {% endif %}
-</dl>
+</div>
+</div>
+
+{% if address_contact.notes %}
+<blockquote>{{ address_contact.notes|markdown }}</blockquote>
+{% endif %}
+
+</div>
 {% endwith %}
