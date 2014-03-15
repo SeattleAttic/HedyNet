@@ -191,7 +191,7 @@ class UserContactInfoEditView(UserContactInfoView):
 
     def get_success_url(self, *args, **kwargs):
 
-        return reverse("user_profile", kwargs={"username": self.kwargs.get("username", None)})
+        return reverse("user_contact", kwargs={"username": self.kwargs.get("username", None)})
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -268,7 +268,7 @@ class UserExternalSiteDetailView(UserContactInfoView, DetailView):
 class UserContactInfoDeleteView(LoginRequiredMixin, DeleteView):
     def get_success_url(self, *args, **kwargs):
 
-        return reverse("user_profile", kwargs={"username": self.kwargs.get("username", None)})
+        return reverse("user_contact", kwargs={"username": self.kwargs.get("username", None)})
 
 class UserPhoneDeleteView(UserContactInfoDeleteView):
     model = models.UserPhone

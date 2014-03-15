@@ -5,12 +5,13 @@ from profiles import views
 urlpatterns = patterns('',
     url(r'^directory$',
         views.MemberDirectoryView.as_view(), name="memberdirectory"),
-    url(r'^user/(?P<username>[\w.@+-]+)/contact$',
-        views.UserProfileDetailView.as_view(template_name="profiles/userprofile_contact.html"), name="user_contact"),
-    url(r'^user/(?P<username>[\w.@+-]+)$',
+    url(r'^user/(?P<username>[\w.@+-]+)/?$',
         views.UserProfileDetailView.as_view(), name="user_profile"),
     url(r'^user/(?P<username>[\w.@+-]+)/edit$',
         views.UserProfileUpdateView.as_view(), name="user_profile_edit"),
+
+    url(r'^user/(?P<username>[\w.@+-]+)/contact$',
+        views.UserProfileDetailView.as_view(template_name="profiles/userprofile_contact.html"), name="user_contact"),
 
     url(r'^user/(?P<username>[\w.@+-]+)/phone/(?P<pk>\d+)$',
         views.UserPhoneDetailView.as_view(), name="user_profile_phone_detail"),

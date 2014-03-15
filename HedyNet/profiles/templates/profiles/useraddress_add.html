@@ -11,6 +11,9 @@
 <form method="post">{% csrf_token %}
 {% include "forms/foundation.html" %}
 <button class="right" type="submit">{{ action|title }}</button>
+{% if action == "edit" %}
+<a href="{% url "user_profile_address_delete" username=username pk=object.pk %}" class="left button">Delete</a>
+{% endif %}
 </form>
 
 </div>
