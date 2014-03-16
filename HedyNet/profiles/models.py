@@ -319,10 +319,11 @@ class UserPhone(UserContactInfo):
         return reverse('user_profile_phone_detail', 
             kwargs = {'username': self.profile.user.username, 'pk': self.pk})
 
-    def is_preferred(self):
-        if self.profile.preferred_phone == self:
+    def _is_preferred(self):
+        if self.profile.preferred_phone_id == self.id:
             return True
         return False
+    is_preferred = property(_is_preferred)
 
     class Meta:
         unique_together = (('profile', 'phone'),)
@@ -338,10 +339,11 @@ class UserEmail(UserContactInfo):
         return reverse('user_profile_email_detail', 
             kwargs = {'username': self.profile.user.username, 'pk': self.pk})
 
-    def is_preferred(self):
-        if self.profile.preferred_email == self:
+    def _is_preferred(self):
+        if self.profile.preferred_email_id == self.id:
             return True
         return False
+    is_preferred = property(_is_preferred)
 
     class Meta:
         unique_together = (("profile", "email"),)
@@ -359,7 +361,8 @@ class UserAddress(UserContactInfo):
         return reverse('user_profile_address_detail', 
             kwargs = {'username': self.profile.user.username, 'pk': self.pk})
     
-    def is_preferred(self):
-        if self.profile.preferred_address == self:
+    def _is_preferred(self):
+        if self.profile.preferred_address_id == self.id:
             return True
         return False
+    is_preferred = property(_is_preferred)
