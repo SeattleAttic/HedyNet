@@ -1,6 +1,7 @@
 {% extends "profiles/base.html" %}
 {% load markdown_deux_tags %}
 {% load access_icons %}
+{% load avatar_tags %}
 
 {% block title %}Profile for: {{ user_profile.user.display_name }}{% endblock %}
 
@@ -8,6 +9,7 @@
 {{ block.super }}
 {% with user_profile.user.username as username %}
 <li class="current retain-capitalization"><a href="{% url "user_profile" username=username %}">{% if user_profile.display_name %}{{ user_profile.display_name }} ({{ username }}){% else %}{{ username }}{% endif %}</a></li>
+<li class="current">Profile</li>
 </ul>
 {% endwith %}
 {% endblock %}
@@ -16,12 +18,15 @@
 {% with user_profile.user.username as username %}
 <div class="profile">
 <div class="row">
-<div class="columns medium-10">
-<h1>Profile for {% if user_profile.display_name %}{{ user_profile.display_name }}{% else %}{{ username }}{% endif %} {{ user_profile.profile_access|access_icon }}</h1>
+<div class="columns medium-2 small-3">
+{% avatar user_profile.user 100 %}
 </div>
-<div class="columns medium-2">
+<div class="columns medium-9 small-8">
+<h1>{% if user_profile.display_name %}{{ user_profile.display_name }}{% else %}{{ username }}{% endif %} {{ user_profile.profile_access|access_icon }}</h1>
+</div>
+<div class="columns medium-1 small-1">
 {% if can_edit %}
-<a href="{% url "user_profile_edit" username=username %}" class="button right">Edit</a>
+<a href="{% url "user_profile_edit" username=username %}" class="button tiny right">Edit</a>
 {% endif %}
 </div>
 </div>

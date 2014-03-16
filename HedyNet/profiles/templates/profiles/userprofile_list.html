@@ -1,5 +1,6 @@
 {% extends "profiles/base.html" %}
-
+{% load avatar_tags %}
+    
 {% block title %}Member directory{% endblock %}
 
 {% block breadcrumbs %}
@@ -12,20 +13,27 @@
 <div class="row">
 <div class="columns">
 <h1>Member Directory</h1>
-</div>
-</div>
-{% for user_profile in user_profile_list %}
-<article class="row">
-<header class="columns">
-<h3><a href="{% url "user_profile" username=user_profile.user.username %}">{{ user_profile }}</a></h3>
-</header>
-<div class="columns large-12">
-<dl>
-{% if user_profile.legal_name %}<dt>Legal name:</dt><dd>{{ user_profile.legal_name }}</dd>{% endif %}
-<dt>Status:</dt><dd>{{ user_profile.status }}</dd>
-<dt>Member since:</dt><dd>{{ user_profile.became_member_on }}</dd>
+
+<hr />
+<dl class="sub-nav">
+<dt>Filter:</dt>
+<dd{% if filter == "members" %} class="active"{% endif %}><a href="{% url "memberdirectory" %}">Members</a></dd>
+<dd{% if filter == "nonmembers" %} class="active"{% endif %}><a href="{% url "memberdirectory" %}?filter=nonmembers">Associates</a></dd>
 </dl>
+<hr />
+
+<ul class="medium-block-grid-3 large-block-grid-4">
+
+{% for user_profile in user_profile_list %}
+<li class="text-center">
+<a href="{% url "user_profile" username=user_profile.user.username %}">
+{% avatar user_profile.user 100 %}
+<p>{{ user_profile }}</p>
+</a>
+</li>
+</ul>
+
 </div>
-</article>
+</div>
 {% endfor %}
 {% endblock %}
