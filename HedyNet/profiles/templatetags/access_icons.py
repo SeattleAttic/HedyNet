@@ -25,9 +25,9 @@ def access_icon(value):
     """Converts an access value into an icon."""
     
     if value == constants.PUBLIC_ACCESS:
-        return mark_safe('<i class="fa fa-unlock-alt"></i>')
+        return mark_safe('')
     if value == constants.REGISTERED_ACCESS:
-        return mark_safe('<i class="fa fa-unlock"></i>')
+        return mark_safe('<i class="fa fa-unlock-alt"></i>')
     if value == constants.MEMBERS_ACCESS:
         return mark_safe('<i class="fa fa-lock"></i>')
     if value in (constants.PRIVATE_ACCESS, constants.ADMIN_ACCESS):
