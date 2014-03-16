@@ -67,11 +67,14 @@ class UserProfile(models.Model):
         choices=constants.CONTACT_METHODS, default=constants.EMAIL_CONTACT,
         help_text="This lists your preferred contact method, so people know the best way to get in touch with you.")
     preferred_phone = models.ForeignKey('UserPhone', blank = True, null = True,
-        help_text="This sets your preferred phone number, so if you have more than one you can say which one to use.")
+        help_text="This sets your preferred phone number, so if you have more than one you can say which one to use.",
+        on_delete=models.SET_NULL)
     preferred_email = models.ForeignKey('UserEmail', blank = True, null = True,
-        help_text="This sets your preferred email, so if you have more than one you can say which one to use.")
+        help_text="This sets your preferred email, so if you have more than one you can say which one to use.",
+        on_delete=models.SET_NULL)
     preferred_address = models.ForeignKey('UserAddress', blank = True, null = True,
-        help_text="This sets your preferred address, so if you have more than one you can say which one to use.")
+        help_text="This sets your preferred address, so if you have more than one you can say which one to use.",
+        on_delete=models.SET_NULL)
 
     emergency_contact = models.TextField(blank = True, default="",
         help_text="Please describe who to contact in an emergency and how to best reach them. This is members only information.")

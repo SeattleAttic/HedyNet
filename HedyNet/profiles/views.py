@@ -11,6 +11,7 @@ from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from django.contrib.auth.models import User
 from django.http import Http404
 from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
 
 from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 
@@ -266,6 +267,7 @@ class UserExternalSiteDetailView(UserContactInfoView, DetailView):
     context_object_name = "user_externalsite"
 
 class UserContactInfoDeleteView(LoginRequiredMixin, DeleteView):
+    
     def get_success_url(self, *args, **kwargs):
 
         return reverse("user_contact", kwargs={"username": self.kwargs.get("username", None)})
