@@ -17,19 +17,21 @@ urlpatterns = patterns('',
     url(r'^wishlist$', TemplateView.as_view(template_name="wishlist.html"), name="wishlist"),
     url(r'^sitemap$', TemplateView.as_view(template_name="sitemap.html"), name="sitemap"),
     url(r'^tos$', TemplateView.as_view(template_name="tos.html"), name="tos"),
-
+    url(r'^donations$', TemplateView.as_view(template_name="donations.html"), name="donations"),
+    url(r'^visit$', TemplateView.as_view(template_name="visit.html"), name="visit"),
     url(r'^membership$', TemplateView.as_view(template_name="membership.html"), name="membership"),    
-    url(r'^othersites$', TemplateView.as_view(template_name="othersites.html"), name="othersites"),
     url(r'^friends$', TemplateView.as_view(template_name="friends.html"), name="friends"),
     url(r'^events$', TemplateView.as_view(template_name="events.html"), name="events"),
-    
+
+    (r'^mailinglists/', include('mailchimp2.urls')),
+    (r'^accounts/', include('allauth.urls')),
+    (r'^avatar/', include('avatar.urls')),
+
     (r'^faq/', include('FAQ.urls')),
     (r'^profiles/', include('profiles.urls')),
-    (r'^accounts/', include('allauth.urls')),
     (r'^payments/', include('payments.urls')),
     (r'^othersites/', include('othersites.urls')),
-    (r'^mailinglists/', include('mailchimp2.urls')),
-
+    
     # Examples:
     # url(r'^$', 'HedyNet.views.home', name='home'),
     # url(r'^HedyNet/', include('HedyNet.foo.urls')),

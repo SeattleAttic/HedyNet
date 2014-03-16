@@ -19,6 +19,7 @@
         <li class="has-dropdown"><a href="#">{{ user }}</a>
           <ul class="dropdown">
             <li><a href="{% url "user_profile" username=user.username %}">My profile</a></li>
+            <li><a href="{% url 'avatar_change' %}">Change avatar</a></li>
           </ul>
         </li> 
         <li class="divider"></li>

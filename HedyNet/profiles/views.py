@@ -46,10 +46,16 @@ class MemberDirectoryView(ListView):
         
         # get the viewer's profile
         viewer_profile = models.UserProfile.get_profile(self.request.user)
-        logger.debug("Viewing member directory by user: %s" % str(self.request.user))
+                
+        # are we filtering?
+        profile_filter = self.request.GET.get('filter')
         
-        return models.UserProfile.get_directory(
-            viewer_profile, status = constants.ACTIVE_STATUS)
+        if profile_filter == "nonmembers":
+            return models.UserProfile.get_directory(viewer_profile,
+                status = "-" + constants.ACTIVE_STATUS)
+        else:
+            return models.UserProfile.get_directory(viewer_profile,
+                status = constants.ACTIVE_STATUS)
 
     def get_context_data(self, *args, **kwargs):
         context = super(MemberDirectoryView, self).get_context_data(**kwargs)
@@ -59,9 +65,20 @@ class MemberDirectoryView(ListView):
 
         valid_access_levels = access_levels(None, self.viewer_profile)
 
+        # strip off all data that can't be seen by the current
+        # viewer from each profile
+        # this way template makers cannot expose data by accident
         [profile.access_strip(access_levels = valid_access_levels,
             viewer_profile = self.viewer_profile)
             for profile in context["user_profile_list"]]
+
+        # are we filtering?
+        profile_filter = self.request.GET.get('filter')
+        
+        if profile_filter == "nonmembers":
+            context["filter"] = "nonmembers"
+        else:
+            context["filter"] = "members"
 
         return context
 

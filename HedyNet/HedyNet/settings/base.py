@@ -208,7 +208,10 @@ THIRD_PARTY_APPS = (
     'allauth.socialaccount.providers.openid',
     # Markdown
     'markdown_deux',
+    # MailChimp integration
     'mailchimp2',
+    # Avatar abilities
+    'avatar',
 )
 
 # Apps specific for this project go here.

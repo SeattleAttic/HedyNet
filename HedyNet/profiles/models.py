@@ -146,9 +146,12 @@ class UserProfile(models.Model):
             set([access_level[0] for access_level in 
             constants.BASIC_ACCESS_LEVELS]))
         
-        # optionally filter by status
+        # optionally filter by status; exclude status by prefixing with "-"
         if status:
-            query = UserProfile.objects.filter(status = status)
+            if status.startswith("-"):
+                query = UserProfile.objects.exclude(status = status[1:])
+            else:
+                query = UserProfile.objects.filter(status = status)
             
         return filter_access_levels(query, "profile_access", directory_access_levels)
         
@@ -289,7 +292,7 @@ class UserExternalSite(models.Model):
 
     class Meta:
         ordering = ['profile', '-order']
-        index_together = ('profile', '-order')
+        index_together = [('profile', 'order')]
 
     def __unicode__(self):
         if self.site_category:
