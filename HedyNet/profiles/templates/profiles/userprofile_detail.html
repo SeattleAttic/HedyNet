@@ -7,7 +7,7 @@
 {% block breadcrumbs %}
 {{ block.super }}
 {% with user_profile.user.username as username %}
-<li class="current retain-capitalization">{% if user_profile.display_name %}{{ user_profile.display_name }} ({{ username }}){% else %}{{ username }}{% endif %}</li>
+<li class="current retain-capitalization"><a href="{% url "user_profile" username=username %}">{% if user_profile.display_name %}{{ user_profile.display_name }} ({{ username }}){% else %}{{ username }}{% endif %}</a></li>
 </ul>
 {% endwith %}
 {% endblock %}
@@ -17,7 +17,7 @@
 <div class="profile">
 <div class="row">
 <div class="columns medium-10">
-<h1 class="left">Profile for {% if user_profile.display_name %}{{ user_profile.display_name }}{% else %}{{ username }}{% endif %} {{ user_profile.profile_access|access_icon }}</h1>
+<h1>Profile for {% if user_profile.display_name %}{{ user_profile.display_name }}{% else %}{{ username }}{% endif %} {{ user_profile.profile_access|access_icon }}</h1>
 </div>
 <div class="columns medium-2">
 {% if can_edit %}
@@ -48,6 +48,8 @@
 {% if user_profile.legal_name %}
 {% include "foundation/infofield/basic.html" with item_title="Legal name" item=user_profile.legal_name %}
 {% endif %}
+
+<hr />
 
 {% if preferred_phone %}
 {% if user_profile.preferred_contact_method == "phone" %}
@@ -82,7 +84,10 @@
 {% endif %}
 {% endif %}
 
-<a class="button right" href="{% url "user_contact" username=username %}">All contact information</a>
+{# only show if we have some contact info #}
+{% if preferred_phone or preferred_email or preferred_address or phone_contacts or address_contacts or email_contacts %}
+<a class="button right" href="{% url "user_contact" username=username %}">All{% if can_edit %}/Edit{% endif %} contact information</a>
+{% endif %}
 </div>
 </section>
 
