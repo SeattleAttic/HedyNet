@@ -33,16 +33,25 @@ class MemberStatusChangeForm(forms.ModelForm):
         fields = ['new_status', 'notes']
 
 class UserPhoneForm(forms.ModelForm):
+    
+    preferred = forms.BooleanField(required = False)
+    
     class Meta:
         model = models.UserPhone
         fields = ['label', 'access', 'phone', 'notes']
 
 class UserEmailForm(forms.ModelForm):
+
+    preferred = forms.BooleanField(required = False)
+
     class Meta:
         model = models.UserEmail
         fields = ['label', 'access', 'email', 'notes']
 
 class UserAddressForm(forms.ModelForm):
+    
+    preferred = forms.BooleanField(required = False)
+
     class Meta:
         model = models.UserAddress
         fields = ['label', 'access', 'address', 'notes']

@@ -199,10 +199,32 @@ class UserContactInfoEditView(UserContactInfoView):
 
         # give this object a profile automatically
         self.object.profile = self.profile
-
         self.object.save()
+        
+        # if we've decided this is a preferred object, save that on the profile
+        if form.cleaned_data['preferred']:
+            field = ''
+            if isinstance(self.object, models.UserPhone):
+                field = 'preferred_phone'
+            elif isinstance(self.object, models.UserEmail):
+                field = 'preferred_email'
+            elif isinstance(self.object, models.UserAddress):
+                field = 'preferred_address'
+            
+            if field:
+                setattr(self.profile, field, self.object)
+                self.profile.save()
 
         return super(ModelFormMixin, self).form_valid(form)
+
+    def get_form_kwargs(self, **kwargs):
+        
+        kwargs = super(UserContactInfoEditView, self).get_form_kwargs(**kwargs)
+
+        if self.object:
+            kwargs['initial'] = {'preferred': self.object.is_preferred}
+
+        return kwargs
 
     def get_context_data(self, *args, **kwargs):
         context = super(UserContactInfoEditView, self).get_context_data(**kwargs)
