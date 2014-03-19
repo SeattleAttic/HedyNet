@@ -209,7 +209,12 @@ class UserContactInfoEditView(UserContactInfoView):
 
     def get_success_url(self, *args, **kwargs):
 
-        return reverse("user_contact", kwargs={"username": self.kwargs.get("username", None)})
+        username = self.kwargs.get("username", None)
+
+        if isinstance(self.object, models.UserExternalSite):
+            return reverse("user_profile", kwargs={"username": username})
+
+        return reverse("user_contact", kwargs={"username": username})
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -219,7 +224,7 @@ class UserContactInfoEditView(UserContactInfoView):
         self.object.save()
         
         # if we've decided this is a preferred object, save that on the profile
-        if form.cleaned_data['preferred']:
+        if 'preferred' in form.cleaned_data and form.cleaned_data['preferred']:
             field = ''
             if isinstance(self.object, models.UserPhone):
                 field = 'preferred_phone'
@@ -238,7 +243,7 @@ class UserContactInfoEditView(UserContactInfoView):
         
         kwargs = super(UserContactInfoEditView, self).get_form_kwargs(**kwargs)
 
-        if self.object:
+        if self.object and not isinstance(self.object, models.UserExternalSite):
             kwargs['initial'] = {'preferred': self.object.is_preferred}
 
         return kwargs
@@ -309,7 +314,12 @@ class UserContactInfoDeleteView(LoginRequiredMixin, DeleteView):
     
     def get_success_url(self, *args, **kwargs):
 
-        return reverse("user_contact", kwargs={"username": self.kwargs.get("username", None)})
+        username = self.kwargs.get("username", None)
+
+        if isinstance(self.object, models.UserExternalSite):
+            return reverse("user_profile", kwargs={"username": username})
+
+        return reverse("user_contact", kwargs={"username": username})
 
 class UserPhoneDeleteView(UserContactInfoDeleteView):
     model = models.UserPhone
