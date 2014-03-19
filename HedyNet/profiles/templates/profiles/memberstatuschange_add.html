@@ -6,7 +6,7 @@
 {{ block.super }}
 <li class="unavailable">Admin</li>
 {% with user_profile.user.username as username %}
-<li class="retain-capitalization">{% if user_profile.display_name %}{{ user_profile.display_name }} ({{ username }}){% else %}{{ username }}{% endif %}</li>
+<li class="retain-capitalization"><a href="{% url "user_profile" username=username %}">{% if user_profile.display_name %}{{ user_profile.display_name }} ({{ username }}){% else %}{{ username }}{% endif %}</a></li>
 {% endwith %}
 <li class="current">Add Status</li>
 </ul>
