@@ -6,6 +6,7 @@ admin.site.register(models.UserProfile)
 admin.site.register(models.UserEmail)
 admin.site.register(models.UserPhone)
 admin.site.register(models.UserAddress)
+admin.site.register(models.UserExternalSite)
 
 class MemberStatusChangeAdmin(admin.ModelAdmin):
     list_display = ("profile", "changed_on", "new_status", "old_status")
