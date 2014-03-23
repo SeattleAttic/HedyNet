@@ -1,6 +1,6 @@
 Django==1.6.2
 MySQL-python
-django-allauth==0.15.0
+django-allauth==0.16.1
 django-braces==1.4.0
 django-markdown-deux==1.0.4
 mailchimp==2.0.7
