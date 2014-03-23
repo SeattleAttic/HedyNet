@@ -1,7 +1,8 @@
 {% if item %}
 <div class="row infofield basic">
 <div class="columns small-{{ small_title_columns|default:"12" }} medium-{{ medium_title_columns|default:"3" }} large-{{ large_title_columns|default:"3" }} title">
-<p><strong>{{ item_title }}:</strong></p>
+<p><strong>{% if title_link %}<a href="{{ title_link }}">{% endif %}
+{{ item_title }}{% if title_link %}</a>{% endif %}:</strong></p>
 </div>
 <div class="columns small-{{ small_item_columns|default:"12" }} medium-{{ medium_item_columns|default:"9" }} large-{{ large_item_columns|default:"9" }} item">
 {% if item_content %}{{ item_content|linebreaks }}{% else %}{{ item|linebreaks }}{% endif %}

@@ -80,12 +80,12 @@
 
 {% if preferred_address %}
 {% if user_profile.preferred_contact_method == "address" %}
-{% include "foundation/infofield/link.html" with item_title="Address (preferred)" item=preferred_address.address item_link="mailto:"|add:preferred_address.address %}
+{% include "foundation/infofield/multiline.html" with item_title="Address (preferred)" item=preferred_address.address %}
 {% else %}
-{% include "foundation/infofield/link.html" with item_title="Address" item=preferred_address.address item_link="mailto:"|add:preferred_address.address %}
+{% include "foundation/infofield/multiline.html" with item_title="Address" item=preferred_address.address %}
 {% endif %}
 {% if preferred_address.notes %}
-<blockquote>{{ preferred_email.notes|markdown }}</blockquote>
+<blockquote>{{ preferred_address.notes|markdown }}</blockquote>
 {% endif %}
 {% endif %}
 

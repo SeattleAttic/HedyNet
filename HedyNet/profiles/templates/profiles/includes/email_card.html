@@ -4,17 +4,19 @@
 
 <div class="row">
 <div class="columns large-10">
-<p><a href="{{ email_contact.get_absolute_url }}">{{ email_contact.label|default:"Email" }}</a>{% if preferred %} (preferred){% endif %}: <a href="mailto:{{ email_contact.email }}">{{ email_contact.email}}</a></p>
+{% if preferred %}
+{% include "foundation/infofield/link.html" with title_link=email_contact.get_absolute_url item_title="Email (preferred)" item=email_contact.email item_link="mailto:"|add:email_contact.email %}
+{% else %}
+{% include "foundation/infofield/link.html" with title_link=email_contact.get_absolute_url item_title="Email" item=email_contact.address item_link="mailto:"|add:email_contact.email %}
+{% endif %}
+{% if email_contact.notes %}
+<blockquote>{{ email_contact.notes|markdown }}</blockquote>
+{% endif %}
 </div>
 <div class="columns large-2">
 {% if can_edit %}
 <a href="{% url "user_profile_email_update" username=username pk=email_contact.pk %}" class="button tiny right">Edit</a>
 {% endif %}
 </div>
-</div>
-
-{% if email_contact.notes %}
-<blockquote>{{ email_contact.notes|markdown }}</blockquote>
-{% endif %}
 </div>
 {% endwith %}

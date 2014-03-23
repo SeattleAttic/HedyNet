@@ -4,7 +4,14 @@
 
 <div class="row">
 <div class="columns large-10">
-<p><a href="{{ phone_contact.get_absolute_url }}">{{ phone_contact.label|default:"Phone" }}</a>{% if preferred %} (preferred){% endif %}: <a href="tel:{{ phone_contact.phone }}">{{ phone_contact.phone }}</a></p>
+{% if preferred == "phone" %}
+{% include "foundation/infofield/link.html" with title_link=phone_contact.get_absolute_url item_title="Phone (preferred)" item=phone_contact.phone item_link="tel:"|add:phone_contact.phone %}
+{% else %}
+{% include "foundation/infofield/link.html" with title_link=phone_contact.get_absolute_url item_title="Phone" item=phone_contact.phone item_link="tel:"|add:phone_contact.phone %}
+{% endif %}
+{% if phone_contact.notes %}
+<blockquote>{{ phone_contact.notes|markdown }}</blockquote>
+{% endif %}
 </div>
 <div class="columns large-2">
 {% if can_edit %}
@@ -12,9 +19,4 @@
 {% endif %}
 </div>
 </div>
-
-{% if phone_contact.notes %}
-<blockquote>{{ phone_contact.notes|markdown }}</blockquote>
-{% endif %}
-</dl>
 {% endwith %}
