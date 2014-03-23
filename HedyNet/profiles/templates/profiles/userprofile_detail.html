@@ -90,7 +90,7 @@
 {% endif %}
 
 {# only show if we have some contact info #}
-{% if preferred_phone or preferred_email or preferred_address or phone_contacts or address_contacts or email_contacts %}
+{% if preferred_phone or preferred_email or preferred_address or phone_contacts or address_contacts or email_contacts or can_edit %}
 <a class="button right" href="{% url "user_contact" username=username %}">All{% if can_edit %}/Edit{% endif %} contact information</a>
 {% endif %}
 </div>
