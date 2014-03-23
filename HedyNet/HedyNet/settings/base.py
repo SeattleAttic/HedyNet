@@ -203,9 +203,9 @@ THIRD_PARTY_APPS = (
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.persona',
-    'allauth.socialaccount.providers.github',
-    'allauth.socialaccount.providers.openid',
+#    'allauth.socialaccount.providers.persona',
+#    'allauth.socialaccount.providers.github',
+#    'allauth.socialaccount.providers.openid',
     # Markdown
     'markdown_deux',
     # MailChimp integration
@@ -278,15 +278,15 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_USERNAME_MIN_LENGTH = 3
 
-SOCIALACCOUNT_PROVIDERS = \
-    { 'openid':
-        { 'SERVERS': []
-            #[dict(id='dreamwidth',
-            #      name='Dreamwidth',
-            #      openid_url='http://www.dreamwidth.org'),
-            #]
-        }
-    }
+#SOCIALACCOUNT_PROVIDERS = \
+#    { 'openid':
+#        { 'SERVERS': []
+#            #[dict(id='dreamwidth',
+#            #      name='Dreamwidth',
+#            #      openid_url='http://www.dreamwidth.org'),
+#            #]
+#        }
+#    }
 ########## END AUTH CONFIGURATION
 
 ########## MARKDOWN CONFIGURATION
@@ -314,3 +314,12 @@ MARKDOWN_DEUX_STYLES = {
 MAILCHIMP_API_KEY = '780167529b893df25d37767d6cce71cf-us3'
 
 ######### END MAILCHIMP INTEGRATION
+
+######### DJANGO AVATAR INTEGRATION
+
+#AVATAR_GRAVATAR_BACKUP = False
+#AVATAR_DEFAULT_URL = "%simg/CookieAvatar.png" % STATIC_URL
+#AVATAR_STORAGE_DIR = "avatar"
+#AUTO_GENERATE_AVATAR_SIZES = (100, )
+
+######### END DJANGO AVATAR INTEGRATION
