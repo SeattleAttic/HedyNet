@@ -98,7 +98,8 @@ class UserProfileView(SingleObjectMixin):
         # add the viewer's profile to this view
         self.viewer_profile = models.UserProfile.get_profile(self.request.user)
 
-        if not user_profile.profile_access in self.valid_access_levels:
+        if (not user_profile.profile_access in self.valid_access_levels) and \
+          (not user_profile.user_id == self.request.user.id):
             raise Http404("No %(verbose_name)s found matching the username" %
                 {'verbose_name': models.UserProfile._meta.verbose_name})
 
