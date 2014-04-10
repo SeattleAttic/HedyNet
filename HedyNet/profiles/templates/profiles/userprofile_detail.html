@@ -45,8 +45,9 @@
 </div>
 {% endif %}
 
+{% with medium_title_columns="6" medium_item_columns="6" large_title_columns="5" large_item_columns="7" %}
 <section class="row">
-<div class="columns">
+<div class="columns large-6">
 {% if user_profile.display_name %}
 {% include "foundation/infofield/basic.html" with item_title="Username" item=username %}
 {% endif %}
@@ -94,30 +95,15 @@
 <a class="button right" href="{% url "user_contact" username=username %}">All{% if can_edit %}/Edit{% endif %} contact information</a>
 {% endif %}
 </div>
-</section>
-
-{% if user_profile.about or user_profile.public_about %}
-<section class="row">
-<div class="columns">
-<h3>About Me</h3>
-{{ user_profile.public_about|markdown }}
-
-{% if user_profile.public_about and user_profile.about %}<hr />{% endif %}
-
-{{ user_profile.about|markdown }}
-</div>
-</section>
-{% endif %}
 
 {% if external_sites %}
-<section class="row">
-<div class="columns">
+<div class="columns large-6">
 
 <div class="row">
-<div class="columns medium-10">
+<div class="columns medium-9">
 <h3>My Sites</h3>
 </div>
-<div class="columns medium-2">
+<div class="columns medium-3">
 {% if can_edit %}
 <a href="{% url "user_profile_site_add" username=username %}" class="button tiny right">Add site</a>
 {% endif %}
@@ -137,10 +123,9 @@
 </dl>
 
 </div>
-</section>
 {% else %}
 {% if can_edit %}
-<section class="row">
+<div class="row">
 <div class="columns medium-10">
 <h3>My Sites</h3>
 </div>
@@ -149,10 +134,24 @@
 <a href="{% url "user_profile_site_add" username=username %}" class="button right">Add site</a>
 {% endif %}
 </div>
+</div>
+{% endif %}
+{% endif %}
+</section>
+{% endwith %}
+
+{% if user_profile.about or user_profile.public_about %}
+<section class="row">
+<div class="columns">
+<h3>About Me</h3>
+{{ user_profile.public_about|markdown }}
+
+{% if user_profile.public_about and user_profile.about %}<hr />{% endif %}
+
+{{ user_profile.about|markdown }}
+</div>
 </section>
 {% endif %}
-{% endif %}
-
 
 {% if user_profile.dietary_considerations %}
 <section class="row">
