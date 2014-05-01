@@ -1,0 +1,26 @@
+{% extends "profiles/base.html" %}
+
+{% block breadcrumbs %}
+{{ block.super }}
+{% with user_profile.user.username as username %}
+<li class="retain-capitalization"><a href="{% url "user_profile" username=username %}">{% if user_profile.display_name %}{{ user_profile.display_name }} ({{ username }}){% else %}{{ username }}{% endif %}</a></li>
+{% endwith %}
+<li class="current">Editing profile</li>
+</ul>
+{% endblock %}
+
+{% block title %}Editing profile for: {{ user_profile.user.username }}{% endblock %}
+
+{% block content %}
+<div class="row">
+<div class="columns">
+<h1>Editing profile for {{ user_profile.user.username }}</h1>
+
+<form method="post">{% csrf_token %}
+{% include "forms/foundation.html" %}
+<button class="right" type="submit">Save</button>
+</form>
+
+</div>
+</div>
+{% endblock %}

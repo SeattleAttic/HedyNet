@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% load markdown_deux_tags %}
+{% load static from staticfiles %}
+
+{% block title %}Profile for: {{ user_profile.user.display_name }}{% endblock %}
+
+{% block breadcrumbs %}
+{% with user_profile.user.username as username %}
+<ul class="breadcrumbs"> <li><a href="{% url "home" %}">Home</a></li>
+<li><a href="{% url "memberdirectory" %}">Member Directory</a></li>
+<li class="retain-capitalization"><a href="{{ user_profile.get_absolute_url }}">{% if user_profile.display_name %}{{ user_profile.display_name }} ({{ username }}){% else %}{{ username }}{% endif %}</a></li>
+<li class="current">Contact</li>
+</ul>
+{% endwith %}
+{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static "css/site/profiles.css" %}" />
+{% endblock %}
+
+{% block content %}
+{% with user_profile.user.username as username %}
+<div class="profile contact">
+<div class="row">
+<div class="columns">
+<h1>Contact Info for {% if user_profile.display_name %}{{ user_profile.display_name }}{% else %}{{ username }}{% endif %}</h1>
+</div>
+</div>
+
+
+<div class="title panel">
+<div class="row">
+<div class="columns medium-9 large-10">
+<h3{% if user_profile.preferred_contact_method = "email" %} class="preferred"{% endif %}>Email</h3>
+</div>
+<div class="columns medium-3 large-2">
+{% if can_edit %}
+<a class="button small expand" href="{% url "user_profile_email_add" username=username %}">Add email</a>
+{% endif %}
+</div>
+</div>
+</div>
+
+<div class="row">
+<article class="columns contact-info emails">
+
+{% if preferred_email %}
+{% with preferred_email as email_contact %}
+{% include "profiles/includes/email_card.html" %}
+{% endwith %}
+{% endif %}
+{% for email_contact in email_contacts %}
+{% if email_contact != preferred_email %}
+{% if preferred_email or not forloop.first %}
+<hr />
+{% endif %}
+{% include "profiles/includes/email_card.html" %}
+{% endif %}
+{% empty %}
+<p>No email information available</p>
+{% endfor %}
+</article>
+</div>
+
+<div class="title panel">
+<div class="row">
+<div class="columns medium-9 large-10">
+<h3{% if user_profile.preferred_contact_method = "phone" %} class="preferred"{% endif %}>Phone</h3>
+</div>
+<div class="columns medium-3 large-2">
+{% if can_edit %}
+<a class="button small expand" href="{% url "user_profile_phone_add" username=username %}">Add phone number</a>
+{% endif %}
+</div>
+</div>
+</div>
+
+<div class="row">
+<article class="columns contact-info phones">
+
+{% if preferred_phone %}
+{% with preferred_phone as phone_contact %}
+{% include "profiles/includes/phone_card.html" %}
+{% endwith %}
+{% endif %}
+{% for phone_contact in phone_contacts %}
+{% if phone_contact != preferred_phone %}
+{% if preferred_phone or not forloop.first %}
+<hr />
+{% endif %}
+{% include "profiles/includes/phone_card.html" %}
+{% endif %}
+{% empty %}
+<p>No phone information available</p>
+{% endfor %}
+</article>
+</div>
+
+<div class="title panel">
+<div class="row">
+<div class="columns medium-9 large-10">
+<h3{% if user_profile.preferred_contact_method = "address" %} class="preferred"{% endif %}>Address</h3>
+</div>
+<div class="columns medium-3 large-2">
+{% if can_edit %}
+<a class="button small expand" href="{% url "user_profile_address_add" username=username %}">Add address</a>
+{% endif %}
+</div>
+</div>
+</div>
+
+<div class="row">
+<article class="columns contact-info addresses">
+
+{% if preferred_address %}
+{% with preferred_address as address_contact %}
+{% include "profiles/includes/address_card.html" %}
+{% endwith %}
+{% endif %}
+{% for address_contact in address_contacts %}
+{% if address_contact != preferred_address %}
+{% if preferred_address or not forloop.first %}
+<hr />
+{% endif %}
+{% include "profiles/includes/address_card.html" %}
+{% endif %}
+{% empty %}
+<p>No address information available</p>
+{% endfor %}
+</article>
+</div>
+
+{% endwith %}
+{% endblock %}

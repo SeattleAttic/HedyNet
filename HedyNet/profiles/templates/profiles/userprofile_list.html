@@ -1,0 +1,39 @@
+{% extends "profiles/base.html" %}
+{% load avatar_tags %}
+    
+{% block title %}Member directory{% endblock %}
+
+{% block breadcrumbs %}
+<ul class="breadcrumbs"> <li><a href="{% url "home" %}">Home</a></li>
+<li class="current"><a href="{% url "memberdirectory" %}">Member Directory</a></li>
+</ul>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+<div class="columns">
+<h1>Member Directory</h1>
+
+<hr />
+<dl class="sub-nav">
+<dt>Filter:</dt>
+<dd{% if filter == "members" %} class="active"{% endif %}><a href="{% url "memberdirectory" %}">Members</a></dd>
+<dd{% if filter == "nonmembers" %} class="active"{% endif %}><a href="{% url "memberdirectory" %}?filter=nonmembers">Associates</a></dd>
+</dl>
+<hr />
+
+<ul class="medium-block-grid-3 large-block-grid-4">
+
+{% for user_profile in user_profile_list %}
+<li class="text-center">
+<a href="{% url "user_profile" username=user_profile.user.username %}">
+{% avatar user_profile.user 100 %}
+<p>{{ user_profile }}</p>
+</a>
+</li>
+</ul>
+
+</div>
+</div>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "profiles/base.html" %}
+
+{% block title %}Member statuses{% endblock %}
+
+{% block breadcrumbs %}
+{{ block.super }}
+<li class="unavailable">Admin</li>
+<li class="current"><a href="{% url "member_status_list_admin" %}">Member Status</a></li>
+</ul>
+{% endblock %}
+
+{% block content %}
+<div class="memberstatus row">
+<div class="columns">
+<h1>Member Statuses</h1>
+
+<table>
+<thead>
+<tr>
+<th>Username</th>
+<th>Display Name</th>
+<th>Legal Name</th>
+<th>Status</th>
+<th>Became member</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody>
+{% for user_profile in user_profile_list %}
+{% with user_profile.user as user %}
+<tr>
+<th><a href="{% url "user_profile" username=user.username %}">{{ user.username }}</a></th>
+<td>{{ user_profile }}</td>
+<td>{{ user_profile.legal_name }}</td>
+<td><a href="{% url "member_status_change_list" username=user.username %}">{{ user_profile.status }}</a></td>
+<td>{{ user_profile.became_member_on }}</td>
+<td><a href="{% url "member_status_change_add" username=user.username %}">Change Status</a></td>
+{% endwith %}
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+{% endblock %}

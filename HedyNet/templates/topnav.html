@@ -1,0 +1,62 @@
+  <nav class="top-bar">
+    <ul class="title-area">
+      <!-- Title Area -->
+      <li class="name">
+        <h1>
+          <a href="{% url "home" %}">
+            Seattle Attic
+          </a>
+        </h1>
+      </li>
+      <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+    </ul>
+
+    <section class="top-bar-section">
+      <!-- Left Nav Section -->
+      <ul class="left">
+        <li class="divider"></li>
+{% if user.is_authenticated %}
+        <li class="has-dropdown"><a href="#">{{ user }}</a>
+          <ul class="dropdown">
+            <li><a href="{% url "user_profile" username=user.username %}">My profile</a></li>
+            <li><a href="{% url 'avatar_change' %}">Change avatar</a></li>
+          </ul>
+        </li> 
+        <li class="divider"></li>
+        <li><a href="{% url "account_logout" %}">Log Out</a></li>
+{% else %}
+        <li><a href="{% url "account_login" %}">Log In</a></li>
+{% endif %}
+        <li class="divider"></li>
+      </ul>
+    </section>
+
+    <section class="top-bar-section">
+      <!-- Right Nav Section -->
+      <ul class="right">
+        <li class="divider"></li>
+        <li><a href="{% url "events" %}">Events</a></li>
+        <li class="divider"></li>
+        <li><a href="http://seattleattic.dreamwidth.org/" target="_blank">Community Blog</a><li>
+        <li class="divider"></li>
+        <li class="has-dropdown">
+          <a href="#">About</a>
+          <ul class="dropdown">
+            <li><a href="{% url "about" %}">About Us</a></li>
+            <li><a href="{% url "policies" %}">Policies</a></li>
+            <li><a href="{% url "codeofconduct" %}">Code of Conduct</a></li>
+            <li><a href="{% url "faqsection-detail" slug="main" %}">FAQ</a></li>
+            <li><a href="{% url "othersite_list" %}">Other sites</a></li>
+            <li><a href="{% url "friends" %}">Friends</a></li>
+          </ul>
+        </li>
+        <li class="divider"></li>
+        <li><a href="{% url "visit" %}">Visit</a></li>
+        <li class="divider"></li>
+        <li><a href="{% url "donations" %}">Donate</a></li>
+        <li class="divider"></li>
+        <li><a href="{% url "membership" %}">Membership</a></li>
+      </ul>
+    </section>
+
+  </nav>

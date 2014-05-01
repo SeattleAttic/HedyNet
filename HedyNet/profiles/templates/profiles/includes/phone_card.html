@@ -1,0 +1,22 @@
+{% load markdown_deux_tags %}
+{% with phone_contact.is_preferred as preferred %}
+<div class="phone contact-card {% if preferred %} preferred{% endif %}">
+
+<div class="row">
+<div class="columns large-10">
+{% if preferred == "phone" %}
+{% include "foundation/infofield/link.html" with title_link=phone_contact.get_absolute_url item_title="Phone (preferred)" item=phone_contact.phone item_link="tel:"|add:phone_contact.phone %}
+{% else %}
+{% include "foundation/infofield/link.html" with title_link=phone_contact.get_absolute_url item_title="Phone" item=phone_contact.phone item_link="tel:"|add:phone_contact.phone %}
+{% endif %}
+{% if phone_contact.notes %}
+<blockquote>{{ phone_contact.notes|markdown }}</blockquote>
+{% endif %}
+</div>
+<div class="columns large-2">
+{% if can_edit %}
+<a href="{% url "user_profile_phone_update" username=username pk=phone_contact.pk %}" class="button tiny right">Edit</a>
+{% endif %}
+</div>
+</div>
+{% endwith %}

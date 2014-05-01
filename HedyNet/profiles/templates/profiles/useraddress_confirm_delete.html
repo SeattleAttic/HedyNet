@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Deleting address contact {{ user_address.label }} for {{ user_address.profile }}{% endblock %}
+
+{% block content %}
+<div class="memberstatus row">
+<div class="columns">
+<h1>Deleting address contact {{ user_address.label }} for {{ user_address.profile }}</h1>
+
+<p>Label: {{ user_address.label }}</p>
+<p>Access: {{ user_address.access }}</p>
+<p>Address: {{ user_address.address }}</p>
+
+<form method="post">{% csrf_token %}
+<p>Delete this address?</p>
+<button type="submit">Confirm delete</button>
+</form>
+
+</div>
+</div>
+{% endblock %}

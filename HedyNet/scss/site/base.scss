@@ -1,3 +1,4 @@
+@import "../foundation/variables";
 @import "variables";
 
 body {
@@ -13,11 +14,23 @@ a { color: $link-color; font-weight: bold; text-decoration: underline; }
 a:visited { color: $link-visited-color; }
 a:hover, a:active { color: $link-hover-color; }
 
+a.button, a.button:visited { color: white !important; }
+
 .top-bar a { text-decoration: none; }
 
 .fineprint { font-size: smaller; }
+
+ul.breadcrumbs { margin-bottom: 0px; }
+
+ul.breadcrumbs li.retain-capitalization, ul.breadcrumbs li.retain-capitalization a { text-transform: none; }
+
+/* Fix IE resizing */
+img { -ms-interpolation-mode: bicubic; }
 
 form {
   .hint { text-align: right; display: block; margin-bottom: .5rem; }
   .required { font-size: smaller; margin-bottom: .5rem; font-style: italic; }
 }
+
+/* https://github.com/zurb/foundation/issues/2127 */
+textarea { height: auto; }
