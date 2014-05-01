@@ -1,0 +1,33 @@
+{% comment %}
+Variables that can be passed in:
+
+* item_title -- label of the field
+* title_link -- link of the label, if any
+* item -- Only shows if this evaluates true; 
+* item_link -- Used if present; otherwise, uses item.get_absolute_url
+* link_label -- Used for the label of the link if present; otherwise, uses the "url" value of the item
+  next if possible; uses the item string itself otherwise.
+  
+There are many column variables. For title areas:
+
+* small_title_columns -- defines columns on small pages; default "12"
+* medium_title_columns -- defines columns on medium pages; default "3"
+* large_title_columns -- defines columns on large pages; default "3"
+
+For item areas:
+
+* small_item_columns -- defines columns on small pages; default "12"
+* medium_item_columns -- defines columns on medium pages; default "9"
+* large_title_columns -- defines columns on large pages; default "9"
+
+{% endcomment %}
+{% if item %}
+<div class="row infofield link">
+<div class="columns small-{{ small_title_columns|default:"12" }} medium-{{ medium_title_columns|default:"3" }} large-{{ large_title_columns|default:"3" }} title">
+<p><strong>{% if title_link %}<a href="{{ title_link }}">{% endif %}
+{{ item_title }}{% if title_link %}</a>{% endif %}:</strong></p></div>
+<div class="columns small-{{ small_item_columns|default:"12" }} medium-{{ medium_item_columns|default:"9" }} large-{{ large_item_columns|default:"9" }} item">
+<p><a href="{% if item_link %}{{ item_link }}{% else %}{{ item.get_absolute_url }}{% endif %}">
+{% if link_label %}{{ link_label }}{% elif item.url %}{{ item.url }}{% else %}{{ item }}{% endif %}</a></p></div>
+</div>
+{% endif %}

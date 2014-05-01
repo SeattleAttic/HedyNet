@@ -1,0 +1,182 @@
+{% extends "profiles/base.html" %}
+{% load markdown_deux_tags %}
+{% load access_icons %}
+{% load avatar_tags %}
+
+{% block title %}Profile for: {{ user_profile.user.display_name }}{% endblock %}
+
+{% block breadcrumbs %}
+{{ block.super }}
+{% with user_profile.user.username as username %}
+<li class="current retain-capitalization"><a href="{% url "user_profile" username=username %}">{% if user_profile.display_name %}{{ user_profile.display_name }} ({{ username }}){% else %}{{ username }}{% endif %}</a></li>
+<li class="current">Profile</li>
+</ul>
+{% endwith %}
+{% endblock %}
+
+{% block content %}
+{% with user_profile.user.username as username %}
+<div class="profile">
+<div class="row">
+<div class="columns medium-2 small-3">
+{% avatar user_profile.user 100 %}
+</div>
+<div class="columns medium-9 small-8">
+<h1>{% if user_profile.display_name %}{{ user_profile.display_name }}{% else %}{{ username }}{% endif %} {{ user_profile.profile_access|access_icon }}</h1>
+</div>
+<div class="columns medium-1 small-1">
+{% if can_edit %}
+<a href="{% url "user_profile_edit" username=username %}" class="button tiny right">Edit</a>
+{% endif %}
+</div>
+</div>
+
+{% if user_profile.is_member %}
+<div class="panel member">
+<section class="row">
+<div class="columns">
+{% if user_profile.became_member_on %}
+<span>Member since: {{ user_profile.became_member_on }}</span>
+{% else %}
+<span>Member</span>
+{% endif %}
+</div>
+</section>
+</div>
+{% endif %}
+
+{% with medium_title_columns="6" medium_item_columns="6" large_title_columns="5" large_item_columns="7" %}
+<section class="row">
+<div class="columns large-6">
+{% if user_profile.display_name %}
+{% include "foundation/infofield/basic.html" with item_title="Username" item=username %}
+{% endif %}
+{% if user_profile.legal_name %}
+{% include "foundation/infofield/basic.html" with item_title="Legal name" item=user_profile.legal_name %}
+{% endif %}
+
+<hr />
+
+{% if preferred_phone %}
+{% if user_profile.preferred_contact_method == "phone" %}
+{% include "foundation/infofield/basic.html" with item_title="Phone (preferred)" item=preferred_phone.phone %}
+{% else %}
+{% include "foundation/infofield/basic.html" with item_title="Phone" item=preferred_phone.phone %}
+{% endif %}
+{% if preferred_phone.notes %}
+<blockquote>{{ preferred_phone.notes|markdown }}</blockquote>
+{% endif %}
+{% endif %}
+
+{% if preferred_email %}
+{% if user_profile.preferred_contact_method == "email" %}
+{% include "foundation/infofield/link.html" with item_title="Email (preferred)" item=preferred_email.email item_link="mailto:"|add:preferred_email.email %}
+{% else %}
+{% include "foundation/infofield/link.html" with item_title="Email" item=preferred_email.email item_link="mailto:"|add:preferred_email.email %}
+{% endif %}
+{% if preferred_email.notes %}
+<blockquote>{{ preferred_email.notes|markdown }}</blockquote>
+{% endif %}
+{% endif %}
+
+{% if preferred_address %}
+{% if user_profile.preferred_contact_method == "address" %}
+{% include "foundation/infofield/multiline.html" with item_title="Address (preferred)" item=preferred_address.address %}
+{% else %}
+{% include "foundation/infofield/multiline.html" with item_title="Address" item=preferred_address.address %}
+{% endif %}
+{% if preferred_address.notes %}
+<blockquote>{{ preferred_address.notes|markdown }}</blockquote>
+{% endif %}
+{% endif %}
+
+{# only show if we have some contact info #}
+{% if preferred_phone or preferred_email or preferred_address or phone_contacts or address_contacts or email_contacts or can_edit %}
+<a class="button right" href="{% url "user_contact" username=username %}">All{% if can_edit %}/Edit{% endif %} contact information</a>
+{% endif %}
+</div>
+
+{% if external_sites %}
+<div class="columns large-6">
+
+<div class="row">
+<div class="columns medium-9">
+<h3>My Sites</h3>
+</div>
+<div class="columns medium-3">
+{% if can_edit %}
+<a href="{% url "user_profile_site_add" username=username %}" class="button tiny right">Add site</a>
+{% endif %}
+</div>
+</div>
+
+<dl>
+{% for site in external_sites %}
+<dt>
+{% if site.link %}<a href="{{ site.link }}">{% endif %}{{ site.label }}{% if site.handle %}: {{ site.handle }}{% endif %}{% if site.link %}</a>{% endif %}
+{% if can_edit %}<a class="right" href="{% url "user_profile_site_update" username=username pk=site.pk %}">Edit</a>{% endif %}
+</dt>
+{% if site.notes %}
+<dd><blockquote>{{ site.notes|markdown }}</blockquote></dd>
+{% endif %}
+{% endfor %}
+</dl>
+
+</div>
+{% else %}
+{% if can_edit %}
+<div class="row">
+<div class="columns medium-10">
+<h3>My Sites</h3>
+</div>
+<div class="columns medium-2">
+{% if can_edit %}
+<a href="{% url "user_profile_site_add" username=username %}" class="button right">Add site</a>
+{% endif %}
+</div>
+</div>
+{% endif %}
+{% endif %}
+</section>
+{% endwith %}
+
+{% if user_profile.about or user_profile.public_about %}
+<section class="row">
+<div class="columns">
+<h3>About Me</h3>
+{{ user_profile.public_about|markdown }}
+
+{% if user_profile.public_about and user_profile.about %}<hr />{% endif %}
+
+{{ user_profile.about|markdown }}
+</div>
+</section>
+{% endif %}
+
+{% if user_profile.dietary_considerations %}
+<section class="row">
+<div class="columns">
+<h3>Dietary Considerations</h3>
+{{ user_profile.dietary_considerations|markdown }}
+</div>
+</section>
+{% endif %}
+
+{% if user_profile.emergency_contact %}
+<section class="row">
+<div class="columns">
+<h3>Emergency Contact</h3>
+{{ user_profile.emergency_contact|markdown }}
+</div>
+</section>
+{% endif %}
+
+<div class="row">
+<div class="columns">
+<p><a href="{% url "memberdirectory" %}"><< Back to member directory</a></p>
+</div>
+</div>
+
+</div>
+{% endwith %}
+{% endblock %}

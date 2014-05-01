@@ -1,0 +1,50 @@
+{% extends "profiles/base.html" %}
+{% load markdown_deux_tags %}
+{% load access_icons %}
+
+{% block title %}Address contact {{ user_address.label }} for {{ user_address.profile }}{% endblock %}
+
+{% block breadcrumbs %}
+{{ block.super }}
+{% with user_profile.user.username as username %}
+<li class="retain-capitalization"><a href="{% url "user_profile" username=username %}">{% if user_profile.display_name %}{{ user_profile.display_name }} ({{ username }}){% else %}{{ username }}{% endif %}</a></li>
+<li class="current">Address</li>
+</ul>
+{% endwith %}
+{% endblock %}
+
+{% block content %}
+<div class="memberstatus row">
+<div class="columns">
+
+<div class="row">
+<div class="columns medium-10">
+<h1>Address contact {{ user_address.label }} for {{ user_address.profile }} {{ user_address.access|access_icon }}</h1>
+</div>
+<div class="columns medium-2">
+{% if can_edit %}
+<a href="{% url "user_profile_address_update" username=username pk=user_address.pk %}" class="button">Update</a>
+{% endif %}
+</div>
+</div>
+
+
+<div class="row">
+<div class="columns large-6">
+{% include "foundation/infofield/basic.html" with item_title="Label" item=user_address.label %}
+{% include "foundation/infofield/basic.html" with item_title="Access" item=user_address.access %}
+{% include "foundation/infofield/multiline.html" with item_title="Address" item=user_address.address %}
+</div>
+<div class="columns large-6">
+{% if user_address.notes %}
+<div class="notes panel">
+<h3>Notes</h3>
+{{ user_address.notes|markdown }}
+</div>
+{% endif %}
+</div>
+</div>
+
+</div>
+</div>
+{% endblock %}

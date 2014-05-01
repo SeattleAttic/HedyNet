@@ -1,0 +1,27 @@
+<!-- Forms rendering with Zurb-Foundation. -->
+{% for hidden in form.hidden_fields %}
+  {{ hidden }}
+{% endfor %}
+
+{% for field in form.visible_fields %}
+    <div class="row">
+  {% if field.errors %}
+    {% for error in field.errors %}
+      <div class="error">
+        <label>{{ field.label_tag }}</label>
+        {{ field }}
+        <small>{{ error|escape }}</small>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="columns large-2 medium-3 small-12">
+    <label for="id_{{field.name}}" class="inline{% if field.help_text %} has-tip" data-tooltip title="{{ field.help_text|linebreaks }}{% endif %}">
+    {{ field.label }}:
+    </label>
+    </div>
+    <div class="columns large-10 medium-9 small-12">
+    {{ field }}
+    </div>
+  {% endif %}
+    </div>
+{% endfor %}

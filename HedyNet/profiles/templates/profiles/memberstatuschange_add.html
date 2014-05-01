@@ -1,0 +1,27 @@
+{% extends "profiles/base.html" %}
+
+{% block title %}Member status change for: {{ user_profile.user.username }}{% endblock %}
+
+{% block breadcrumbs %}
+{{ block.super }}
+<li class="unavailable">Admin</li>
+{% with user_profile.user.username as username %}
+<li class="retain-capitalization"><a href="{% url "user_profile" username=username %}">{% if user_profile.display_name %}{{ user_profile.display_name }} ({{ username }}){% else %}{{ username }}{% endif %}</a></li>
+{% endwith %}
+<li class="current">Add Status</li>
+</ul>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+<div class="columns">
+<h1>Changing member status for {{ user_profile.user.username }}</h1>
+
+<form method="post">{% csrf_token %}
+{% include "forms/foundation.html" %}
+<button class="right" type="submit">Change</button>
+</form>
+
+</div>
+</div>
+{% endblock %}

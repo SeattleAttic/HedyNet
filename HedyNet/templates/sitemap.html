@@ -7,15 +7,40 @@
 <div class="columns large-12 small-12">
 <header><h1>Sitemap</h1></header>
 <div class="content">
+<h2>Base Pages</h2>
 <ul>
 <li><a href="{% url "home" %}">Home</a></li>
-<li><a href="{% url "about" %}">About Us</a></li>
+<li><a href="{% url "about" %}">About us</a></li>
 <li><a href="{% url "events" %}">Events</a></li>
 <li><a href="{% url "policies" %}">Policies</a></li>
 <li><a href="{% url "codeofconduct" %}">Code of Conduct</a></li>
-<li><a href="{% url "othersite_list" %}">Attic Windows (other sites)</a></li>
 <li><a href="{% url "faqsection-detail" "main" %}">Main FAQ</a></li>
+<li><a href="{% url "othersite_list" %}">Attic Windows (other sites)</a></li>
 <li><a href="{% url "friends" %}">Friends of the attic</a></li>
+</ul>
+
+<h2>Members Directory</h2>
+<ul>
+<li><a href="{% url "memberdirectory" %}">Member directory</a></li>
+{% if user.is_authenticated %}
+<li><a href="{% url "user_profile" username=user.username %}">My profile</a></li>
+{% endif %}
+</ul>
+
+<h2>Accounts</h2>
+<ul>
+{% if user.is_authenticated %}
+<li><a href="{% url "account_email" %}">Email</a></li>
+<li><a href="{% url "account_change_password" %}">Account change password</a></li>
+<li><a href="{% url "socialaccount_connections" %}">Social account connections</a></li>
+<li><a href="{% url "account_change_password" %}">Change password</a></li>
+<li><a href="{% url "account_set_password" %}">Set password</a></li>
+<li><a href="{% url "account_logout" %}">Log out</a></li>
+{% else %}
+<li><a href="{% url "account_signup" %}">Sign up</a></li>
+<li><a href="{% url "account_login" %}">Log in</a></li>
+<li><a href="{% url "account_reset_password" %}">Reset password</a></li>
+{% endif %}
 </ul>
 </div>
 </div>

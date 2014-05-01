@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Email contact {{ user_email.label }} for {{ user_email.profile }}{% endblock %}
+
+{% block content %}
+<div class="memberstatus row">
+<div class="columns">
+<h1>Email contact {{ user_email.label }} for {{ user_email.profile }}</h1>
+
+<p>Label: {{ user_email.label }}</p>
+<p>Access: {{ user_email.access }}</p>
+<p>Email: <a href="mailto:{{ user_email.email }}">{{ user_email.email }}</a></p>
+
+<form method="post">{% csrf_token %}
+<p>Delete this email?</p>
+<button type="submit">Confirm delete</button>
+</form>
+
+</div>
+</div>
+{% endblock %}

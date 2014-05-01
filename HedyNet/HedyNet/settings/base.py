@@ -84,7 +84,7 @@ USE_TZ = True
 
 ########## MEDIA CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-root
-MEDIA_ROOT = normpath(join(SITE_ROOT, 'media'))
+MEDIA_ROOT = normpath(join(SITE_ROOT, '..', 'media'))
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-url
 MEDIA_URL = '/media/'
@@ -144,6 +144,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.tz',
     'django.contrib.messages.context_processors.messages',
     'django.core.context_processors.request',
+    'allauth.account.context_processors.account',
+    'allauth.socialaccount.context_processors.socialaccount',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
@@ -197,14 +199,25 @@ DJANGO_APPS = (
 )
 
 THIRD_PARTY_APPS = (
-    # Database migration helpers:
+    # Authentication apps
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+#    'allauth.socialaccount.providers.persona',
+#    'allauth.socialaccount.providers.github',
+#    'allauth.socialaccount.providers.openid',
+    # Markdown
     'markdown_deux',
+    # MailChimp integration
     'mailchimp2',
+    # Avatar abilities
+    'avatar',
 )
 
 # Apps specific for this project go here.
 LOCAL_APPS = (
     'FAQ',
+    'profiles',
     'payments',
     'othersites',
 )
@@ -252,6 +265,30 @@ LOGGING = {
 WSGI_APPLICATION = 'wsgi.application'
 ########## END WSGI CONFIGURATION
 
+########## AUTH CONFIGURATION
+
+AUTH_PROFILE_MODULE = 'profiles.UserProfile'
+# ACCOUNT_SIGNUP_FORM_CLASS = 'ffuser.forms.UserProfileForm'
+
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = 'home'
+
+ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_USERNAME_MIN_LENGTH = 3
+
+#SOCIALACCOUNT_PROVIDERS = \
+#    { 'openid':
+#        { 'SERVERS': []
+#            #[dict(id='dreamwidth',
+#            #      name='Dreamwidth',
+#            #      openid_url='http://www.dreamwidth.org'),
+#            #]
+#        }
+#    }
+########## END AUTH CONFIGURATION
+
 ########## MARKDOWN CONFIGURATION
 MARKDOWN_DEUX_STYLES = {
     "default": {
@@ -277,3 +314,12 @@ MARKDOWN_DEUX_STYLES = {
 MAILCHIMP_API_KEY = '780167529b893df25d37767d6cce71cf-us3'
 
 ######### END MAILCHIMP INTEGRATION
+
+######### DJANGO AVATAR INTEGRATION
+
+AVATAR_GRAVATAR_BACKUP = False
+AVATAR_DEFAULT_URL = "img/CookieAvatar.png"
+AVATAR_STORAGE_DIR = "avatar"
+AUTO_GENERATE_AVATAR_SIZES = (100, )
+
+######### END DJANGO AVATAR INTEGRATION

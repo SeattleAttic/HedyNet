@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="{% static "css/normalize.css" %}" />
   <link rel="stylesheet" href="{% static "css/foundation.css" %}" />
   <link rel="stylesheet" href="{% static "css/site/base.css" %}" />
-
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
   <script src="{% static "js/vendor/custom.modernizr.js" %}"></script>
 
   {% block extrahead %}
@@ -36,56 +36,19 @@
   <!-- Header and Nav -->
 {% block body %}
 {% block topbar %}
-  <nav class="top-bar">
-    <ul class="title-area">
-      <!-- Title Area -->
-      <li class="name">
-        <h1>
-          <a href="{% url "home" %}">
-            Seattle Attic
-          </a>
-        </h1>
-      </li>
-      <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
-    </ul>
-
-    <section class="top-bar-section">
-      <!-- Right Nav Section -->
-      <ul class="right">
-        <li class="divider"></li>
-        <li><a href="{% url "events" %}">Events</a></li>
-        <li class="divider"></li>
-        <li><a href="http://seattleattic.dreamwidth.org/" target="_blank">Community Blog</a><li>
-        <li class="divider"></li>
-        <li class="has-dropdown">
-          <a href="#">About</a>
-          <ul class="dropdown">
-            <li><a href="{% url "about" %}">About Us</a></li>
-            <li><a href="{% url "policies" %}">Policies</a></li>
-            <li><a href="{% url "codeofconduct" %}">Code of Conduct</a></li>
-            <li><a href="{% url "faqsection-detail" slug="main" %}">FAQ</a></li>
-            <li><a href="{% url "othersite_list" %}">Other sites</a></li>
-            <li><a href="{% url "friends" %}">Friends</a></li>
-          </ul>
-        </li>
-        <li class="divider"></li>
-        <li><a href="{% url "visit" %}">Visit</a></li>
-        <li class="divider"></li>
-        <li><a href="{% url "donations" %}">Donate</a></li>
-        <li class="divider"></li>
-        <li><a href="{% url "membership" %}">Membership</a></li>
-      </ul>
-    </section>
-
-  </nav>
+   {% include "topnav.html" %}
 {% endblock %}
 
+{% block breadcrumbs %}
+{% endblock %}
   <!-- End Header and Nav -->
 
   <!-- Main Grid Section -->
 
+{% block basecontent %}
 {% block content %}
 
+{% endblock %}
 {% endblock %}
 
   <!-- End Grid Section -->
@@ -96,17 +59,22 @@
 {% block footer %}
 <footer class="row">
 <div class="columns"><hr /></div>
-    <div class="large-6 columns fineprint">
+    <div class="medium-6 columns fineprint">
         <p>This is a fiscally sponsored project of the School Factory, Inc. a 501(c)3 non-profit corporation.  For more information: <br /><a href="mailto:info@seattleattic.com">info@seattleattic.com</a></p>
     </div>
-    <div class="large-6 columns">
+    <div class="medium-6 columns">
+    <div class="row">
+      <div class="columns">
         <ul class="inline-list right">
             <li><a href="{% url "sitemap" %}">Sitemap</a></li>
             <li><a href="{% url "tos" %}">TOS</a></li>
             <li><a href="{% url "policies" %}">Policies</a></li>
             <li><a href="{% url "codeofconduct" %}">Code of Conduct</a></li>
         </ul>
+      </div>
+      <div class="columns">
         <p class="right">&copy; Seattle Attic 2013</p>
+      </div>
     </div>
   </footer>
 {% endblock %}

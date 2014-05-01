@@ -1,0 +1,49 @@
+{% extends "profiles/base.html" %}
+{% load markdown_deux_tags %}
+{% load access_icons %}
+
+{% block title %}Phone contact {{ user_phone.label }} for {{ user_phone.profile }}{% endblock %}
+
+{% block breadcrumbs %}
+{{ block.super }}
+{% with user_profile.user.username as username %}
+<li class="retain-capitalization"><a href="{% url "user_profile" username=username %}">{% if user_profile.display_name %}{{ user_profile.display_name }} ({{ username }}){% else %}{{ username }}{% endif %}</a></li>
+<li class="current">Phone</li>
+</ul>
+{% endwith %}
+{% endblock %}
+
+{% block content %}
+<div class="memberstatus row">
+<div class="columns">
+
+<div class="row">
+<div class="columns medium-10">
+<h1>Phone contact {{ user_email.label }} for {{ user_phone.profile }} {{ user_phone.access|access_icon }}</h1>
+</div>
+<div class="columns medium-2">
+{% if can_edit %}
+<a href="{% url "user_profile_phone_update" username=username pk=user_phone.pk %}" class="button">Update</a>
+{% endif %}
+</div>
+</div>
+
+<div class="row">
+<div class="columns large-6">
+{% include "foundation/infofield/basic.html" with item_title="Label" item=user_phone.label %}
+{% include "foundation/infofield/basic.html" with item_title="Access" item=user_phone.access %}
+{% include "foundation/infofield/link.html" with item_title="Phone" item=user_phone.phone item_link="tel:"|add:user_phone.phone %}
+</div>
+<div class="columns large-6">
+{% if user_phone.notes %}
+<div class="notes panel">
+<h3>Notes</h3>
+{{ user_phone.notes|markdown }}
+</div>
+{% endif %}
+</div>
+</div>
+
+</div>
+</div>
+{% endblock %}
