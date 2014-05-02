@@ -127,12 +127,12 @@
 <div class="columns large-6">
 {% if can_edit %}
 <div class="row">
-<div class="columns medium-10">
+<div class="columns medium-9">
 <h3>My Sites</h3>
 </div>
-<div class="columns medium-2">
+<div class="columns medium-3">
 {% if can_edit %}
-<a href="{% url "user_profile_site_add" username=username %}" class="button right">Add site</a>
+<a href="{% url "user_profile_site_add" username=username %}" class="button tiny right">Add site</a>
 {% endif %}
 </div>
 </div>
