@@ -33,15 +33,6 @@ $topbar-bg: $contrast-color;
 $topbar-height: 45px;
 $topbar-margin-bottom: 0px;
 
-/* Control Input height for top bar */
-
-$topbar-input-height: 2.45em;
-
-/* Controlling the styles for the title in the top bar */
-
-$topbar-title-weight: bold;
-$topbar-title-font-size: em-calc(17);
-
 /* Style the top bar dropdown elements */
 
 $topbar-dropdown-bg: $primary-color;
@@ -56,7 +47,6 @@ $topbar-dropdown-toggle-alpha: 0.5;
 $topbar-link-color: #fff;
 $topbar-link-color-hover: #fff;
 $topbar-link-color-active: #fff;
-$topbar-link-weight: bold;
 $topbar-link-font-size: em-calc(13);
 $topbar-link-hover-lightness: -30%;
 $topbar-link-bg-hover: darken($topbar-bg, 3%);
@@ -77,11 +67,6 @@ $topbar-menu-icon-color: #fff;
 $topbar-menu-link-color-toggled: #d35f5f;
 $topbar-menu-icon-color-toggled: #d35f5f;
 
-/* Transitions and breakpoint styles */
-
-$topbar-transition-speed: 300ms;
-$topbar-breakpoint: em-calc(940);
-$topbar-media-query: "only screen and (min-width: #{$topbar-breakpoint})";
 
 /* Divider Styles */
 
