@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Open House{% endblock %}
+
+{% block content %}
+<div class="row">
+<div class="columns">
+<h1>Open House</h1>
+
+<div class="row">
+<div class="columns medium-6">
+<p>The Seattle Attic hosts "open nights" every Tuesday evening and every other Sunday afternoon. Open nights are meant to be events where people who are curious about us and what we do to come check out the space and meet some of the members.</p>
+<p>We realize that this setting can make some people nervous. We do not want to risk losing the company of awesome people on account of this though, so we do a lot to try and make the open nights as warm, friendly and inclusive as possible to our guests. This includes tea and tasty nibbles and a range of friendly people who will greet you when you arrive and either engage with you or leave you alone, as you prefer.</p>
+</div>
+<div class="columns medium-6">
+<p><img src="{{ STATIC_URL }}/img/photos/openhouse/TeamMeeting.jpg" alt="A photo of a team meeting." width="1024" height="577"></p>
+</div>
+</div>
+
+<p>Here is a quote from Michelle, one of our newest members whom we are so delighted to have!</p>
+
+<div class="row">
+<div class="columns small-6 small-centered medium-3 medium-uncentered">
+<img src="{{ STATIC_URL }}/img/photos/openhouse/Michelle.jpg" alt="A portrait of Michelle." width="480" height="480">
+</div>
+<div class="columns small-12 medium-9">
+<blockquote>
+<p>When I first went to the Attic for an open night, I was instantly pleased with the group of people I saw. I could immediately tell that everyone was like me, weird and awesome! It reminded me of when I was just starting to attend the New School for the Arts and Academics (a charter school for arts in Arizona). At the New School, it didn't matter who you were or relatively how you acted, you were welcome and an immediate friend. I had the same feeling when I went to the Attic.</p>
+<p>I also found that they were a non-profit, non-hierarchical, community-driven place which meant that anyone could speak up and offer their opinion and help out. I had no qualms on my first day to offer to help out at events, give advice and offer my artistic services. I immediately felt I was already a member on day one.</p>
+</blockquote>
+</div>
+</div>
+
+<p>Other things about the Attic in general and Open Nights in particular:</p>
+<ol>
+<li>You do not have to be a "hacker" or a "maker". We realize that many people - including some of us members - hesitate to identify with either term. As long as the description of the Seattle Attic piques your interest and you're curious enough to find out what we are all about, you are welcome here. Perhaps you will meet people who do things here that you want to learn. Or perhaps you will find that this is not the space for you at all. Either one is a win, right?</li>
+<li>If you're an introvert, shy, or just not confident in social situations, you are welcome to bring a book (or browse through our excellent selection), laptop, or project and sit in a corner and not Talk To The Strangers. We get many such guests who need some time to get used to us before opening up and talking about themselves. Some of our members also wind up hanging out together and working on stuff without talking a whole lot!</li>
+<li>You might have been to a hackerspace where you heard something like "OMG you don't know X?". Rest assured that you will never hear such a thing here. We are building a community where it is safe for you to say that you don't know about X and would like to learn more about it (or not!).</li>
+<li>We practice intersectional feminism. This means that this is a "safe space" for other feminists (in whatever form of feminism you embrace). You won't hear "girls can't do math" jokes and you won't be critiqued for your gender presentation, whatever form that takes.</li>
+<li>While this is a woman-centric space, all genders are extremely welcome. A good portion of our members identify as male!</li>
+</ol>
+
+<p>To attend, you can just show up on the scheduled dates – every Tuesday night and occasional Sunday afternoons. Check our <a href="{% url "events" %}">calendar</a>.</p> 
+<p>We are located on the sixth floor of the Pioneer Building. Our address is 600 1st Ave, #605, Seattle, WA 98104. You can take a bus or light rail to the Pioneer Square stop or drive. Parking is not usually a problem after 6:00PM unless there is a game.</p>
+
+<div class="row">
+<div class="columns large-6">
+<p>And finally, on to some <a href="{% url "visit" %}">logistics</a> about Open Nights:</p>
+
+<p>Enter the building via the James St. entrance. Look for the "Office Space" sign. On the call box, scroll down until you find "Attic L", press Call, wait for the ring tone and the voice that says Welcome and listen for the door to unlock. Walk down the corridor and take the elevator to the sixth floor. We are in unit 605.</p>
+<p>If the door happens to be locked for some reason, you can knock on the door and someone will let you in.</p>
+<p>You may bring a drink or some food to share, but it is not required.</p>
+</div>
+<div class="columns large-6">
+<p><img src="{{ STATIC_URL }}/img/photos/openhouse/PioneerBuilding6thFloor.jpg" width="912" height="684" alt="A picture of the sixth floor of the Pioneer Building where we are."></p>
+</div>
+</div>
+
+<p>Are there other things you would like to know about Open Nights? Email <a href="mailto:info@seattleattic.com">info@seattleattic.com</a> or <a href="https://twitter.com/seattle_attic">ask our Twitter</a>!</p> 
+
+</div>
+</div>
+{% endblock %}

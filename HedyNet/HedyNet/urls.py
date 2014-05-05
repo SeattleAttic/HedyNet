@@ -22,6 +22,7 @@ urlpatterns = patterns('',
     url(r'^membership$', TemplateView.as_view(template_name="membership.html"), name="membership"),    
     url(r'^friends$', TemplateView.as_view(template_name="friends.html"), name="friends"),
     url(r'^events$', TemplateView.as_view(template_name="events.html"), name="events"),
+    url(r'^openhouse$', TemplateView.as_view(template_name="openhouse.html"), name="openhouse"),
 
     (r'^mailinglists/', include('mailchimp2.urls')),
     (r'^accounts/', include('allauth.urls')),
