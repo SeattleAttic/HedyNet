@@ -299,6 +299,7 @@ class UserExternalSite(models.Model):
             return "%s (%s)" % (self.site_category, self.profile)
         if self.custom_label:
             return "%s (%s)" % (self.custom_label, self.profile)
+        return "(No label) (%s)" % self.profile
 
 class UserContactInfo(models.Model):
 
