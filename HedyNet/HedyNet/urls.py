@@ -32,7 +32,7 @@ urlpatterns = patterns('',
     (r'^profiles/', include('profiles.urls')),
     (r'^payments/', include('payments.urls')),
     (r'^othersites/', include('othersites.urls')),
-    (r'^applications/', include('applications.urls')),
+    #(r'^applications/', include('applications.urls')),
     
     # Examples:
     # url(r'^$', 'HedyNet.views.home', name='home'),
