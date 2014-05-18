@@ -20,7 +20,7 @@ urlpatterns = patterns('',
     url(r'^donations$', TemplateView.as_view(template_name="donations.html"), name="donations"),
     url(r'^visit$', TemplateView.as_view(template_name="visit.html"), name="visit"),
     url(r'^membership$', TemplateView.as_view(template_name="membership.html"), name="membership"),    
-    url(r'^friends$', TemplateView.as_view(template_name="friends.html"), name="friends"),
+    url(r'^resources$', TemplateView.as_view(template_name="resources.html"), name="resources"),
     url(r'^events$', TemplateView.as_view(template_name="events.html"), name="events"),
     url(r'^openhouse$', TemplateView.as_view(template_name="openhouse.html"), name="openhouse"),
 
@@ -32,6 +32,7 @@ urlpatterns = patterns('',
     (r'^profiles/', include('profiles.urls')),
     (r'^payments/', include('payments.urls')),
     (r'^othersites/', include('othersites.urls')),
+    (r'^applications/', include('applications.urls')),
     
     # Examples:
     # url(r'^$', 'HedyNet.views.home', name='home'),
