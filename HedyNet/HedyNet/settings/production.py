@@ -6,6 +6,18 @@ from base import *
 
 ALLOWED_HOSTS = ['www.seattleattic.com', 'seattleattic.com']
 
+########## DATABASE CONFIGURATION
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': get_env_variable("DATABASE_NAME"),
+        'USER': get_env_variable("DATABASE_USER"),
+        'PASSWORD': get_env_variable("DATABASE_PASSWORD"),
+    }
+}
+########## END DATABASE CONFIGURATION
+
 ########## EMAIL CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
