@@ -32,6 +32,8 @@ environment_settings = (
     "DATABASE_USER",
     "DATABASE_PASSWORD",
     "SECRET_KEY",
+    "EMAIL_ACCOUNT",
+    "EMAIL_PASSWORD",
 )
 
 def application(environ, start_response):
