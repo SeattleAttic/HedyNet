@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 import logging
 logger = logging.getLogger(__name__)
 
-from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
+from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView, TemplateView
 from django.views.generic.edit import ModelFormMixin
 from django.views.generic.detail import SingleObjectMixin
 from django.db.models import Q
@@ -13,7 +13,7 @@ from django.http import Http404
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 
-from braces.views import LoginRequiredMixin, PermissionRequiredMixin
+from braces.views import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
 
 import profiles.models as models
 from profiles import constants
@@ -31,7 +31,6 @@ def get_user_profile_or_404(username):
             {'verbose_name': models.UserProfile._meta.verbose_name})
     try:
         user_profile, created = models.UserProfile.objects.get_or_create(user = user)
-
     except ObjectDoesNotExist:
         raise Http404("No %(verbose_name)s found matching the username" %
             {'verbose_name': models.UserProfile._meta.verbose_name})
@@ -412,3 +411,19 @@ class MemberStatusChangeCreateView(LoginRequiredMixin, PermissionRequiredMixin, 
         self.object.save()
 
         return super(ModelFormMixin, self).form_valid(form)
+
+class MemberOnlyPassView(UserPassesTestMixin, TemplateView):
+    """
+    A convenience view that will let a viewer see a page only if they are a member.
+    """
+    def test_func(self, user):
+
+        if not user.id:
+            return False
+
+        try:
+            user_profile, created = models.UserProfile.objects.get_or_create(user__id = user.id)
+        except ObjectDoesNotExist:
+            return False
+
+        return user_profile.is_member
