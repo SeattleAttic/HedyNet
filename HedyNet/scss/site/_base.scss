@@ -1,0 +1,73 @@
+$include-html-classes: false;
+$include-print-styles: false;
+$include-html-global-classes: false;
+
+@import "../foundation/variables";
+@import "variables";
+@import "../foundation/components/icon-bar";
+
+body {
+    font-family: 'Open Sans', "Arial", sans-serif;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: 'Cherry Swash', "Arial", sans-serif;
+    font-weight: bold;
+}
+
+a { color: $link-color; font-weight: bold; text-decoration: underline; }
+a:visited { color: $link-visited-color; }
+a:hover, a:active { color: $link-hover-color; }
+
+a.button, a.button:visited { color: white !important; }
+
+.top-bar a { text-decoration: none; }
+
+.fineprint { font-size: smaller; }
+
+ul.breadcrumbs { margin-bottom: 0px; }
+
+ul.breadcrumbs li.retain-capitalization, ul.breadcrumbs li.retain-capitalization a { text-transform: none; }
+
+/* Fix IE resizing */
+img { -ms-interpolation-mode: bicubic; }
+
+form {
+  .hint { text-align: right; display: block; margin-bottom: .5rem; }
+  .required { font-size: smaller; margin-bottom: .5rem; font-style: italic; }
+}
+
+/* https://github.com/zurb/foundation/issues/2127 */
+textarea { height: auto; }
+
+.footer-nav {
+@include icon-bar(
+
+  // Set the background color of the icon bar. Default: $icon-bar-bg.
+  $bar-bg: white,
+  //  Set the font color of the icon bar. Default: $icon-bar-font-color.
+  $bar-font-color: $link-color,
+  // Set the hover background color for the icon bar. Default: $icon-bar-hover-color.
+  $bar-hover-color: white,
+  // Set the color of the icons for the icon bar. Default: $icon-bar-icon-color
+  $bar-icon-color: transparent,
+  // Set the background of the color when the icon bar is clicked or tapped on (or items within the icon bar). Default: $icon-bar-active-color.
+  $bar-active-color: blue,
+  // Set the padding for icon bar. Default: $icon-bar-item-padding.
+  $padding: 1rem,
+  // Set the font-size of the icon bar. Default: $icon-bar-font-size.
+  $font-size: 1rem,
+  // Set the size of the icons within the icon bar. Default: $icon-bar-icon-size.
+  $icon-size: 0px,
+  // Set the width of images within the icon bar. Default: $icon-bar-image-width
+  $image-width: 0px,
+  // Set the height of images within the icon bar. Default: $icon-bar-image-height
+  $image-height: 0px,
+  // Assign whether or not base styles usually associated with the icon bar to appear the way it usually does should be included. Default: true.
+  $base-style: true
+  );
+
+  border-top: 1px solid $gainsboro;
+  border-bottom: 1px solid $gainsboro;
+  margin-bottom: 1.1875rem;
+}
