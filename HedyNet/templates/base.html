@@ -13,9 +13,8 @@
   <!-- If you are using CSS version, only link these 2 files, you may add app.css to use for your overrides if you like. -->
   <link href='//fonts.googleapis.com/css?family=Cherry+Swash:700|Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="{% static "css/normalize.css" %}" />
-  <link rel="stylesheet" href="{% static "css/foundation.css" %}" />
-  <link rel="stylesheet" href="{% static "css/site/base.css" %}" />
-  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static "css/app.css" %}" />
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
   <script src="{% static "js/vendor/custom.modernizr.js" %}"></script>
 
   {% block extrahead %}
@@ -58,25 +57,40 @@
   <!-- Footer -->
 {% block footer %}
 <footer class="row">
-<div class="columns"><hr /></div>
-    <div class="medium-6 columns fineprint">
-        <p>This is a fiscally sponsored project of Independent Arts &amp; Media, a 501(c)3 non-profit corporation.  For more information: <br /><a href="mailto:info@seattleattic.com">info@seattleattic.com</a></p>
-    </div>
-    <div class="medium-6 columns">
+  <div class="columns">
     <div class="row">
       <div class="columns">
-        <ul class="inline-list right">
-            <li><a href="{% url "sitemap" %}">Sitemap</a></li>
-            <li><a href="{% url "tos" %}">TOS</a></li>
-            <li><a href="{% url "policies" %}">Policies</a></li>
-            <li><a href="{% url "codeofconduct" %}">Code of Conduct</a></li>
-        </ul>
-      </div>
-      <div class="columns">
-        <p class="right">&copy; Seattle Attic {% now "Y" %}</p>
+        <div class="footer-nav four-up" role="navigation">
+          <a class="item" role="button" tabindex="0" aria-labelledby="#footer-sitemap">
+          <label id='footer-sitemap'>Home</label>
+          </a>
+          <a class="item" role="button" tabindex="0" aria-labelledby="#footer-tos">
+          <label id='footer-tos'>TOS</label>
+          </a>
+          <a class="item" role="button" tabindex="0" aria-labelledby="#footer-policies">
+          <label id='footer-policies'>Policies</label>
+          </a>
+          <a class="item" role="button" tabindex="0" aria-labelledby="#footer-codeofconduct">
+          <label id='footer-codeofconduct'>Code of Conduct</label>
+          </a>
+        </div>
       </div>
     </div>
-  </footer>
+  <div class="row">
+    <div class="medium-3 columns">
+       <p><img src="{{ STATIC_URL }}img/IAM/WebLogo.png"></p>
+    </div>
+    <div class="medium-9 columns fineprint">
+        <p>This is a fiscally sponsored project of Independent Arts &amp; Media, a 501(c)3 non-profit corporation.</p><p>For more information: <a href="mailto:info@seattleattic.com">info@seattleattic.com</a></p>
+    </div>
+  </div>
+  </div>
+  </div>
+    <div class="columns">
+      <hr />
+      <p class="right">&copy; Seattle Attic {% now "Y" %}</p>
+    </div>
+</footer>
 {% endblock %}
 {% endblock %}
 
