@@ -208,6 +208,7 @@ LOCAL_APPS = (
     'profiles',
     'payments',
     'othersites',
+    'promotions',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

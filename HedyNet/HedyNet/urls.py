@@ -32,6 +32,7 @@ urlpatterns = patterns('',
     (r'^profiles/', include('profiles.urls')),
     (r'^payments/', include('payments.urls')),
     (r'^othersites/', include('othersites.urls')),
+    (r'^', include('promotions.urls')),
     #(r'^applications/', include('applications.urls')),
     
     # Examples:

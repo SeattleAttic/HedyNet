@@ -1,0 +1,118 @@
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>{% block title %}{{ title }}{% endblock %} | Seattle Attic</title>
+
+  <meta name="google-site-verification" content="B3Sxu7Nh7EKEHLtfzA8PwzpcBv98h5ucLgdbj9Y6bxI" />
+
+  <!-- If you are using CSS version, only link these 2 files, you may add app.css to use for your overrides if you like. -->
+  <link href='//fonts.googleapis.com/css?family=Cherry+Swash:700|Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="{% static "css/normalize.css" %}" />
+  <link rel="stylesheet" href="{% static "css/app.css" %}" />
+  <script src="{% static "js/vendor/custom.modernizr.js" %}"></script>
+
+  {% block extrahead %}
+  {% endblock %}
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42119165-1', 'seattleattic.com');
+  ga('send', 'pageview');
+</script>
+</head>
+<body>
+
+  <!-- Header and Nav -->
+{% block body %}
+<a name="who"></a>
+<div class="row">
+<div class="columns medium-4 push-8">
+<p class="text-center"><img src="/s/img/logo/SACW_logo.png" height="100" alt="The Seattle Attic Logo: A banner with our name below a stylized roof with a window."></p>
+<div class="panel callout">
+<p class="text-center">Find us on Twitter: <a href="https://twitter.com/Seattle_Attic">@Seattle_Attic</a></p>
+</div>
+</div>
+<div class="columns medium-8 pull-4">
+<h2>Hi GeekGirlCon!</h2>
+
+<p>The <b>Seattle Attic Community Workshop</b> is a feminist, woman-centered, trans- and queer- 
+inclusive space for tinkerers, makers, crafters and hackers of all genders. Our goal is to 
+offer a safe, non-intimidating environment, tools, and a supportive, friendly community to help 
+feminist makers and hackers learn and build.</p>
+
+<p>Our space is a year and a half old and this is our second GeekGirlCon.  We are thrilled to be back!
+You can visit us at <b>Booth 204</b>.</p>
+
+<p>Sound interesting? Stay in the loop by signing up to our 
+<a href="{% url "maillist_subscribe" list_id="9d8da4359d" %}">low
+volume announcements list</a> or following our Twitter <a href="https://twitter.com/Seattle_Attic">@Seattle_Attic</a>.</p>
+</div>
+</div>
+
+<a name="events"></a>
+
+<div class="row">
+<div class="columns">
+<h2>Come check us out!</h2>
+</div>
+<div class="columns medium-5">
+<div class="panel callout">
+<p>We have moved recently and are now
+located in Pioneer Square at:</p>
+
+<p class="text-center"><b>114 Alaskan Way S<br />
+Seattle WA 98104</b></p>
+
+<p>We have open houses every <b>Tuesday from 6:30-9pm</b>
+with special weekend open houses <b>Oct 25, Nov 9, Dec 14 from 1-4pm</b>.</p>
+<p>We also have a variety of public events!  You can keep on top of them
+using our <a href="http://www.meetup.com/SeattleAttic/">MeetUp</a> or <a href="{% url "events" %}">calendar</a>. 
+Attendees should be prepared to follow our <a href="{% url "codeofconduct" %}">Code of Conduct</a> guidelines.</p>
+
+</div>
+</div>
+<div class="columns medium-7">
+<dl>
+<dt>Attic Book Club  <em>Oct 24 7pm</em></dt>
+<dd>In October we will be reading the 2014 Hugo award recipients for best novelette (The Lady Astronaut of Mars, Mary Kowal) and best short story (The Water that Falls on You from Nowhere, John Chu) - come talk about them with us!</dd>
+
+<dt>SeaGL  <em>Oct 24-25 @ Seattle Central College</em></dt>
+<dd>SeaGL is a grassroots technical conference dedicated to spreading awareness and knowledge about the GNU/Linux community and free/libre/open-source software / hardware. Attendance is free and Seattle Attic will have a booth in the exhibitors hall.</dd>
+
+<dt>Figure Drawing  <em>Oct 26 2-4pm</em></dt>
+<dd>During Figure Drawing time, we will display images of nude male and female models from PoseSpace.com for sketching. We want this event to be an encouraging space for people who might not normally feel comfortable figure drawing, drawing around others, or even drawing in general.  Pencils, paper, and introductory drawing books will be available.</dd>
+
+<dt>Let’s Play IFcomp 2014 Entries  <em>Nov 2 3pm</em></dt>
+<dd>The Interactive Fiction Competition is an annual event to encourage both the creation and the discussion of new interactive fiction works (also known as IF). Bring your laptop and share your commentary with the group as you play some IFComp entries on your own, or join us as we play through one or two entries together on our TV! IF novices and experts both are welcome at this event.</dd>
+
+<dt>ScreenConf <em>Nov 8 1pm</em></dt>
+<dd>Join us for an afternoon of recorded conference talks on various programming / design / tech community topics, all without leaving the comfort of the Attic. Popcorn and tea will be provided; bring snacks and beverages to share if you want!
+
+<dt>Introvert Night <em>Nov 13 7pm</em></dt>
+<dd>Come be companionably introverted together! Read a book (your own or one from our library - maybe even this month's Attic Reads book club selection), work on craft stuff, use your laptop, etc. We have multiple rooms if some people are interested in an ongoing conversation, but the intent is for this to be a reasonably quiet environment.
+
+<dt>Papercraft Day <em>Nov 22 1-4pm</em></dt>
+<dd>Come join us in making elaborate and not-so-elaborate paper greeting cards and decorations. We'll have supplies on hand for cross-stitching and embroidery, paper circuit supplies if you want to light things up, and a variety of other supplies for cutting, coloring, and glittering your work. Kids welcome when accompanied by an adult.
+
+<dt>Attic Book Club <em>Dec 5 7pm</em></dt>
+<dd>November's book is The Underground Girls of Kabul by Jenny Nordberg.  “In Afghanistan, a culture ruled almost entirely by men, the birth of a son is cause for celebration and the arrival of a daughter is often mourned as misfortune. A bacha posh (literally translated from Dari as “dressed up like a boy”) is a third kind of child – a girl temporarily raised as a boy and presented as such to the outside world.”</dd>
+
+</div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}
+</body>
+</html>
