@@ -1,0 +1,32 @@
+/* A very stripped down set of elements
+   for downloading as fast as possible. */
+
+// Make sure the charset is set appropriately
+@charset "UTF-8";
+
+// This includes all of the foundation global elements that are needed to work with any of the other files.
+@import "site/variables";
+
+// Behold, here are all the Foundation components.
+@import
+  "foundation/components/grid",
+  "foundation/components/block-grid",
+  "foundation/components/forms",
+  "foundation/components/panels",
+  "foundation/components/type",
+  "foundation/components/visibility";
+
+body {
+    font-family: 'Open Sans', "Arial", sans-serif;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: 'Cherry Swash', "Arial", sans-serif;
+    font-weight: bold;
+}
+
+a { color: $link-color; font-weight: bold; text-decoration: underline; }
+a:visited { color: $link-visited-color; }
+a:hover, a:active { color: $link-hover-color; }
+
+a.button, a.button:visited { color: white !important; }

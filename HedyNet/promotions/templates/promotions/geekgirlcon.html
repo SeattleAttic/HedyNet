@@ -10,15 +10,6 @@
 
   <meta name="google-site-verification" content="B3Sxu7Nh7EKEHLtfzA8PwzpcBv98h5ucLgdbj9Y6bxI" />
 
-  <!-- If you are using CSS version, only link these 2 files, you may add app.css to use for your overrides if you like. -->
-  <link href='//fonts.googleapis.com/css?family=Cherry+Swash:700|Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" href="{% static "css/normalize.css" %}" />
-  <link rel="stylesheet" href="{% static "css/app.css" %}" />
-  <script src="{% static "js/vendor/custom.modernizr.js" %}"></script>
-
-  {% block extrahead %}
-  {% endblock %}
-
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -27,7 +18,16 @@
 
   ga('create', 'UA-42119165-1', 'seattleattic.com');
   ga('send', 'pageview');
-</script>
+</script>  
+  
+  <!-- If you are using CSS version, only link these 2 files, you may add app.css to use for your overrides if you like. -->
+  <link href='//fonts.googleapis.com/css?family=Cherry+Swash:700|Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="{% static "css/normalize.css" %}" />
+  <link rel="stylesheet" href="{% static "css/promotions.css" %}" />
+
+  {% block extrahead %}
+  {% endblock %}
+<script src="{% static "js/vendor/custom.modernizr.js" %}"></script>
 </head>
 <body>
 
@@ -36,7 +36,7 @@
 <a name="who"></a>
 <div class="row">
 <div class="columns medium-4 push-8">
-<p class="text-center"><img src="/s/img/logo/SACW_logo.png" height="100" alt="The Seattle Attic Logo: A banner with our name below a stylized roof with a window."></p>
+<p class="text-center"><a href="{% url "home" %}"><img src="/s/img/logo/SACW_logo_small.png" alt="The Seattle Attic Logo: A banner with our name below a stylized roof with a window."></a></p>
 <div class="panel callout">
 <p class="text-center">Find us on Twitter: <a href="https://twitter.com/Seattle_Attic">@Seattle_Attic</a></p>
 </div>
@@ -54,7 +54,8 @@ You can visit us at <b>Booth 204</b>.</p>
 
 <p>Sound interesting? Stay in the loop by signing up to our 
 <a href="{% url "maillist_subscribe" list_id="9d8da4359d" %}">low
-volume announcements list</a> or following our Twitter <a href="https://twitter.com/Seattle_Attic">@Seattle_Attic</a>.</p>
+volume announcements list</a> or following our Twitter <a href="https://twitter.com/Seattle_Attic">@Seattle_Attic</a>.
+You can also see the <a href="{% url "home" %}">rest of our website.</a></p>
 </div>
 </div>
 
