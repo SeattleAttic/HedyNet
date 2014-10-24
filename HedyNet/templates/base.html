@@ -61,16 +61,16 @@
     <div class="row">
       <div class="columns">
         <div class="footer-nav four-up" role="navigation">
-          <a class="item" role="button" tabindex="0" aria-labelledby="#footer-sitemap">
-          <label id='footer-sitemap'>Home</label>
+          <a href="{% url "sitemap" %}" class="item" role="button" tabindex="0" aria-labelledby="#footer-sitemap">
+          <label id='footer-sitemap'>Sitemap</label>
           </a>
-          <a class="item" role="button" tabindex="0" aria-labelledby="#footer-tos">
+          <a href="{% url "tos" %}" class="item" role="button" tabindex="0" aria-labelledby="#footer-tos">
           <label id='footer-tos'>TOS</label>
           </a>
-          <a class="item" role="button" tabindex="0" aria-labelledby="#footer-policies">
+          <a href="{% url "policies" %}" class="item" role="button" tabindex="0" aria-labelledby="#footer-policies">
           <label id='footer-policies'>Policies</label>
           </a>
-          <a class="item" role="button" tabindex="0" aria-labelledby="#footer-codeofconduct">
+          <a href="{% url "codeofconduct" %}" class="item" role="button" tabindex="0" aria-labelledby="#footer-codeofconduct">
           <label id='footer-codeofconduct'>Code of Conduct</label>
           </a>
         </div>
