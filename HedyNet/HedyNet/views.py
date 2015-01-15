@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 from django.views.generic import TemplateView
 from django.conf import settings
 
+from mailchimp2.views import SubscribeFormView
+
 import othersites
 
 class HomeTemplateView(TemplateView):
@@ -34,3 +36,9 @@ class VisitTemplateView(TemplateView):
             pass
 
         return context
+
+class MailingListView(SubscribeFormView):
+    list_id = settings.MAILING_LIST_ID
+
+    def get_list_id(self):
+        return self.list_id

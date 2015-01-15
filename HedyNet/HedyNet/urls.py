@@ -5,7 +5,9 @@ from django.views.generic import TemplateView
 from django.contrib import admin
 admin.autodiscover()
 
-from .views import HomeTemplateView, VisitTemplateView
+from mailchimp2.views import SubscribeFormView
+
+from .views import HomeTemplateView, VisitTemplateView, MailingListView
 
 urlpatterns = patterns('',
     url(r'^$', HomeTemplateView.as_view(), name="home"),
@@ -25,6 +27,8 @@ urlpatterns = patterns('',
     url(r'^openhouse$', TemplateView.as_view(template_name="openhouse.html"), name="openhouse"),
 
     (r'^mailinglists/', include('mailchimp2.urls')),
+    url(r'^mailinglist', MailingListView.as_view(), name="mailing_list"),
+
     (r'^accounts/', include('allauth.urls')),
     (r'^avatar/', include('avatar.urls')),
 
