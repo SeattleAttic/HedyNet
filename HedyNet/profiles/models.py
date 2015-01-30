@@ -22,7 +22,7 @@ def filter_access_levels(query, field, access_levels, owner_field = None,
     """Given a query, add an OR filter for the list of valid access levels
     applied to the given field. Can optionally add in an owner field and
     owner object that will be added, so that a user can see their own
-    items regardless of """
+    items regardless of access level"""
     
     access_filter = reduce(
         lambda q,access_level: q|Q(**{field: access_level}), access_levels, Q())

@@ -12,10 +12,10 @@
 </div>
 </article>
 
-{% for faq in faqsection.faqitem_set.all %}
+{% for faq in faqsection_items %}
 <article id="faq-{{ faq.pk }}" class="faqitem list">
 <header>
-<h4><a href="{% url "faqitem-detail" section_slug=faq.section.slug faq_slug=faq.slug %}">{{ faq.question }}</a></h4>
+<h4><a href="{% url "faqitem-detail" section_slug=faq.section.slug faq_slug=faq.slug %}">{{ faq.topic }}</a></h4>
 </header>
 <div class="content">
 <div class="summary">

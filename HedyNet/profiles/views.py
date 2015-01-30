@@ -427,3 +427,39 @@ class MemberOnlyPassView(UserPassesTestMixin, TemplateView):
             return False
 
         return user_profile.is_member
+
+class AccessFieldPassDetailMixin(UserPassesTestMixin):
+    """
+    A convenience view that will let a viewer see a page only if they meet the access
+    requirements of a given field. Requires a model variable defined:
+
+    access_field_name="access"
+    """
+
+    def test_func(self, user):
+        """
+        Test for the given user's ability to access based on the access field.
+        """
+
+        detail_object = self.get_object()
+        access = getattr(detail_object, self.access_field_name, None)
+        profile = models.UserProfile.get_profile(user)
+
+        logger.debug("testing access %s for %s" % (access, str(profile)))
+
+        if can_access(None, profile, access):
+            return True
+        elif user.is_authenticated():
+            raise PermissionDenied()
+
+class AccessFieldPassListView(ListView):
+    """
+    Filter out items a viewer does not have access to see from the ListView. 
+    """
+
+    def get_queryset(self):
+        queryset = super(AccessFieldPassListView, self).get_queryset()
+        viewer_profile = models.UserProfile.get_profile(self.request.user) 
+        valid_access_levels = access_levels(None, viewer_profile)
+
+        return models.filter_access_levels(queryset, self.access_field_name, valid_access_levels)

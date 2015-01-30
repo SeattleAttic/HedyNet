@@ -1,11 +1,14 @@
 from django.contrib import admin
 
-from .views import FAQSection, FAQItem
+from .models import FAQSection, FAQItem
 
 class FAQSectionAdmin(admin.ModelAdmin):
+    list_display = ("title", "access")
     prepopulated_fields = {"slug": ("title",)}
 admin.site.register(FAQSection, FAQSectionAdmin)
 
 class FAQItemAdmin(admin.ModelAdmin):
-    prepopulated_fields = {"slug": ("question",)}
+    list_display = ("topic", "section", "access")
+    prepopulated_fields = {"slug": ("topic",)}
+    list_filter = ("section",)
 admin.site.register(FAQItem, FAQItemAdmin)
