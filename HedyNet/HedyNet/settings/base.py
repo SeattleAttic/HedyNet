@@ -293,6 +293,14 @@ MARKDOWN_DEUX_STYLES = {
         # Allow raw HTML (WARNING: don't use this for user-generated
         # Markdown for your site!).
         "safe_mode": False,
+    },
+    "faq": {
+        "extras": {
+            "code-friendly": None,
+        },
+        # Allow raw HTML (WARNING: don't use this for user-generated
+        # Markdown for your site!).
+        "safe_mode": False,
     }
 }
 ######### END MARKDOWN CONFIGURATION

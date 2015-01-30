@@ -9,9 +9,7 @@
 <dl class="faqsection list">
 {% for faqsection in faqsection_list %}
 <dt><a href="{{ faqsection.get_absolute_url }}">{{ faqsection }}</a></dt>
-{% if faqsection.description %}
-<dd>{{ faqsection.description|safe }}</dd>
-{% endif %}
+{{ faqsection.render_description }}
 {% endfor %}
 </dl>
 </div>

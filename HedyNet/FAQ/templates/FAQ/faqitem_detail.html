@@ -11,12 +11,12 @@
 </header>
 <div class="content">
 <div class="summary">
-{{ faqitem.summary_answer|safe }}
+{{ faqitem.render_summary_answer }}
 </div>
 {% if faqitem.full_answer %}
 <hr />
 <div class="full">
-{{ faqitem.full_answer|safe }}
+{{ faqitem.render_full_answer }}
 </div>
 {% endif %}
 </div>

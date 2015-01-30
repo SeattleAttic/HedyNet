@@ -8,7 +8,7 @@
 <article class="faqsection detail">
 <h1>{{ faqsection }}</h1>
 <div class="content">
-{{ faqsection.description|safe }}
+{{ faqsection.render_description }}
 </div>
 </article>
 
@@ -19,7 +19,7 @@
 </header>
 <div class="content">
 <div class="summary">
-{{ faq.summary_answer|safe }}
+{{ faq.render_summary_answer }}
 </div>
 {% if faq.long_answer %}
 <div class="more">

@@ -5,6 +5,8 @@ from django.db import models
 
 from profiles import constants
 
+from .utility import render_template_markdown
+
 class FAQSection(models.Model):
     
     title = models.CharField(max_length=255)
@@ -25,6 +27,9 @@ class FAQSection(models.Model):
 
     def get_absolute_url(self):
         return reverse('faqsection-detail', kwargs={'slug': self.slug})
+
+    def render_description(self):
+        return render_template_markdown(self.description, markdown_settings="faq")
 
 class FAQItem(models.Model):
     
@@ -55,3 +60,9 @@ class FAQItem(models.Model):
         return reverse('faqitem-detail', kwargs={
             'section_slug': self.section.slug,
             'faq_slug': self.slug})
+
+    def render_summary_answer(self):
+        return render_template_markdown(self.summary_answer, markdown_settings="faq")
+
+    def render_full_answer(self):
+        return render_template_markdown(self.full_answer, markdown_settings="faq")
