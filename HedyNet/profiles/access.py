@@ -4,7 +4,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 from django.contrib.auth.models import User, AnonymousUser
-from django.db.models.loading import get_model
+from django.apps import apps
 
 from profiles import constants
 
@@ -25,7 +25,7 @@ def access_levels(owner_userprofile, viewer_userprofile):
     # Dynamically load access to this profiles model
     # This is so we don't have a circular import when we use access functions
     # inside of models.py
-    UserProfile_model = get_model('profiles', 'UserProfile')
+    UserProfile_model = apps.get_model(app_label='profiles', model_name='UserProfile')
 
     if isinstance(viewer_userprofile, User):
         viewer_userprofile = UserProfile_model.get_profile(viewer_userprofile)
