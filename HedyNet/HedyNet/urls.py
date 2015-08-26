@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.views.generic import TemplateView
+from django.views.generic.base import RedirectView
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -23,7 +24,8 @@ urlpatterns = patterns('',
     url(r'^visit$', TemplateView.as_view(template_name="visit.html"), name="visit"),
     url(r'^membership$', TemplateView.as_view(template_name="membership.html"), name="membership"),    
     url(r'^resources$', TemplateView.as_view(template_name="resources.html"), name="resources"),
-    url(r'^events$', TemplateView.as_view(template_name="events.html"), name="events"),
+    #url(r'^events$', TemplateView.as_view(template_name="events.html"), name="events"),
+    url(r'^events$', RedirectView.as_view(url="http://www.meetup.com/SeattleAttic/"), name="events"),
     url(r'^openhouse$', TemplateView.as_view(template_name="openhouse.html"), name="openhouse"),
 
     (r'^mailinglists/', include('mailchimp2.urls')),
