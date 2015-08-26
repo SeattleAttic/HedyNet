@@ -42,7 +42,6 @@ def application(environ, start_response):
     if "VIRTUALENV_PATH" in environ:
         addpath = environ["VIRTUALENV_PATH"]
         if not addpath in path:
-            print "Adding VIRTUALENV_PATH: %s" % environ["VIRTUALENV_PATH"]
             path.insert(0, environ["VIRTUALENV_PATH"])
 
     for key in environment_settings:
