@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 """
 WSGI config for HedyNet project.
 
@@ -14,17 +15,14 @@ framework.
 
 """
 import os
-from os.path import abspath, dirname
 from sys import path
+from sys import stderr
+from os.path import abspath, dirname
 
+# Need to have the project root available for
+# settings importing
 SITE_ROOT = dirname(dirname(abspath(__file__)))
 path.insert(0, SITE_ROOT)
-
-# We defer to a DJANGO_SETTINGS_MODULE already in the environment. This breaks
-# if running multiple sites in the same mod_wsgi process. To fix this, use
-# mod_wsgi daemon mode with each site in its own daemon process, or use
-# os.environ["DJANGO_SETTINGS_MODULE"] = "jajaja.settings"
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "HedyNet.settings.development")
 
 environment_settings = (
     "DJANGO_SETTINGS_MODULE",
@@ -32,20 +30,26 @@ environment_settings = (
     "DATABASE_USER",
     "DATABASE_PASSWORD",
     "SECRET_KEY",
+    "MAILCHIMP_API_KEY",
     "EMAIL_ACCOUNT",
     "EMAIL_PASSWORD",
 )
 
 def application(environ, start_response):
 
+    global environment_settings
+
     if "VIRTUALENV_PATH" in environ:
-        path.insert(0, environ["VIRTUALENV_PATH"])
+        addpath = environ["VIRTUALENV_PATH"]
+        if not addpath in path:
+            path.insert(0, environ["VIRTUALENV_PATH"])
 
     for key in environment_settings:
         if key in environ:
             os.environ[key] = str(environ[key])
 
-    import django.core.handlers.wsgi
-    _application = django.core.handlers.wsgi.WSGIHandler()
+    from django.core.wsgi import get_wsgi_application
+
+    _application = get_wsgi_application()
 
     return _application(environ, start_response)
